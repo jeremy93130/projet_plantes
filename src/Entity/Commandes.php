@@ -22,7 +22,7 @@ class Commandes
 
     #[ORM\ManyToOne(inversedBy: 'commandes')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?user $client_id = null;
+    private ?User $client_id = null;
 
     public function getId(): ?int
     {
@@ -53,12 +53,12 @@ class Commandes
         return $this;
     }
 
-    public function getClientId(): ?user
+    public function getClientId(): ?User
     {
         return $this->client_id;
     }
 
-    public function setClientId(?user $client_id): static
+    public function setClientId(?User $client_id): static
     {
         $this->client_id = $client_id;
 

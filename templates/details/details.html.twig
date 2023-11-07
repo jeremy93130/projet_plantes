@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+	Hello HomeController!
+
+{% endblock %}
+{% block body %}
+	{% include "navbar/navbar.html.twig" %}
+	<div class="w-25 m-auto">
+		<div class="card" style="width: 900px;">
+			<img src="{{asset('images/plantes/' ~ plante.image)}}" class="card-img-top detail-img" alt="{{plante.nomPlante}}">
+			<div class="card-body" style="width: 900px;">
+				<h5 class="card-title">{{plante.nomPlante}}</h5>
+				<p class="card-text">{{plante.descriptionPlante}}</p>
+			</div>
+		</div>
+	</div>
+</div>{% endblock %}
