@@ -21,8 +21,12 @@ class DashboardController extends AbstractDashboardController
 
         // Option 1. You can make your dashboard redirect to some common page of your backend
         //
-        $adminUrlGenerator = $this->container->get(AdminUrlGenerator::class);
-        return $this->redirect($adminUrlGenerator->setController(PlantesCrudController::class)->generateUrl());
+        // if($this->getUser()->getRoles() == "ROLE_ADMIN"){
+            $adminUrlGenerator = $this->container->get(AdminUrlGenerator::class);
+            return $this->redirect($adminUrlGenerator->setController(PlantesCrudController::class)->generateUrl());
+        // } else {
+        //     return $this->redirectToRoute("app_home");
+        // }
 
         // Option 2. You can make your dashboard redirect to different pages depending on the user
         //

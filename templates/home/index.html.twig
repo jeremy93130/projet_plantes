@@ -28,7 +28,7 @@
   <div class="achat-accueil">
     <h2 class="text-center m-3">Plantes disponibles à l'achat</h2>
     <div class="d-flex flex-wrap justify-content-center">
-      {% for plantes in plante %}
+      {% for plantes in plante%}
         <div class="card m-5" style="width: 18rem;">
           <div class="img-card">
             <img src="{{ asset('images/plantes/' ~ plantes.image) }}" class="card-img-top" alt="{{ plantes.nomPlante }}" />

@@ -1,17 +1,18 @@
 {% extends 'base.html.twig' %}
 {% block title %}
-	Hello HomeController!
-
+  Hello HomeController!
 {% endblock %}
 {% block body %}
-	{% include "navbar/navbar.html.twig" %}
-	<div class="w-50 m-auto">
-		<div class="card" style="width: 900px; height: 300px;">
-			<img src="{{asset('images/plantes/' ~ plante.image)}}" class="card-img-top detail-img h-100 w-50 m-auto" alt="{{plante.nomPlante}}">
-			<div class="card-body bg-success " style="width: 900px;">
-				<h5 class="card-title ">{{plante.nomPlante}}</h5>
-				<p class="card-text ">{{plante.descriptionPlante}}</p>
-			</div>
-		</div>
-	</div>
-</div>{% endblock %}
+  {% include 'navbar/navbar.html.twig' %}
+  <div class="w-50 m-auto mt-5">
+    <div class="card" style="width: 900px; height: 300px;">
+      <img src="{{ asset('images/plantes/' ~ plante.image) }}" class="card-img-top detail-img h-100 w-50 m-auto" alt="{{ plante.nomPlante }}" />
+      <div class="card-body bg-success" style="width: 900px;">
+        <h5 class="card-title">{{ plante.nomPlante }}</h5>
+        <p class="card-text">{{ plante.descriptionPlante }}</p>
+        <span class="bg-warning absolutePrix" style="text-align:center">{{ plante.prixPlante }}€</span>
+        <a class="link-warning link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" href="">Acheter cette plante</a>
+      </div>
+    </div>
+  </div>
+{% endblock %}
