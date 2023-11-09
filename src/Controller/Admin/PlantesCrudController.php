@@ -25,13 +25,14 @@ class PlantesCrudController extends AbstractCrudController
         return [
             IdField::new('id')->hideOnForm(),
             TextField::new('nom_plante', 'Nom de la plante'),
-            TextareaField::new('description_plante','description de la plante')->renderAsHtml(),
+            TextareaField::new('description_plante', 'description de la plante')->renderAsHtml(),
+            TextareaField::new('caracteristiques', 'caractéristiques de la plante')->renderAsHtml(),
+            TextareaField::new('entretien', 'conseils d\'entretien')->renderAsHtml(true)->formatValue(function ($value) {
+                return nl2br($value);
+            }),
             NumberField::new('prix_plante', 'Prix de la plante'),
             NumberField::new('stock', 'En Stock'),
-            ImageField::new('image')
-                ->setBasePath('/images/plantes')
-                ->setUploadDir('public/images/plantes')
-                ->setRequired(false),
+            ImageField::new('image')->setBasePath('/images/plantes')->setUploadDir('public/images/plantes')->setRequired(false),
         ];
     }
 }

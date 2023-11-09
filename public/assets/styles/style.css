@@ -10,7 +10,7 @@ nav h2 {
 }
 
 
-/* Partie card index.html.twig */
+/* Partie card achats.html.twig */
 
 .img-card {
     height: 300px;
@@ -24,7 +24,7 @@ nav h2 {
 /* Caroussel accueil  */
 
 .hauteur-caroussel {
-    height: 800px;
+    height: 93vh;
     background-color: rgb(8, 37, 8);
 }
 
@@ -39,7 +39,17 @@ nav h2 {
 .absolutePrix {
     position: absolute;
     top: 20px;
-    right: 50px;
+    left: 570px;
     padding: 20px;
     border-radius: 50%;
+}
+
+.detail-img {
+    height: 100%;
+    width: 400px;
+    margin: auto;
+}
+
+.accordion-item,.accordion-button,.accordion-body{
+    background-color: transparent;
 }
