@@ -6,6 +6,7 @@ use App\Repository\PlantesRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class HomeController extends AbstractController
@@ -20,7 +21,7 @@ class HomeController extends AbstractController
 
 
     #[Route('/details/{id}', name: 'details')]
-    public function show(PlantesRepository $plantesRepository, $id): Response
+    public function show(PlantesRepository $plantesRepository, $id, SessionInterface $session): Response
     {
         $plantes = $plantesRepository->find($id);
 

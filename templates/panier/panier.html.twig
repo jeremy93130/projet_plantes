@@ -14,24 +14,28 @@
         <th scope="col">Prix Unitaire</th>
         <th scope="col">Quantité</th>
         <th scope="col">Total</th>
+        <th scope="col">Action</th>
       </tr>
     </thead>
     <tbody>
       {% set totalGeneral = 0 %}
       {% for plante in app.session.get('panier', []) %}
-        <tr>
+        <tr class="delete_article">
           <td>
             <img src="{{ asset('images/plantes/' ~ plante.image) }}" alt="{{ plante.nomPlante }}" style="width: 200px;" />
           </td>
           <td>{{ plante.nomPlante }}</td>
-          <td >{{ plante.prixPlante }}</td>
+          <td>{{ plante.prixPlante }}€</td>
           <td>
-            <button type="button" id="moins">-</button>
-            <input type="text" value="1" name="quantite" id='inputPrix' class="quantite-input" data-prix="{{ plante.prixPlante }}" />
-            <button type="button" id="plus">+</button>
+            <button type="button" data-article="234" class="quantity-change moins" data-delta="-1">-</button>
+            <input type="text" value="1" data-article="234" class="quantity" value="0" />
+            <button type="button" data-article="234" class="quantity-change plus" data-delta="1">+</button>
           </td>
           <td class="total-column">
-            {% set totalGeneral = totalGeneral + plante.prixPlante %} {{ totalGeneral }}
+            {% set totalGeneral = totalGeneral + plante.prixPlante%} {{ totalGeneral }}
+          </td>
+          <td class="">
+            <a href="{{ path('app_panier', { id: plante.id }) }}" class="supprimer_article" data-article-id="{{ plante.id }}" onclick="deleteArticle(this)">Supprimer</a>
           </td>
         </tr>
       {% endfor %}
@@ -40,6 +44,9 @@
       <tr>
         <th colspan="4">Total général :</th>
         <td class="total-column" id="total-general">{{ totalGeneral }}</td>
+        <td>
+          <a href="path('commande')">Passer la commande</a>
+        </td>
       </tr>
     </tfoot>
   </table>

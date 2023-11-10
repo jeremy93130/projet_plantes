@@ -44,4 +44,22 @@ class PanierController extends AbstractController
         // Rediriger vers la page du panier
         return $this->redirectToRoute('app_panier');
     }
+
+    #[Route('/supprimer/{id}', name: 'app_supp')]
+    public function deleteFromCard(PlantesRepository $plantesRepository, SessionInterface $session, $id): Response
+    {
+        // Supprimez l'article du panier dans le repository ou toute autre logique nécessaire
+        $plantesRepository->deleteFrom($id);
+
+        // Utilisez l'ID de l'article pour supprimer l'article du panier dans la session
+        $panier = $session->get('panier', []);
+        if (array_key_exists($id, $panier)) {
+            unset($panier[$id]);
+            $session->set('panier', $panier);
+        }
+
+        // Redirigez simplement vers la page du panier
+        return $this->redirectToRoute('app_panier');
+    }
+
 }
