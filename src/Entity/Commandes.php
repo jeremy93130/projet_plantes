@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CommandesRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -23,6 +25,18 @@ class Commandes
     #[ORM\ManyToOne(inversedBy: 'commandes')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $client_id = null;
+
+    #[ORM\ManyToMany(targetEntity: Plantes::class, inversedBy: 'commandes')]
+    private Collection $plante_id;
+
+    #[ORM\OneToMany(mappedBy: 'commande_id', targetEntity: DetailsCommande::class)]
+    private Collection $detailsCommandes;
+
+    public function __construct()
+    {
+        $this->plante_id = new ArrayCollection();
+        $this->detailsCommandes = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -61,6 +75,60 @@ class Commandes
     public function setClientId(?User $client_id): static
     {
         $this->client_id = $client_id;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, plantes>
+     */
+    public function getPlanteId(): Collection
+    {
+        return $this->plante_id;
+    }
+
+    public function addPlanteId(plantes $planteId): static
+    {
+        if (!$this->plante_id->contains($planteId)) {
+            $this->plante_id->add($planteId);
+        }
+
+        return $this;
+    }
+
+    public function removePlanteId(plantes $planteId): static
+    {
+        $this->plante_id->removeElement($planteId);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, DetailsCommande>
+     */
+    public function getDetailsCommandes(): Collection
+    {
+        return $this->detailsCommandes;
+    }
+
+    public function addDetailsCommande(DetailsCommande $detailsCommande): static
+    {
+        if (!$this->detailsCommandes->contains($detailsCommande)) {
+            $this->detailsCommandes->add($detailsCommande);
+            $detailsCommande->setCommandeId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDetailsCommande(DetailsCommande $detailsCommande): static
+    {
+        if ($this->detailsCommandes->removeElement($detailsCommande)) {
+            // set the owning side to null (unless already changed)
+            if ($detailsCommande->getCommandeId() === $this) {
+                $detailsCommande->setCommandeId(null);
+            }
+        }
 
         return $this;
     }

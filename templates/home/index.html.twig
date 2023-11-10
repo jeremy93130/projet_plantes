@@ -7,13 +7,13 @@
   <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
       <div class="carousel-item active hauteur-caroussel" data-bs-interval="10000">
-        <img src="images/plantes/acheter-plante-strelitzia-nicolai-xl-786215.webp" class="d-block" alt="Strelitzia nicolaï" />
+        <a href="{{ path('app_achats') }}"><img src="images/plantes/acheter-plante-strelitzia-nicolai-xl-786215.webp" class="d-block" alt="Strelitzia nicolaï" /></a>
       </div>
       <div class="carousel-item hauteur-caroussel" data-bs-interval="2000">
-        <img src="images/plantes/aralia-sieboldii-600x450.jpg" class="d-block" alt="Aralia du japon" />
+        <a href="{{ path('app_achats') }}"><img src="images/plantes/aralia-sieboldii-600x450.jpg" class="d-block" alt="Aralia du japon" /></a>
       </div>
       <div class="carousel-item hauteur-caroussel">
-        <img src="images/plantes/monstera.jpg" class="d-block" alt="Monstera" />
+        <a href="{{ path('app_achats') }}"><img src="images/plantes/monstera.jpg" class="d-block" alt="Monstera" /></a>
       </div>
     </div>
     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
@@ -24,21 +24,5 @@
       <span class="carousel-control-next-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Next</span>
     </button>
-  </div>
-  <div class="achat-accueil">
-    <h2 class="text-center m-3">Plantes disponibles à l'achat</h2>
-    <div class="d-flex flex-wrap justify-content-center">
-      {% for plantes in plante%}
-        <div class="card m-5" style="width: 18rem;">
-          <div class="img-card">
-            <img src="{{ asset('images/plantes/' ~ plantes.image) }}" class="card-img-top" alt="{{ plantes.nomPlante }}" />
-          </div>
-          <div class="card-body text-center">
-            <h5 class="card-title">{{ plantes.nomPlante }}</h5>
-            <a href="{{ url('details', { id: plantes.id }) }}" class="btn btn-primary">Voir la plante en détail</a>
-          </div>
-        </div>
-      {% endfor %}
-    </div>
   </div>
 {% endblock %}

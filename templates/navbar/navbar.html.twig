@@ -1,41 +1,39 @@
 {% extends 'base.html.twig' %} {% block body %}
-  <nav class="navbar navbar-expand-lg">
+  <nav class="navbar navbar-expand-lg bg-dark">
     <div class="container-fluid">
       <h2 class="me-3 text-warning">Le Naturel Au Vert</h2>
-      <a class="navbar-brand">
-        {% if app.user %}
-          Bienvenu(e) {{ app.user.prenom }}
-        {% endif %}
-      </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="{{ path('app_home') }}">Accueil</a>
+            <a class="nav-link active text-warning" aria-current="page" href="{{ path('app_home') }}">Accueil</a>
           </li>
           {% if app.user is empty %}
             <li class="nav-item">
-              <a class="nav-link" href="{{ path('app_login') }}">Connexion</a>
+              <a class="nav-link text-warning" href="{{ path('app_login') }}">Connexion</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{ path('app_register') }}">Inscription</a>
+              <a class="nav-link text-warning" href="{{ path('app_register') }}">Inscription</a>
             </li>
           {% else %}
+              {% if 'ROLE_ADMIN' in app.user.roles %}
             <li>
-              <a class="nav-link" href="{{ path('app_logout') }}">Déconnexion</a>
+              <a class="nav-link text-warning" href="{{ path('app_logout') }}">Déconnexion</a>
             </li>
-            {% if 'ROLE_ADMIN' in app.user.roles %}
               <li class="nav-item">
-                <a class="nav-link" href="{{path('admin')}}">Page Admin</a>
+                <a class="nav-link text-danger" href="{{ path('admin') }}">Page Admin</a>
               </li>
+              {% else %}
+              <li>
+              <a class="nav-link text-danger" href="{{ path('app_logout') }}">Déconnexion</a>
+            </li>
             {% endif %}
           {% endif %}
         </ul>
       </div>
       {% if app.user %}
+        <a class="navbar-brand text-warning">Bienvenu(e) {{ app.user.prenom }}</a>
         <li class="list-unstyled me-5">
-          <span class="text-warning">Panier</span>
-          <a href=""></a><i class="fa-solid fa-cart-shopping nav-link"></i>
+          <a href="{{ path('app_panier') }}"><i class="fa-solid fa-cart-shopping nav-link"></i></a>
         </li>
       {% endif %}
     </div>

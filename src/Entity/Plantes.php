@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\PlantesRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -28,6 +30,24 @@ class Plantes
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $image = null;
+
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $caracteristiques = null;
+
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $entretien = null;
+
+    #[ORM\ManyToMany(targetEntity: Commandes::class, mappedBy: 'plante_id')]
+    private Collection $commandes;
+
+    #[ORM\OneToMany(mappedBy: 'plante_id', targetEntity: DetailsCommande::class)]
+    private Collection $detailsCommandes;
+
+    public function __construct()
+    {
+        $this->commandes = new ArrayCollection();
+        $this->detailsCommandes = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -90,6 +110,87 @@ class Plantes
     public function setImage(?string $image): static
     {
         $this->image = $image;
+
+        return $this;
+    }
+
+    public function getCaracteristiques(): ?string
+    {
+        return $this->caracteristiques;
+    }
+
+    public function setCaracteristiques(string $caracteristiques): static
+    {
+        $this->caracteristiques = $caracteristiques;
+
+        return $this;
+    }
+
+    public function getEntretien(): ?string
+    {
+        return $this->entretien;
+    }
+
+    public function setEntretien(string $entretien): static
+    {
+        $this->entretien = $entretien;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Commandes>
+     */
+    public function getCommandes(): Collection
+    {
+        return $this->commandes;
+    }
+
+    public function addCommande(Commandes $commande): static
+    {
+        if (!$this->commandes->contains($commande)) {
+            $this->commandes->add($commande);
+            $commande->addPlanteId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommande(Commandes $commande): static
+    {
+        if ($this->commandes->removeElement($commande)) {
+            $commande->removePlanteId($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, DetailsCommande>
+     */
+    public function getDetailsCommandes(): Collection
+    {
+        return $this->detailsCommandes;
+    }
+
+    public function addDetailsCommande(DetailsCommande $detailsCommande): static
+    {
+        if (!$this->detailsCommandes->contains($detailsCommande)) {
+            $this->detailsCommandes->add($detailsCommande);
+            $detailsCommande->setPlanteId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDetailsCommande(DetailsCommande $detailsCommande): static
+    {
+        if ($this->detailsCommandes->removeElement($detailsCommande)) {
+            // set the owning side to null (unless already changed)
+            if ($detailsCommande->getPlanteId() === $this) {
+                $detailsCommande->setPlanteId(null);
+            }
+        }
 
         return $this;
     }

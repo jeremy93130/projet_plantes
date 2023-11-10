@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+  Hello PanierController!
+{% endblock %}
+
+{% block body %}
+  {% include 'navbar/navbar.html.twig' %}
+  <table class="table mt-4">
+    <thead>
+      <tr>
+        <th scope="col">Image_produit</th>
+        <th scope="col">Produit</th>
+        <th scope="col">Prix Unitaire</th>
+        <th scope="col">Quantité</th>
+        <th scope="col">Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% set totalGeneral = 0 %}
+      {% for plante in app.session.get('panier', []) %}
+        <tr>
+          <td>
+            <img src="{{ asset('images/plantes/' ~ plante.image) }}" alt="{{ plante.nomPlante }}" style="width: 200px;" />
+          </td>
+          <td>{{ plante.nomPlante }}</td>
+          <td >{{ plante.prixPlante }}</td>
+          <td>
+            <button type="button" id="moins">-</button>
+            <input type="text" value="1" name="quantite" id='inputPrix' class="quantite-input" data-prix="{{ plante.prixPlante }}" />
+            <button type="button" id="plus">+</button>
+          </td>
+          <td class="total-column">
+            {% set totalGeneral = totalGeneral + plante.prixPlante %} {{ totalGeneral }}
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+    <tfoot>
+      <tr>
+        <th colspan="4">Total général :</th>
+        <td class="total-column" id="total-general">{{ totalGeneral }}</td>
+      </tr>
+    </tfoot>
+  </table>
+{% endblock %}
