@@ -58,30 +58,29 @@ document.addEventListener("DOMContentLoaded", function () {
       totalGeneral += total;
     });
     document.getElementById("total-general").textContent =
-      totalGeneral.toFixed(2) + '€';
+      totalGeneral.toFixed(2) + "€";
   }
-
-  function deleteArticle() {
-    // Sélectionnez tous les éléments avec la classe 'supprimer_article'
-    let supprimerArticles = document.querySelectorAll(".supprimer_article");
-
-    // Ajoutez un gestionnaire d'événements à chaque bouton 'supprimer_article'
-    supprimerArticles.forEach((supprimerButton) => {
-      supprimerButton.addEventListener("click", function () {
-        // Obtenez l'ID de l'article à supprimer, par exemple, à partir d'un attribut data
-        let articleId = this.getAttribute("data-article-id");
-
-        // Appeler la fonction pour supprimer l'article côté serveur (vous devez l'implémenter côté serveur)
-        deleteArticleFromCart(articleId);
-
-        // Facultatif : Mettez à jour l'interface utilisateur côté client si nécessaire
-        // Par exemple, supprimez la ligne correspondante à l'article du DOM
-        let articleRow = this.closest("tr");
-        articleRow.remove();
-      });
-    });
-  }
-
-  // Appelez la fonction deleteArticle pour l'initialiser
-  deleteArticle();
 });
+// Ajoutez cette fonction à votre fichier JavaScript
+function deletePlante(link) {
+  // Obtenez l'ID de l'article à supprimer à partir de l'attribut data-article-id
+  var articleId = link.getAttribute("data-article-id");
+
+  // Effectuez une requête AJAX ou utilisez une autre méthode pour supprimer l'article côté serveur
+  // Vous devrez peut-être ajuster cela en fonction de votre backend
+
+  // Ensuite, supprimez la ligne du tableau correspondante
+  var row = link.closest(".delete_article");
+  row.remove();
+
+  if (row < 1) {
+  }
+
+  // Envoyez une requête AJAX pour supprimer l'article côté serveur
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", "/supprimer/" + articleId, true);
+  xhr.send();
+
+  // Mettez à jour le total général
+  updateTotal();
+}

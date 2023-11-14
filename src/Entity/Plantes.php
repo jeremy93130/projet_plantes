@@ -43,6 +43,7 @@ class Plantes
     #[ORM\OneToMany(mappedBy: 'plante_id', targetEntity: DetailsCommande::class)]
     private Collection $detailsCommandes;
 
+    private ?string $search;
     public function __construct()
     {
         $this->commandes = new ArrayCollection();
@@ -192,6 +193,17 @@ class Plantes
             }
         }
 
+        return $this;
+    }
+
+    public function getSearch(): ?string
+    {
+        return $this->search;
+    }
+
+    public function setSearch($search): static
+    {
+        $this->search = $search;
         return $this;
     }
 }

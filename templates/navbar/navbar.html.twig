@@ -15,17 +15,17 @@
               <a class="nav-link text-warning" href="{{ path('app_register') }}">Inscription</a>
             </li>
           {% else %}
-              {% if 'ROLE_ADMIN' in app.user.roles %}
-            <li>
-              <a class="nav-link text-warning" href="{{ path('app_logout') }}">Déconnexion</a>
-            </li>
+            {% if 'ROLE_ADMIN' in app.user.roles %}
+              <li>
+                <a class="nav-link text-warning" href="{{ path('app_logout') }}">Déconnexion</a>
+              </li>
               <li class="nav-item">
                 <a class="nav-link text-danger" href="{{ path('admin') }}">Page Admin</a>
               </li>
-              {% else %}
+            {% else %}
               <li>
-              <a class="nav-link text-danger" href="{{ path('app_logout') }}">Déconnexion</a>
-            </li>
+                <a class="nav-link text-danger" href="{{ path('app_logout') }}">Déconnexion</a>
+              </li>
             {% endif %}
           {% endif %}
         </ul>
@@ -33,7 +33,15 @@
       {% if app.user %}
         <a class="navbar-brand text-warning">Bienvenu(e) {{ app.user.prenom }}</a>
         <li class="list-unstyled me-5">
-          <a href="{{ path('app_panier') }}"><i class="fa-solid fa-cart-shopping nav-link"></i></a>
+          <a href="{{ path('app_panier') }}">
+            <i class="fa-solid fa-cart-shopping nav-link">
+              <span>
+                {% if custom_function(app.request) > 0 %}
+                    {{ custom_function(app.request) }}
+                {% endif %}
+              </span>
+            </i>
+          </a>
         </li>
       {% endif %}
     </div>

@@ -3,29 +3,36 @@
 {% block title %}
   Hello AchatsController!
 {% endblock %}
-
+{% block javascripts %}
+  <script src="{{ asset('assets/js/structure.js') }}"></script>
+{% endblock %}
 {% block body %}
   {% include 'navbar/navbar.html.twig' %}
   <div class="achat-accueil">
     <div class="d-flex justify-content-around align-items-center">
       <div class="w-25"></div>
-      <h2 class="text-center m-3">Plantes disponibles à l'achat</h2>
-      <div class="d-flex justify-content-end" style="width: 400px;">
-        <input class="form-control me-2 h-25" style="width: 18rem;" type="search" placeholder="Trouvez votre plante" aria-label="Search" />
-        <button class="btn btn-outline-success" type="submit">Search</button>
+      <h2 class="text-center m-3 bg-warning">Plantes disponibles à l'achat</h2>
+      <div class="d-flex justify-content-end" id="relative-div">
+        {{ form_start(form) }}
+        {{ form_widget(form.search) }}
+        <button type="submit" class="btn btn-warning" style="padding: 3px;">Rechercher</button>
+        <a href="{{ path('app_achats') }}">retour liste</a>
+        {{ form_end(form) }}
       </div>
     </div>
     <div class="d-flex flex-wrap justify-content-center">
       {% for plantes in plante %}
-        <div class="card m-5" style="width: 18rem;">
-          <div class="img-card">
-            <img src="{{ asset('images/plantes/' ~ plantes.image) }}" class="card-img-top" alt="{{ plantes.nomPlante }}" />
+        {% if plantes.nomPlante matches '/.*' ~ form.search.vars.value ~ '.*/i' %}
+          <div class="card m-5 plantesResults" style="width: 18rem;">
+            <div class="img-card">
+              <img src="{{ asset('images/plantes/' ~ plantes.image) }}" class="card-img-top" alt="{{ plantes.nomPlante }}" />
+            </div>
+            <div class="card-body text-center">
+              <h5 class="card-title">{{ plantes.nomPlante }}</h5>
+              <a href="{{ url('details', { id: plantes.id }) }}" class="btn btn-primary">Voir la plante en détail</a>
+            </div>
           </div>
-          <div class="card-body text-center">
-            <h5 class="card-title">{{ plantes.nomPlante }}</h5>
-            <a href="{{ url('details', { id: plantes.id }) }}" class="btn btn-primary">Voir la plante en détail</a>
-          </div>
-        </div>
+        {% endif %}
       {% endfor %}
     </div>
   </div>

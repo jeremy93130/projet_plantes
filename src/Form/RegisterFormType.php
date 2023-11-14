@@ -58,7 +58,7 @@ class RegisterFormType extends AbstractType
                     new Assert\NotBlank(['message' => 'Numéro de téléphone requit !']),
                 ],
             ])
-            ->add('send', SubmitType::class)
+            ->add('Inscription', SubmitType::class)
         ;
     }
 

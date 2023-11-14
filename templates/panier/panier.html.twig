@@ -1,53 +1,62 @@
 {% extends 'base.html.twig' %}
-
 {% block title %}
   Hello PanierController!
 {% endblock %}
 
 {% block body %}
+  <script src="{{ asset('public/assets/js/structure.js') }}"></script>
   {% include 'navbar/navbar.html.twig' %}
-  <table class="table mt-4">
-    <thead>
-      <tr>
-        <th scope="col">Image_produit</th>
-        <th scope="col">Produit</th>
-        <th scope="col">Prix Unitaire</th>
-        <th scope="col">Quantité</th>
-        <th scope="col">Total</th>
-        <th scope="col">Action</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% set totalGeneral = 0 %}
-      {% for plante in app.session.get('panier', []) %}
-        <tr class="delete_article">
+  
+  {% if app.session.get('panier') is empty %}
+    <div class="panier-vide-div">
+      <h1 class="text-warning">Ohhh ... votre panier est vide ... Pourquoi ne pas aller le remplir ?</h1>
+      <a href="{{path('app_achats')}}">Suivez nous ! <i class="fa-solid fa-arrow-right" style="color: #d40c0c;"></i></a>
+    </div>
+  {% else %}
+    <table class="table mt-4">
+      <thead>
+        <tr>
+          <th scope="col">Image_produit</th>
+          <th scope="col">Produit</th>
+          <th scope="col">Prix Unitaire</th>
+          <th scope="col">Quantité</th>
+          <th scope="col">Total</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% set totalGeneral = 0 %}
+        {% for plante in app.session.get('panier', []) %}
+          <tr class="delete_article">
+            <td>
+              <img src="{{ asset('images/plantes/' ~ plante.image) }}" alt="{{ plante.nomPlante }}" style="width: 200px;" />
+            </td>
+            <td>{{ plante.nomPlante }}</td>
+            <td>{{ plante.prixPlante }}€</td>
+            <td>
+              <button type="button" data-article="234" class="quantity-change moins" data-delta="-1">-</button>
+              <input type="text" value="1" data-article="234" class="quantity" value="0" />
+              <button type="button" data-article="234" class="quantity-change plus" data-delta="1">+</button>
+            </td>
+            <td class="total-column">
+              {% set totalGeneral = totalGeneral + (plante.prixPlante * 1) %}
+              {{ plante.prixPlante * 1 }}€
+            </td>
+            <td class="">
+              <a href="" class="supprimer_article" data-article-id="{{ plante.id }}" onclick="deletePlante(this)">Supprimer</a>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+      <tfoot>
+        <tr>
+          <th colspan="4">Total général :</th>
+          <td class="total-column" id="total-general">{{ totalGeneral }}</td>
           <td>
-            <img src="{{ asset('images/plantes/' ~ plante.image) }}" alt="{{ plante.nomPlante }}" style="width: 200px;" />
-          </td>
-          <td>{{ plante.nomPlante }}</td>
-          <td>{{ plante.prixPlante }}€</td>
-          <td>
-            <button type="button" data-article="234" class="quantity-change moins" data-delta="-1">-</button>
-            <input type="text" value="1" data-article="234" class="quantity" value="0" />
-            <button type="button" data-article="234" class="quantity-change plus" data-delta="1">+</button>
-          </td>
-          <td class="total-column">
-            {% set totalGeneral = totalGeneral + plante.prixPlante%} {{ totalGeneral }}
-          </td>
-          <td class="">
-            <a href="{{ path('app_panier', { id: plante.id }) }}" class="supprimer_article" data-article-id="{{ plante.id }}" onclick="deleteArticle(this)">Supprimer</a>
+            <a href="">Passer la commande</a>
           </td>
         </tr>
-      {% endfor %}
-    </tbody>
-    <tfoot>
-      <tr>
-        <th colspan="4">Total général :</th>
-        <td class="total-column" id="total-general">{{ totalGeneral }}</td>
-        <td>
-          <a href="path('commande')">Passer la commande</a>
-        </td>
-      </tr>
-    </tfoot>
-  </table>
+      </tfoot>
+    </table>
+  {% endif %}
 {% endblock %}

@@ -4,25 +4,39 @@
 {% endblock %}
 {% block body %}
   {% include 'navbar/navbar.html.twig' %}
-  <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
-    <div class="carousel-inner">
-      <div class="carousel-item active hauteur-caroussel" data-bs-interval="10000">
-        <a href="{{ path('app_achats') }}"><img src="images/plantes/acheter-plante-strelitzia-nicolai-xl-786215.webp" class="d-block" alt="Strelitzia nicolaï" /></a>
-      </div>
-      <div class="carousel-item hauteur-caroussel" data-bs-interval="2000">
-        <a href="{{ path('app_achats') }}"><img src="images/plantes/aralia-sieboldii-600x450.jpg" class="d-block" alt="Aralia du japon" /></a>
-      </div>
-      <div class="carousel-item hauteur-caroussel">
-        <a href="{{ path('app_achats') }}"><img src="images/plantes/monstera.jpg" class="d-block" alt="Monstera" /></a>
-      </div>
-    </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Next</span>
-    </button>
+  <div>
+    {% if app.user %}
+      <nav class="accueil-nav">
+        <ul class="d-flex justify-content-around pt-4 pb-4 list-unstyled">
+          <li class="text-light pe-4 ps-4 bg-dark">
+            <a href="" class="text-decoration-none">ggjgoji</a>
+          </li>
+          <li class="pe-4 ps-4 bg-dark">
+            <a href="" class="text-decoration-none">bdkfdkk</a>
+          </li>
+          <li class="pe-4 ps-4 bg-dark">
+            <a href="" class="text-decoration-none">bfhdghddf</a>
+          </li>
+          <li class="pe-4 ps-4 bg-dark">
+            <a href="{{ path('app_achats') }}" class="text-decoration-none">Voir nos plantes</a>
+          </li>
+          <li class="pe-4 ps-4 bg-dark">
+            <a href="" class="text-decoration-none">hdfhfhfh</a>
+          </li>
+          <li class="pe-4 ps-4 bg-dark">
+            <a href="" class="text-decoration-none">fdhdbdf</a>
+          </li>
+          <li class="pe-4 ps-4 bg-dark">
+            <a href="" class="text-decoration-none">dgfdgdfgdfgdfg</a>
+          </li>
+          <li class="pe-4 ps-4 bg-dark">
+            <a href="" class="text-decoration-none">dgfgdfgdfgdfgdfg</a>
+          </li>
+          <li class="pe-4 ps-4 bg-dark">
+            <a href="" class="text-decoration-none">rytertazfr</a>
+          </li>
+        </ul>
+      </nav>
+    {% endif %}
   </div>
 {% endblock %}

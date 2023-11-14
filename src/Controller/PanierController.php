@@ -16,10 +16,14 @@ class PanierController extends AbstractController
     #[Route('/panier', name: 'app_panier')]
     public function index(PlantesRepository $plantesRepository, Request $request): Response
     {
-        $panier = $request->getSession();
+        $panier = $request->getSession()->get('panier');
+
+        $nbArticles = count($panier);
+        
         return $this->render('panier/panier.html.twig', [
             'controller_name' => 'PanierController',
             'infos' => $panier,
+            'nbArticle' => $nbArticles,
         ]);
     }
 
@@ -46,20 +50,14 @@ class PanierController extends AbstractController
     }
 
     #[Route('/supprimer/{id}', name: 'app_supp')]
-    public function deleteFromCard(PlantesRepository $plantesRepository, SessionInterface $session, $id): Response
+    public function deleteFromCard(PlantesRepository $plantesRepository, Request $request, $id): Response
     {
         // Supprimez l'article du panier dans le repository ou toute autre logique nécessaire
         $plantesRepository->deleteFrom($id);
 
-        // Utilisez l'ID de l'article pour supprimer l'article du panier dans la session
-        $panier = $session->get('panier', []);
-        if (array_key_exists($id, $panier)) {
-            unset($panier[$id]);
-            $session->set('panier', $panier);
-        }
 
         // Redirigez simplement vers la page du panier
-        return $this->redirectToRoute('app_panier');
+        return $this->redirectToRoute('app_panier', [], Response::HTTP_SEE_OTHER);
     }
 
 }
