@@ -66,21 +66,38 @@ function deletePlante(link) {
   // Obtenez l'ID de l'article à supprimer à partir de l'attribut data-article-id
   var articleId = link.getAttribute("data-article-id");
 
-  // Effectuez une requête AJAX ou utilisez une autre méthode pour supprimer l'article côté serveur
-  // Vous devrez peut-être ajuster cela en fonction de votre backend
-
-  // Ensuite, supprimez la ligne du tableau correspondante
-  var row = link.closest(".delete_article");
-  row.remove();
-
-  if (row < 1) {
-  }
-
-  // Envoyez une requête AJAX pour supprimer l'article côté serveur
+  // Effectuez une requête AJAX pour supprimer l'article côté serveur
   var xhr = new XMLHttpRequest();
   xhr.open("POST", "/supprimer/" + articleId, true);
-  xhr.send();
 
-  // Mettez à jour le total général
-  updateTotal();
+  // Définissez le gestionnaire d'événements pour la réponse de la requête
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === XMLHttpRequest.DONE) {
+      if (xhr.status === 200) {
+        // La requête s'est bien déroulée, supprimez la ligne du tableau correspondante
+        var row = link.closest(".delete_article");
+        row.remove();
+
+        // Mettez à jour le total général
+        updateTotal();
+      } else {
+        // La requête a échoué, affichez une alerte ou gérez l'erreur de la manière appropriée
+        console.error("Erreur lors de la suppression de l'article.");
+      }
+    }
+  };
+
+  // Envoyez la requête AJAX
+  xhr.send();
+}
+
+function updateQuantityAndTotalInSession(planteId, newQuantity) {
+  // ... votre logique pour mettre à jour la quantité dans le panier côté client ...
+
+  // Mettez à jour le total côté client
+  let totalParPlante = newQuantity * prixUnitaire; // Assurez-vous d'avoir le prix unitaire
+  totalGeneral += totalParPlante;
+
+  // Mettez à jour le total dans la session côté client (par exemple, en utilisant localStorage ou sessionStorage)
+  sessionStorage.setItem("total_general", totalGeneral);
 }

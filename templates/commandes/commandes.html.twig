@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}commandes{% endblock %}
+
+{% block body %}
+    {% include 'navbar/navbar.html.twig' %}
+    <div class="text-light">
+        <h1>Récapitulatif de la commande</h1>
+        
+        {% for commande in commandes %}
+            {# Affiche les détails de chaque plante #}
+
+
+            <hr> {# Ligne de séparation entre chaque plante #}
+        {% endfor %}
+
+        {# Affiche le total #}
+
+    </div>
+{% endblock %}

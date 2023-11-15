@@ -34,13 +34,16 @@
         <a class="navbar-brand text-warning">Bienvenu(e) {{ app.user.prenom }}</a>
         <li class="list-unstyled me-5">
           <a href="{{ path('app_panier') }}">
-            <i class="fa-solid fa-cart-shopping nav-link">
-              <span>
-                {% if custom_function(app.request) > 0 %}
+            {% if app.request.attributes.get('_route') != 'app_commandes' %}
+              <i class="fa-solid fa-cart-shopping nav-link">
+                <span>
+                  {% if custom_function(app.request) > 0 %}
                     {{ custom_function(app.request) }}
-                {% endif %}
-              </span>
-            </i>
+                  {% endif %}
+                </span>
+              </i>
+            {% else %}
+            {% endif %}
           </a>
         </li>
       {% endif %}
