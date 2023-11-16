@@ -60,44 +60,40 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("total-general").textContent =
       totalGeneral.toFixed(2) + "€";
   }
+  var passerCommandeLink = document.getElementById("passer-commande-link");
+
+  if (passerCommandeLink) {
+    passerCommandeLink.addEventListener("click", function (event) {
+      event.preventDefault();
+
+      var totalGeneral = document
+        .getElementById("total-general")
+        .textContent.trim();
+
+      // Utilisation de fetch pour envoyer la requête AJAX
+      fetch("{{ path('app_commandes') }}", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: "total=" + encodeURIComponent(totalGeneral),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          // Gérer la réponse JSON du serveur ici
+          if (data.url) {
+            // Rediriger vers l'URL renvoyée par le serveur
+            window.location.href = data.url;
+          } else {
+            console.error(
+              "Aucune URL de redirection trouvée dans la réponse JSON."
+            );
+          }
+        })
+        .catch((error) => {
+          // Gérer les erreurs ici
+          console.error("Erreur lors de la requête AJAX:", error);
+        });
+    });
+  }
 });
-// Ajoutez cette fonction à votre fichier JavaScript
-function deletePlante(link) {
-  // Obtenez l'ID de l'article à supprimer à partir de l'attribut data-article-id
-  var articleId = link.getAttribute("data-article-id");
-
-  // Effectuez une requête AJAX pour supprimer l'article côté serveur
-  var xhr = new XMLHttpRequest();
-  xhr.open("POST", "/supprimer/" + articleId, true);
-
-  // Définissez le gestionnaire d'événements pour la réponse de la requête
-  xhr.onreadystatechange = function () {
-    if (xhr.readyState === XMLHttpRequest.DONE) {
-      if (xhr.status === 200) {
-        // La requête s'est bien déroulée, supprimez la ligne du tableau correspondante
-        var row = link.closest(".delete_article");
-        row.remove();
-
-        // Mettez à jour le total général
-        updateTotal();
-      } else {
-        // La requête a échoué, affichez une alerte ou gérez l'erreur de la manière appropriée
-        console.error("Erreur lors de la suppression de l'article.");
-      }
-    }
-  };
-
-  // Envoyez la requête AJAX
-  xhr.send();
-}
-
-function updateQuantityAndTotalInSession(planteId, newQuantity) {
-  // ... votre logique pour mettre à jour la quantité dans le panier côté client ...
-
-  // Mettez à jour le total côté client
-  let totalParPlante = newQuantity * prixUnitaire; // Assurez-vous d'avoir le prix unitaire
-  totalGeneral += totalParPlante;
-
-  // Mettez à jour le total dans la session côté client (par exemple, en utilisant localStorage ou sessionStorage)
-  sessionStorage.setItem("total_general", totalGeneral);
-}

@@ -27,7 +27,7 @@
     <div class="d-flex flex-wrap justify-content-center">
       {% for plantes in plante %}
         {% if plantes.nomPlante matches '/.*' ~ form.search.vars.value ~ '.*/i' %}
-          <div class="card m-5 plantesResults" style="width: 18rem;">
+          <div class="card m-5 plantesResults relative-div-achats" style="width: 18rem;">
             <div class="img-card">
               <img src="{{ asset('images/plantes/' ~ plantes.image) }}" class="card-img-top" alt="{{ plantes.nomPlante }}" />
             </div>
@@ -35,6 +35,7 @@
               <h5 class="card-title">{{ plantes.nomPlante }}</h5>
               <a href="{{ url('details', { id: plantes.id }) }}" class="btn btn-warning change-btn">Voir la plante en détail</a>
             </div>
+            <span class="absolute-prix" style="text-align:center">{{ plantes.prixPlante }}€</span>
           </div>
         {% endif %}
       {% endfor %}

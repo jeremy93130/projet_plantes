@@ -4,7 +4,7 @@
 {% endblock %}
 
 {% block body %}
-  {% include 'navbar/navbar.html.twig' %}
+    {% include 'navbar/navbar.html.twig' %}
 
   {% if app.session.get('panier') is empty %}
     <div class="panier-vide-div">
@@ -33,9 +33,9 @@
             <td>{{ plante.nomPlante }}</td>
             <td>{{ plante.prixPlante }}€</td>
             <td>
-              <button type="button" data-article="{{plante.id}}" class="quantity-change moins" data-delta="-1">-</button>
-              <input type="text" value="1" data-article="{{plante.id}}" class="quantity" value="0" />
-              <button type="button" data-article="{{plante.id}}" class="quantity-change plus" data-delta="1">+</button>
+                <button type="button" data-article="{{ plante.id }}" class="quantity-change moins" data-delta="-1">-</button>
+                <input type="text" value="1" data-article="{{ plante.id }}" class="quantity" name="quantity_plante" id="{{plante.id}}"/>
+                <button type="button" data-article="{{ plante.id }}" class="quantity-change plus" data-delta="1">+</button>
             </td>
             <td class="total-column">
               {% set totalGeneral = totalGeneral + plante.prixPlante * 1 %}
@@ -50,12 +50,13 @@
       <tfoot>
         <tr>
           <th colspan="4">Total général :</th>
-          <td class="total-column" id="total-general">{{ totalGeneral }}</td>
+          <td class="total-column" id="total-general">{{ totalGeneral }} <input type="hidden" value="{{totalGeneral}}"></td>
           <td>
-            <a href="{{ path('app_commandes')}}">Passer la commande</a>
+            <a href="{{path('app_commandes')}}" id="passer-commande">Passer la commande</a>
           </td>
         </tr>
       </tfoot>
     </table>
   {% endif %}
 {% endblock %}
+

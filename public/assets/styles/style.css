@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Kolker+Brush&display=swap');
+
 /* Body */
 body {
     /* background-color: rgb(4, 70, 4); */
@@ -5,20 +7,22 @@ body {
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
-    height: 100vh;
+    background-attachment: fixed;
 }
 
 /* NavBar */
 
 nav h2 {
-    text-shadow: 7px 5px 4px rgba(0, 0, 0, 0.603);
+    text-shadow: 15px 12px 4px rgba(0, 0, 0, 0.603);
+    font-family: 'Kolker Brush', cursive;
+    font-size: 55px;
 }
 
 
 /* Partie card achats.html.twig */
 
 
-.titre-plante h2{
+.titre-plante h2 {
     color: #FFC107;
     text-shadow: 4px 3px rgba(0, 0, 0, 0.603);
 }
@@ -47,13 +51,15 @@ nav h2 {
     color: black;
 }
 
-.rechercher{
+.rechercher {
     background-color: #FFC107;
     border-color: #FFC107;
 }
-#relative-div form a:hover, #relative-div form button:hover {
+
+#relative-div form a:hover,
+#relative-div form button:hover {
     background-color: #212529;
-    color:white;
+    color: white;
     transition: 1.5s;
     border-color: black;
 }
@@ -62,8 +68,28 @@ nav h2 {
     box-shadow: 10px 10px 3px rgba(0, 0, 0, 0.603);
 }
 
-#plante_search_search{
+#plante_search_search {
     padding: 5px 10px;
+}
+
+.relative-div-achats {
+    position: relative;
+}
+
+.absolute-prix {
+    position: absolute;
+    background-color: #212529;
+    color: #FFC107;
+    border-radius: 50%;
+    padding: 5px;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    font-size: 13px;
+    font-weight: bold;
+    right: 0;
 }
 
 /* #btn-btn {
@@ -101,25 +127,27 @@ nav h2 {
     height: 300px;
 }
 
-.change-btn:hover{
+.change-btn:hover {
     background: #212529;
     transition: 2s;
     color: white;
 }
 
 /* ACCUEIL  */
-
-.accueil-nav>ul>li>a{
+/* 
+.accueil-nav>ul>li>a {
     color: #FFC107;
     padding: 5px 10px;
 }
-.accueil-nav>ul>li>a:hover{
+
+.accueil-nav>ul>li>a:hover {
     color: black;
     transition: 1s;
     font-size: 25px;
     color: #FFC107;
     font-weight: bold;
-}
+} */
+
 
 
 
@@ -198,14 +226,14 @@ table.table td {
 table.table td a {
     text-decoration: none;
     color: #FFC107;
-    border:  2px solid black;
+    border: 2px solid black;
     background-color: rgba(0, 0, 0, 0.671);
 }
 
 
 /* Panier vide */
 
-.panier-vide-div{
+.panier-vide-div {
     display: flex;
     flex-direction: column;
     height: 93vh;

@@ -9,12 +9,10 @@
         
         {% for commande in commandes %}
             {# Affiche les détails de chaque plante #}
-
+            {{commande.prixPlante}}
 
             <hr> {# Ligne de séparation entre chaque plante #}
         {% endfor %}
-
-        {# Affiche le total #}
 
     </div>
 {% endblock %}
