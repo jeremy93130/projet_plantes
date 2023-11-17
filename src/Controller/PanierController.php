@@ -17,10 +17,10 @@ class PanierController extends AbstractController
 {
 
     #[Route('/panier', name: 'app_panier')]
-    public function index(SessionInterface $session, Request $request): Response
+    public function index(SessionInterface $session, PlantesRepository $plantesRepository): Response
     {
 
-        $panier = $session->get('panier');
+        $panier = $session->get('panier', []);
 
         $nbArticles = 0;
 
@@ -64,10 +64,11 @@ class PanierController extends AbstractController
         // Assurez-vous d'adapter cela à votre logique spécifique
 
         $articles = $session->get('panier');
-        foreach($articles as $key => $article){
-            if($article->getId() == $id){
+        foreach ($articles as $key => $article) {
+            if ($article->getId() == $id) {
                 unset($articles[$key]);
-            };
+            }
+            ;
         }
         $session->set('panier', $articles);
         // dd($articles);

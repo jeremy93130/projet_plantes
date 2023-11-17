@@ -60,40 +60,31 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("total-general").textContent =
       totalGeneral.toFixed(2) + "€";
   }
-  var passerCommandeLink = document.getElementById("passer-commande-link");
-
-  if (passerCommandeLink) {
-    passerCommandeLink.addEventListener("click", function (event) {
-      event.preventDefault();
-
-      var totalGeneral = document
-        .getElementById("total-general")
-        .textContent.trim();
-
-      // Utilisation de fetch pour envoyer la requête AJAX
-      fetch("{{ path('app_commandes') }}", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        body: "total=" + encodeURIComponent(totalGeneral),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          // Gérer la réponse JSON du serveur ici
-          if (data.url) {
-            // Rediriger vers l'URL renvoyée par le serveur
-            window.location.href = data.url;
-          } else {
-            console.error(
-              "Aucune URL de redirection trouvée dans la réponse JSON."
-            );
-          }
-        })
-        .catch((error) => {
-          // Gérer les erreurs ici
-          console.error("Erreur lors de la requête AJAX:", error);
-        });
-    });
-  }
+  // Supposons que vous ayez un bouton ou un événement déclencheur avec l'ID 'passer-commande'
+//   $("#passer-commande").on("click", function () {
+//     // Récupérer la valeur du total depuis le champ caché
+//     var total = $("#total-general").text().trim();
+//     console.log(total);
+  
+//     // Effectuer la requête AJAX
+//     $.ajax({
+//       type: "POST",
+//       url: "/commandes",
+//       data: { total: total },
+//       success: function (response) {
+//         // La réponse du serveur (éventuellement une URL) est stockée dans response
+//         var url = response.url;
+//         console.log(url);
+        
+//         // Rediriger l'utilisateur vers la nouvelle URL (s'il y en a une)
+//         if (url) {
+//           window.location.href = url;
+//         }
+//       },
+//       error: function (error) {
+//         console.error("Erreur lors de la requête AJAX:", error);
+//       },
+//     });
+//   });
 });
+
