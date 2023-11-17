@@ -61,30 +61,31 @@ document.addEventListener("DOMContentLoaded", function () {
       totalGeneral.toFixed(2) + "€";
   }
   // Supposons que vous ayez un bouton ou un événement déclencheur avec l'ID 'passer-commande'
-//   $("#passer-commande").on("click", function () {
-//     // Récupérer la valeur du total depuis le champ caché
-//     var total = $("#total-general").text().trim();
-//     console.log(total);
-  
-//     // Effectuer la requête AJAX
-//     $.ajax({
-//       type: "POST",
-//       url: "/commandes",
-//       data: { total: total },
-//       success: function (response) {
-//         // La réponse du serveur (éventuellement une URL) est stockée dans response
-//         var url = response.url;
-//         console.log(url);
-        
-//         // Rediriger l'utilisateur vers la nouvelle URL (s'il y en a une)
-//         if (url) {
-//           window.location.href = url;
-//         }
-//       },
-//       error: function (error) {
-//         console.error("Erreur lors de la requête AJAX:", error);
-//       },
-//     });
-//   });
+  $("#passer-commande").on("click", function () {
+    // Récupérer la valeur du total depuis le champ caché
+    var total = $("#total-general").text().trim();
+    ;
+    console.log(total);
+
+    // Effectuer la requête AJAX
+    $.ajax({
+      type: "POST",
+      url: "/commandes",
+      data: { total: total },
+      success: function (response) {
+        // La réponse du serveur (éventuellement une URL) est stockée dans response
+        var url = response.url;
+        console.log(url);
+
+        // Rediriger l'utilisateur vers la nouvelle URL (s'il y en a une)
+        if (url) {
+          window.location.href = url;
+        }
+      },
+      error: function (error) {
+        console.error("Erreur lors de la requête AJAX:", error);
+      },
+    });
+  });
 });
 
