@@ -1,18 +1,21 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}commandes{% endblock %}
+{% block title %}
+  commandes
+{% endblock %}
 
 {% block body %}
-    {% include 'navbar/navbar.html.twig' %}
-    <div class="text-light">
-        <h1>Récapitulatif de la commande</h1>
-        
-        {% for commande in commandes %}
-            {# Affiche les détails de chaque plante #}
-           {# <p class="text-light">{{total}}</p>  #}
+  {% include 'navbar/navbar.html.twig' %}
+  {% if app.session.get('panier', []) %}
+    <div class="text-light recap">
+      <h1>Récapitulatif de la commande</h1>
 
-            <hr> {# Ligne de séparation entre chaque plante #}
-        {% endfor %}
-
+      <h2>produits :</h2>
+      {% for commande in app.session.get('panier', []) %}
+        <span><br />{{ commande.nomPlante }} {% if not loop.last %} ,{% endif %}</span>
+        {{quantite}}
+      {% endfor %}
+      <p>total : {{ total|replace({ '€': '' })|number_format(2, ',', ' ', '') }}</p>
     </div>
+  {% endif %}
 {% endblock %}

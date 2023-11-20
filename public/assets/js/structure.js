@@ -63,24 +63,31 @@ document.addEventListener("DOMContentLoaded", function () {
   // Supposons que vous ayez un bouton ou un événement déclencheur avec l'ID 'passer-commande'
   $("#passer-commande").on("click", function () {
     // Récupérer la valeur du total depuis le champ caché
-    var total = $("#total-general").text().trim();
-    ;
-    console.log(total);
-
+    var totalGeneral = $("#total-general").text().trim();
+    var quantities = {};
+    $("input.quantity").each(function () {
+      var articleId = $(this).data("article");
+      var articleQuantity = $(this).val();
+      quantities[articleId] = articleQuantity;
+    });
+    console.log(totalGeneral);
+    console.log(quantities);
     // Effectuer la requête AJAX
+    console.log(JSON.stringify(quantities));
     $.ajax({
       type: "POST",
       url: "/commandes",
-      data: { total: total },
+      data: {
+        totalGeneral: totalGeneral,
+        quantities: JSON.stringify(quantities),
+      },
       success: function (response) {
-        // La réponse du serveur (éventuellement une URL) est stockée dans response
-        var url = response.url;
-        console.log(url);
-
-        // Rediriger l'utilisateur vers la nouvelle URL (s'il y en a une)
-        if (url) {
-          window.location.href = url;
-        }
+        // Le contenu du template est maintenant dans la réponse
+        console.log(response);
+        window.location.href = "/commandes";
+        $("#recap").text(response);
+        // Vous pouvez utiliser le contenu de la réponse comme vous le souhaitez
+        // Par exemple, injecter le contenu dans une div existante sur votre page
       },
       error: function (error) {
         console.error("Erreur lors de la requête AJAX:", error);
@@ -88,4 +95,3 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 });
-

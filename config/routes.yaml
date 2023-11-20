@@ -6,3 +6,6 @@ controllers:
 app_commandes:
   path: "/commandes"
   controller: 'App\Controller\CommandesController::index'
+recap_commande:
+  path: /recapitulatif-commande
+  controller: 'App\Controller\CommandesController::recapCommande'

@@ -248,3 +248,28 @@ table.table td a {
 }
 
 /* FIN PARTIE PANIER */
+
+
+/* PARTIE COMMANDE */
+
+.recap {
+    width: 700px;
+    height: 700px;
+    margin: auto;
+    border: 3px solid black;
+}
+
+.recap h1 {
+    text-align: center;
+    color: #FFC107;
+    background-color: #21252970;
+}
+
+.recap h2 {
+    text-align: center;
+}
+
+.recap span {
+    font-size: 14px;
+    width: 100%;
+}
