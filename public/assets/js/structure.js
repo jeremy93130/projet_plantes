@@ -64,26 +64,27 @@ document.addEventListener("DOMContentLoaded", function () {
   $("#passer-commande").on("click", function () {
     // Récupérer la valeur du total depuis le champ caché
     var totalGeneral = $("#total-general").text().trim();
-    var quantities = {};
+    var quantity = {};
     $("input.quantity").each(function () {
       var articleId = $(this).data("article");
       var articleQuantity = $(this).val();
-      quantities[articleId] = articleQuantity;
+      quantity[articleId] = articleQuantity;
     });
     console.log(totalGeneral);
-    console.log(quantities);
+    console.log(quantity);
     // Effectuer la requête AJAX
-    console.log(JSON.stringify(quantities));
+    console.log(JSON.stringify(quantity));
     $.ajax({
       type: "POST",
       url: "/commandes",
+      contentType: 'application/json',
       data: {
         totalGeneral: totalGeneral,
-        quantities: JSON.stringify(quantities),
+        quantite: JSON.stringify(quantity),
       },
       success: function (response) {
         // Le contenu du template est maintenant dans la réponse
-        console.log(response);
+        // console.log(response);
         window.location.href = "/commandes";
         $("#recap").text(response);
         // Vous pouvez utiliser le contenu de la réponse comme vous le souhaitez

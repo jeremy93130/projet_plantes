@@ -13,7 +13,6 @@
       <h2>produits :</h2>
       {% for commande in app.session.get('panier', []) %}
         <span><br />{{ commande.nomPlante }} {% if not loop.last %} ,{% endif %}</span>
-        {{quantite}}
       {% endfor %}
       <p>total : {{ total|replace({ '€': '' })|number_format(2, ',', ' ', '') }}</p>
     </div>
