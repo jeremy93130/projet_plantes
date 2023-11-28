@@ -63,11 +63,11 @@ document.addEventListener("DOMContentLoaded", function () {
   // Supposons que vous ayez un bouton ou un événement déclencheur avec l'ID 'passer-commande'
   $("#passer-commande").on("click", function () {
     // Récupérer la valeur du total depuis le champ caché
-    var totalGeneral = $("#total-general").text().trim();
-    var quantity = {};
+    var totalGeneral = $("#total-general input[type=hidden]").val();
+    var quantity = $(".quantity");
     $("input.quantity").each(function () {
       var articleId = $(this).data("article");
-      var articleQuantity = $(this).val();
+      var articleQuantity = quantity.val();
       quantity[articleId] = articleQuantity;
     });
     console.log(totalGeneral);
@@ -77,7 +77,7 @@ document.addEventListener("DOMContentLoaded", function () {
     $.ajax({
       type: "POST",
       url: "/commandes",
-      contentType: 'application/json',
+      contentType: "application/json",
       data: {
         totalGeneral: totalGeneral,
         quantite: JSON.stringify(quantity),
@@ -93,6 +93,19 @@ document.addEventListener("DOMContentLoaded", function () {
       error: function (error) {
         console.error("Erreur lors de la requête AJAX:", error);
       },
+    });
+    const searchInput = document.getElementById("plante_search");
+    const plantes = document.querySelectorAll(".plantesResults");
+    searchInput.addEventListener("input", function () {
+      const searchTerm = searchInput.value.toLowerCase();
+      plantes.forEach(function (plante) {
+        const planteName = plante.getAttribute("data-nom").toLowerCase();
+        if (planteName.startsWith(searchTerm)) {
+          plante.style.display = "block";
+        } else {
+          plante.style.display = "none";
+        }
+      });
     });
   });
 });
