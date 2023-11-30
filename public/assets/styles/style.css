@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Kolker+Brush&display=swap');
+
 /* Body */
 body {
     /* background-color: rgb(4, 70, 4); */
@@ -5,17 +7,25 @@ body {
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
-    height: 100vh;
+    background-attachment: fixed;
 }
 
 /* NavBar */
 
 nav h2 {
-    text-shadow: 7px 5px 4px black;
+    text-shadow: 15px 12px 4px rgba(0, 0, 0, 0.603);
+    font-family: 'Kolker Brush', cursive;
+    font-size: 55px;
 }
 
 
 /* Partie card achats.html.twig */
+
+
+.titre-plante h2 {
+    color: #FFC107;
+    text-shadow: 4px 3px rgba(0, 0, 0, 0.603);
+}
 
 #relative-div {
     position: relative;
@@ -23,30 +33,64 @@ nav h2 {
     width: 550px;
 }
 
+#relative-div form {
+    width: 420px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
 #relative-div form a {
     font-size: 1rem;
     background-color: #FFC107;
     border: 1px solid black;
-    padding: 3px;
+    padding: 8px 7px;
     border-radius: 10%;
     vertical-align: middle;
     text-decoration: none;
     color: black;
 }
 
-#searchBar {
-    border: none;
-    border-bottom: 1px solid #FFC107;
-    outline: none;
-    transition: 0.5s ease-in-out;
+.rechercher {
+    background-color: #FFC107;
+    border-color: #FFC107;
 }
 
-.search-off {
-    display: none;
+#relative-div form a:hover,
+#relative-div form button:hover {
+    background-color: #212529;
+    color: white;
+    transition: 1.5s;
+    border-color: black;
 }
 
-.search-on {
-    display: inline-block;
+.plantesResults {
+    box-shadow: 10px 10px 3px rgba(0, 0, 0, 0.603);
+}
+
+#plante_search_search {
+    padding: 5px 10px;
+}
+
+.relative-div-achats {
+    position: relative;
+}
+
+.absolute-prix {
+    position: absolute;
+    background-color: #212529;
+    color: #FFC107;
+    border-radius: 50%;
+    padding: 5px;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    font-size: 13px;
+    font-weight: bold;
+    right: 0;
+    top: 0;
 }
 
 /* #btn-btn {
@@ -84,19 +128,27 @@ nav h2 {
     height: 300px;
 }
 
-/* ACCUEIL  */
+.change-btn:hover {
+    background: #212529;
+    transition: 2s;
+    color: white;
+}
 
-.accueil-nav>ul>li>a{
+/* ACCUEIL  */
+/* 
+.accueil-nav>ul>li>a {
     color: #FFC107;
     padding: 5px 10px;
 }
-.accueil-nav>ul>li>a:hover{
+
+.accueil-nav>ul>li>a:hover {
     color: black;
     transition: 1s;
     font-size: 25px;
     color: #FFC107;
     font-weight: bold;
-}
+} */
+
 
 
 
@@ -175,14 +227,14 @@ table.table td {
 table.table td a {
     text-decoration: none;
     color: #FFC107;
-    border:  2px solid black;
+    border: 2px solid black;
     background-color: rgba(0, 0, 0, 0.671);
 }
 
 
 /* Panier vide */
 
-.panier-vide-div{
+.panier-vide-div {
     display: flex;
     flex-direction: column;
     height: 93vh;
@@ -197,3 +249,28 @@ table.table td a {
 }
 
 /* FIN PARTIE PANIER */
+
+
+/* PARTIE COMMANDE */
+
+.recap {
+    width: 700px;
+    height: 700px;
+    margin: auto;
+    border: 3px solid black;
+}
+
+.recap h1 {
+    text-align: center;
+    color: #FFC107;
+    background-color: #21252970;
+}
+
+.recap h2 {
+    text-align: center;
+}
+
+.recap span {
+    font-size: 14px;
+    width: 100%;
+}

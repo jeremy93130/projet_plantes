@@ -11,28 +11,25 @@
   <div class="achat-accueil">
     <div class="d-flex justify-content-around align-items-center">
       <div class="w-25"></div>
-      <h2 class="text-center m-3 bg-warning">Plantes disponibles à l'achat</h2>
+      <div class="w-25 titre-plante">
+        <h2 class="text-center m-3">Plantes disponibles à l'achat</h2>
+      </div>
       <div class="d-flex justify-content-end" id="relative-div">
-        {{ form_start(form) }}
-        {{ form_widget(form.search) }}
-        <button type="submit" class="btn btn-warning" style="padding: 3px;">Rechercher</button>
-        <a href="{{ path('app_achats') }}">retour liste</a>
-        {{ form_end(form) }}
+        <input type="search" name="plante_search" id="plante_search" placeholder="Recherche plante"/>
       </div>
     </div>
     <div class="d-flex flex-wrap justify-content-center">
       {% for plantes in plante %}
-        {% if plantes.nomPlante matches '/.*' ~ form.search.vars.value ~ '.*/i' %}
-          <div class="card m-5 plantesResults" style="width: 18rem;">
-            <div class="img-card">
-              <img src="{{ asset('images/plantes/' ~ plantes.image) }}" class="card-img-top" alt="{{ plantes.nomPlante }}" />
-            </div>
-            <div class="card-body text-center">
-              <h5 class="card-title">{{ plantes.nomPlante }}</h5>
-              <a href="{{ url('details', { id: plantes.id }) }}" class="btn btn-primary">Voir la plante en détail</a>
-            </div>
+        <div class="card m-5 plantesResults relative-div-achats" style="width: 18rem;" data-nom="{{ plantes.nomPlante }}">
+          <div class="img-card">
+            <img src="{{ asset('images/plantes/' ~ plantes.image) }}" class="card-img-top" alt="{{ plantes.nomPlante }}" />
           </div>
-        {% endif %}
+          <div class="card-body text-center">
+            <h5 class="card-title">{{ plantes.nomPlante }}</h5>
+            <a href="{{ url('details', { id: plantes.id }) }}" class="btn btn-warning change-btn">Voir la plante en détail</a>
+          </div>
+          <span class="absolute-prix" style="text-align:center">{{ plantes.prixPlante }}€</span>
+        </div>
       {% endfor %}
     </div>
   </div>

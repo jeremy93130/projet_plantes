@@ -19,11 +19,12 @@ class AppExtension extends AbstractExtension
     public function customFunction(Request $request): string
     {
         $sessionArticles = $request->getSession()->get('panier');
-
-        // Vérifiez si $sessionArticles n'est pas null avant d'appeler count
-        $nbArticles = is_array($sessionArticles) ? count($sessionArticles) : 0;
+        $nbArticles = 0;
+        if ($sessionArticles !== null && is_array($sessionArticles)) {
+            $nbArticles = count($sessionArticles);
+        }
 
         // Logique de la fonction personnalisée
-        return (string)$nbArticles;
+        return (string) $nbArticles;
     }
 }

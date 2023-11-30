@@ -4,13 +4,12 @@
 {% endblock %}
 
 {% block body %}
-  <script src="{{ asset('public/assets/js/structure.js') }}"></script>
   {% include 'navbar/navbar.html.twig' %}
-  
+
   {% if app.session.get('panier') is empty %}
     <div class="panier-vide-div">
       <h1 class="text-warning">Ohhh ... votre panier est vide ... Pourquoi ne pas aller le remplir ?</h1>
-      <a href="{{path('app_achats')}}">Suivez nous ! <i class="fa-solid fa-arrow-right" style="color: #d40c0c;"></i></a>
+      <a href="{{ path('app_achats') }}">Suivez nous ! <i class="fa-solid fa-arrow-right" style="color: #d40c0c;"></i></a>
     </div>
   {% else %}
     <table class="table mt-4">
@@ -34,16 +33,16 @@
             <td>{{ plante.nomPlante }}</td>
             <td>{{ plante.prixPlante }}€</td>
             <td>
-              <button type="button" data-article="234" class="quantity-change moins" data-delta="-1">-</button>
-              <input type="text" value="1" data-article="234" class="quantity" value="0" />
-              <button type="button" data-article="234" class="quantity-change plus" data-delta="1">+</button>
+              <button type="button" data-article="{{ plante.id }}" class="quantity-change moins" data-delta="-1">-</button>
+              <input type="text" value="1" data-article="{{ plante.id }}" class="quantity" name="quantity_plante" id="{{ plante.id }}" />
+              <button type="button" data-article="{{ plante.id }}" class="quantity-change plus" data-delta="1">+</button>
             </td>
             <td class="total-column">
-              {% set totalGeneral = totalGeneral + (plante.prixPlante * 1) %}
+              {% set totalGeneral = totalGeneral + plante.prixPlante * 1 %}
               {{ plante.prixPlante * 1 }}€
             </td>
             <td class="">
-              <a href="" class="supprimer_article" data-article-id="{{ plante.id }}" onclick="deletePlante(this)">Supprimer</a>
+              <a href="{{ path('app_supp', { id: plante.id }) }}" class="supprimer_article" data-article-id="{{ plante.id }}" onclick="deletePlante(this)">Supprimer</a>
             </td>
           </tr>
         {% endfor %}
@@ -51,9 +50,11 @@
       <tfoot>
         <tr>
           <th colspan="4">Total général :</th>
-          <td class="total-column" id="total-general">{{ totalGeneral }}</td>
+          <td class="total-column" id="total-general">
+            {{ totalGeneral }} <input type="hidden"  value="{{ totalGeneral }}" />
+          </td>
           <td>
-            <a href="">Passer la commande</a>
+            <button type="button" id="passer-commande">Passer la commande</button>
           </td>
         </tr>
       </tfoot>

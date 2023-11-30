@@ -60,27 +60,52 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("total-general").textContent =
       totalGeneral.toFixed(2) + "€";
   }
+  // Supposons que vous ayez un bouton ou un événement déclencheur avec l'ID 'passer-commande'
+  $("#passer-commande").on("click", function () {
+    // Récupérer la valeur du total depuis le champ caché
+    var totalGeneral = $("#total-general input[type=hidden]").val();
+    var quantity = $(".quantity");
+    $("input.quantity").each(function () {
+      var articleId = $(this).data("article");
+      var articleQuantity = quantity.val();
+      quantity[articleId] = articleQuantity;
+    });
+    console.log(totalGeneral);
+    console.log(quantity);
+    // Effectuer la requête AJAX
+    console.log(JSON.stringify(quantity));
+    $.ajax({
+      type: "POST",
+      url: "/commandes",
+      contentType: "application/json",
+      data: {
+        totalGeneral: totalGeneral,
+        quantite: JSON.stringify(quantity),
+      },
+      success: function (response) {
+        // Le contenu du template est maintenant dans la réponse
+        // console.log(response);
+        window.location.href = "/commandes";
+        $("#recap").text(response);
+        // Vous pouvez utiliser le contenu de la réponse comme vous le souhaitez
+        // Par exemple, injecter le contenu dans une div existante sur votre page
+      },
+      error: function (error) {
+        console.error("Erreur lors de la requête AJAX:", error);
+      },
+    });
+    const searchInput = document.getElementById("plante_search");
+    const plantes = document.querySelectorAll(".plantesResults");
+    searchInput.addEventListener("input", function () {
+      const searchTerm = searchInput.value.toLowerCase();
+      plantes.forEach(function (plante) {
+        const planteName = plante.getAttribute("data-nom").toLowerCase();
+        if (planteName.startsWith(searchTerm)) {
+          plante.style.display = "block";
+        } else {
+          plante.style.display = "none";
+        }
+      });
+    });
+  });
 });
-// Ajoutez cette fonction à votre fichier JavaScript
-function deletePlante(link) {
-  // Obtenez l'ID de l'article à supprimer à partir de l'attribut data-article-id
-  var articleId = link.getAttribute("data-article-id");
-
-  // Effectuez une requête AJAX ou utilisez une autre méthode pour supprimer l'article côté serveur
-  // Vous devrez peut-être ajuster cela en fonction de votre backend
-
-  // Ensuite, supprimez la ligne du tableau correspondante
-  var row = link.closest(".delete_article");
-  row.remove();
-
-  if (row < 1) {
-  }
-
-  // Envoyez une requête AJAX pour supprimer l'article côté serveur
-  var xhr = new XMLHttpRequest();
-  xhr.open("POST", "/supprimer/" + articleId, true);
-  xhr.send();
-
-  // Mettez à jour le total général
-  updateTotal();
-}
