@@ -268,11 +268,18 @@ table.table td a {
 
 .recap h2 {
     text-align: center;
+    color: #FFC107;
+    background-color: #212529bb;
+    padding: 30px 0;
 }
 
-.recap span {
-    font-size: 14px;
-    width    : 100%;
+.ttG {
+    width: 25%;
+    text-align: right;
+}
+
+.td-quantite, .td-prix {
+    text-align: right;
 }
 
 

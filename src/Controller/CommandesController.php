@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\PlantesRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,19 +15,22 @@ class CommandesController extends AbstractController
     #[Route('/commandes', name: 'app_commandes')]
     public function index(SessionInterface $session, Request $request): Response
     {
-        $panier = $session->get('panier', []);
-        $total = $request->request->get('totalGeneral');
-        if ($total !== null) {
-            $session->set('totalGeneral', $total);
-        } else {
-            // Sinon, récupérez-le de la session
-            $total = $session->get('totalGeneral');
-            dd($total);
-        }
-        // Rendez votre template et renvoyez-le dans la réponse
+        $data = json_decode($request->getContent(), true);
+        $session->set('commande', $data);
+        // Faites quelque chose avec $data (prix total, prix et quantités des plantes)
+
+        // Vous pouvez renvoyer une réponse JSON en fonction de vos besoins
+        return new JsonResponse(['message' => 'Commande reçue avec succès!', 'redirect' => $this->generateUrl('recapp_commande'), 'data' => $data]);
+    }
+
+    #[Route('/recap', name: 'recapp_commande')]
+    public function recap(SessionInterface $session): Response
+    {
+        $sessionCommande = $session->get('commande');
+        // dd($sessionCommande);
         return $this->render('commandes/commandes.html.twig', [
-            'commandes' => $panier,
-            'total' => $total,
+            'dataCommande' => $sessionCommande,
         ]);
     }
 }
+

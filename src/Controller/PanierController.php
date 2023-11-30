@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Panier;
+use App\Entity\Plantes;
 use App\Repository\PlantesRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -36,25 +37,44 @@ class PanierController extends AbstractController
     }
 
     #[Route('/add-to-cart/{id}', name: 'add_to_cart')]
-    public function addToCart(PlantesRepository $plantesRepository, SessionInterface $session, $id): Response
+    public function addToCart(Request $request, SessionInterface $session, $id, EntityManagerInterface $entityManagerInterface): Response
     {
-        $plante = $plantesRepository->find($id);
+        // Récupérer les données du panier depuis la requête JSON
+        $data = json_decode($request->getContent(), true);
 
+        // Vérifier si l'ID de la plante est présent dans les données
+        if (!isset($data['id'])) {
+            return new JsonResponse(['message' => 'ID de plante manquant'], 400);
+        }
+        // Récupérer la plante depuis la base de données
+        $plante = $entityManagerInterface->getRepository(Plantes::class)->find($id);
+
+        // Vérifier si la plante existe
         if (!$plante) {
-            throw $this->createNotFoundException('Plante non trouvée');
+            return new JsonResponse(['message' => 'La plante n\'existe pas'], 404);
         }
 
         // Récupérer le panier actuel depuis la session
         $panier = $session->get('panier', []);
 
         // Ajouter la plante au panier
-        $panier[] = $plante;
+        // Vous devez adapter cela en fonction de la structure réelle de vos données
+        $panier[$id] = [
+            'id' => $plante->getId(),
+            'nom' => $plante->getNomPlante(),
+            'prix' => $plante->getPrixPlante(),
+            'image' => $plante->getImage(),
+            'quantite' => 1, // Vous pouvez ajuster cela selon vos besoins
+        ];
 
-        // Enregistrer le panier mis à jour dans la session
+        // Mettre à jour le panier dans la session
         $session->set('panier', $panier);
 
-        // Rediriger vers la page du panier
-        return $this->redirectToRoute('app_panier');
+        // Retourner une réponse JSON
+        // return new JsonResponse(['message' => 'Plante ajoutée au panier avec succès', 'success' => true, 'data' => $dataToView]);
+        return $this->render('panier/panier.html.twig', [
+            'panier' => $panier,
+        ]);
     }
 
     #[Route('/supprimer/{id}', name: 'app_supp')]
@@ -65,7 +85,7 @@ class PanierController extends AbstractController
 
         $articles = $session->get('panier');
         foreach ($articles as $key => $article) {
-            if ($article->getId() == $id) {
+            if ($article['id'] == $id) {
                 unset($articles[$key]);
             }
             ;

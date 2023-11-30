@@ -6,15 +6,35 @@
 
 {% block body %}
   {% include 'navbar/navbar.html.twig' %}
-  {% if app.session.get('panier', []) %}
-    <div class="text-light recap">
+  {% if app.session.get('commande') %}
+    <div class="recap">
       <h1>Récapitulatif de la commande</h1>
-
-      <h2>produits :</h2>
-      {% for commande in app.session.get('panier', []) %}
-        <span><br />{{ commande.nomPlante }} {% if not loop.last %} ,{% endif %}</span>
-      {% endfor %}
-      <p>total : {{ total|replace({ '€': '' })|number_format(2, ',', ' ', '') }}</p>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Produit</th>
+            <th class="td-quantite">Quantité</th>
+            <th class="td-prix">Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for data in dataCommande['commandeData'] %}
+            <tr>
+              <td class="td-nom">{{ data.alt }}</td>
+              <td class="td-quantite">{{ data.quantite }}</td>
+              <td class="td-prix">{{ data.prix * data.quantite }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+        <tfoot>
+          <tr>
+            <td class="ttG"></td>
+            <td class="ttG"></td>
+            <td class="ttG">{{ dataCommande.totalGeneral }}</td>
+          </tr>
+        </tfoot>
+      </table>
+      <a href="">Payer</a>
     </div>
   {% endif %}
 {% endblock %}

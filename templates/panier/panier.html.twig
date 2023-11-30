@@ -28,34 +28,30 @@
         {% for plante in app.session.get('panier', []) %}
           <tr class="delete_article">
             <td>
-              <img src="{{ asset('images/plantes/' ~ plante.image) }}" alt="{{ plante.nomPlante }}" style="width: 200px;" />
+              <img src="{{ asset('images/plantes/' ~ plante.image) }}" alt="{{ plante.nom }}" style="width: 200px;" />
             </td>
-            <td>{{ plante.nomPlante }}</td>
-            <td>{{ plante.prixPlante }}€</td>
+            <td>{{ plante.nom }}</td>
+            <td>{{ plante.prix }}€</td>
             <td>
               <button type="button" data-article="{{ plante.id }}" class="quantity-change moins" data-delta="-1">-</button>
-              <input type="text" value="1" data-article="{{ plante.id }}" class="quantity" name="quantity_plante" id="{{ plante.id }}" />
+              <input type="text" value="{{ plante.quantite }}" data-article="{{ plante.id }}" class="quantity" name="quantity_plante" id="quantity-{{ plante.id }}" />
               <button type="button" data-article="{{ plante.id }}" class="quantity-change plus" data-delta="1">+</button>
             </td>
-            <td class="total-column">
-              {% set totalGeneral = totalGeneral + plante.prixPlante * 1 %}
-              {{ plante.prixPlante * 1 }}€
-            </td>
+            <td class="total-column">{{ plante.prix }} €</td>
             <td class="">
               <a href="{{ path('app_supp', { id: plante.id }) }}" class="supprimer_article" data-article-id="{{ plante.id }}" onclick="deletePlante(this)">Supprimer</a>
             </td>
           </tr>
+          {% set totalGeneral = totalGeneral + plante.prix * 1 %}
         {% endfor %}
       </tbody>
       <tfoot>
         <tr>
           <th colspan="4">Total général :</th>
-          <td class="total-column" id="total-general">
-            {{ totalGeneral }} <input type="hidden"  value="{{ totalGeneral }}" />
-          </td>
+          <td class="total-column" id="total-general">{{ totalGeneral }} €</td>
           <td>
-            <button type="button" id="passer-commande">Passer la commande</button>
-          </td>
+             <a href="#" onclick="commander()">Passer la commande</a>
+          </td>}
         </tr>
       </tfoot>
     </table>

@@ -34,7 +34,7 @@
         <a class="navbar-brand text-warning">Bienvenu(e) {{ app.user.prenom }}</a>
         <li class="list-unstyled me-5">
           <a href="{{ path('app_panier') }}">
-            {% if app.request.attributes.get('_route') != 'app_commandes' %}
+            {% if app.request.attributes.get('_route') != 'recapp_commande' %}
               <i class="fa-solid fa-cart-shopping nav-link">
                 <span>
                   {% if custom_function(app.request) > 0 %}
