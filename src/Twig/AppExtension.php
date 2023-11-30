@@ -18,7 +18,7 @@ class AppExtension extends AbstractExtension
 
     public function customFunction(Request $request): string
     {
-        $sessionArticles = $request->getSession()->get('panier');
+        $sessionArticles = $request->getSession()->get('nb_counts');
         $nbArticles = 0;
         if ($sessionArticles !== null && is_array($sessionArticles)) {
             $nbArticles = count($sessionArticles);

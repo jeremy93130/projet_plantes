@@ -41,7 +41,6 @@ class PanierController extends AbstractController
     {
         // Récupérer les données du panier depuis la requête JSON
         $data = json_decode($request->getContent(), true);
-
         // Vérifier si l'ID de la plante est présent dans les données
         if (!isset($data['id'])) {
             return new JsonResponse(['message' => 'ID de plante manquant'], 400);
@@ -87,13 +86,13 @@ class PanierController extends AbstractController
         foreach ($articles as $key => $article) {
             if ($article['id'] == $id) {
                 unset($articles[$key]);
-            }
-            ;
+            };
         }
         $session->set('panier', $articles);
+
+        
         // dd($articles);
         // Retournez une redirection vers la page du panier
         return $this->redirectToRoute('app_panier');
     }
-
 }

@@ -111,7 +111,9 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // Fonction ajout panier
+var nb_counts = parseInt(localStorage.getItem("nb_counts")) || 0;
 function ajouterAuPanier(url, nom, prix, image) {
+  var nb_articles = document.getElementById("nb_articles");
   var planteData = {
     id: "{{ plante.id }}",
     nom: nom,
@@ -127,7 +129,12 @@ function ajouterAuPanier(url, nom, prix, image) {
     data: JSON.stringify(planteData),
     success: function (response) {
       if (response) {
-        window.history.back();
+        nb_counts++;
+        nb_articles.textContent = nb_counts;
+        // Stockez la nouvelle valeur de nb_counts dans localStorage
+        localStorage.setItem("nb_counts", nb_counts);
+        // localStorage.clear('nb_counts');
+        location.reload();
       } else {
         alert("ok");
       }
@@ -137,6 +144,14 @@ function ajouterAuPanier(url, nom, prix, image) {
     },
   });
 }
+window.onload = function () {
+  var nb_counts = parseInt(localStorage.getItem("nb_counts")) || 0;
+  if (nb_counts > 0) {
+    document.getElementById("nb_articles").textContent = nb_counts;
+  } else {
+    document.getElementById("nb_articles").textContent = "";
+  }
+};
 function commander(url) {
   // Récupérer tous les éléments de quantité
   var quantities = document.querySelectorAll(".quantity");
