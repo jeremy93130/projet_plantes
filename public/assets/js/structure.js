@@ -94,18 +94,18 @@ document.addEventListener("DOMContentLoaded", function () {
         console.error("Erreur lors de la requête AJAX:", error);
       },
     });
-    const searchInput = document.getElementById("plante_search");
-    const plantes = document.querySelectorAll(".plantesResults");
-    searchInput.addEventListener("input", function () {
-      const searchTerm = searchInput.value.toLowerCase();
-      plantes.forEach(function (plante) {
-        const planteName = plante.getAttribute("data-nom").toLowerCase();
-        if (planteName.startsWith(searchTerm)) {
-          plante.style.display = "block";
-        } else {
-          plante.style.display = "none";
-        }
-      });
+  });
+  const searchInput = document.getElementById("plante_search");
+  const plantes = document.querySelectorAll(".plantesResults");
+  searchInput.addEventListener("input", function () {
+    const searchTerm = searchInput.value.toLowerCase();
+    plantes.forEach(function (plante) {
+      const planteName = plante.getAttribute("data-nom").toLowerCase();
+      if (planteName.startsWith(searchTerm)) {
+        plante.style.display = "block";
+      } else {
+        plante.style.display = "none";
+      }
     });
   });
 });
