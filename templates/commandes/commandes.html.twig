@@ -34,7 +34,7 @@
           </tr>
         </tfoot>
       </table>
-      <a href="">Payer</a>
+      <a href="{{ path('app_paiement', { total: dataCommande.totalGeneral }) }}">Payer</a>
     </div>
   {% endif %}
 {% endblock %}

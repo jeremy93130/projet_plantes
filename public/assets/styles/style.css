@@ -282,6 +282,19 @@ table.table td a {
     text-align: right;
 }
 
+/* Paiement */
+.paiements {
+    margin: auto;
+    width: 500px;
+    height: 500px;
+    background-color: rgba(0, 0, 0, 0.651);
+    color: #FFC107;
+}
+
+.paiements{
+    padding: 20px;
+    border: 3px solid white;
+}
 
 
 /* MEDIAS QUERIES */

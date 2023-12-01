@@ -163,16 +163,16 @@ function supprimerArticleDuPanier(url, id) {
 
         if (nb_counts == 0) {
           nb_articles.textContent = "";
+        } else {
+          // Mettez à jour l'affichage dans votre interface utilisateur
+          nb_articles.textContent = nb_counts;
         }
-
-        // Mettez à jour l'affichage dans votre interface utilisateur
-        nb_articles.textContent = nb_counts;
 
         // Mettez à jour le localStorage avec la nouvelle valeur de nb_counts
         localStorage.setItem("nb_counts", nb_counts);
 
         // Rechargez la page pour refléter les changements (vous pouvez ajuster ceci selon vos besoins)
-        // location.reload();
+        location.reload();
       } else {
         console.log("Erreur lors de la suppression de l'article du panier");
         console.log(response);
@@ -190,7 +190,7 @@ function supprimerArticleDuPanier(url, id) {
 window.onload = function () {
   nb_counts = parseInt(localStorage.getItem("nb_counts")) || 0;
   if (nb_counts > 0) {
-    // localStorage.clear('nb_counts ');
+    // localStorage.clear('nb_counts');
     document.getElementById("nb_articles").textContent = nb_counts;
   } else {
     document.getElementById("nb_articles").textContent = "";
@@ -251,3 +251,8 @@ function commander(url) {
     },
   });
 }
+
+var stripe = Stripe(
+  "pk_test_51OICEgC3GA5BR02AuVfYushtuoMQHtv99wK9FATC9PnIHCwDhOR2jlvTOAcZIoGmnxNOSeU9JDvP7OHMAeg0AX0B00E7MKlVNK"
+);
+
