@@ -29,6 +29,8 @@ class PanierController extends AbstractController
             $nbArticles = count($panier);
         }
 
+        // dd($panier);
+
         return $this->render('panier/panier.html.twig', [
             'controller_name' => 'PanierController',
             'infos' => $panier,
@@ -64,10 +66,12 @@ class PanierController extends AbstractController
             'prix' => $plante->getPrixPlante(),
             'image' => $plante->getImage(),
             'quantite' => 1, // Vous pouvez ajuster cela selon vos besoins
+            'nbArticles' => $data["nbArticles"],
         ];
 
         // Mettre à jour le panier dans la session
         $session->set('panier', $panier);
+
 
         // Retourner une réponse JSON
         // return new JsonResponse(['message' => 'Plante ajoutée au panier avec succès', 'success' => true, 'data' => $dataToView]);
@@ -77,7 +81,7 @@ class PanierController extends AbstractController
     }
 
     #[Route('/supprimer/{id}', name: 'app_supp')]
-    public function deleteFromCard($id, SessionInterface $session): RedirectResponse
+    public function deleteFromCard($id, SessionInterface $session): JsonResponse
     {
         // Supprimez l'article du panier dans le repository ou toute autre logique nécessaire
         // Assurez-vous d'adapter cela à votre logique spécifique
@@ -89,10 +93,9 @@ class PanierController extends AbstractController
             };
         }
         $session->set('panier', $articles);
+        // $session->remove('panier');
 
-        
         // dd($articles);
-        // Retournez une redirection vers la page du panier
-        return $this->redirectToRoute('app_panier');
+        return new JsonResponse(['success' => true]);
     }
 }

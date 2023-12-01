@@ -119,8 +119,10 @@ function ajouterAuPanier(url, nom, prix, image) {
     nom: nom,
     prix: prix,
     image: image,
+    nbArticles: nb_counts + 1,
     // Ajoutez d'autres informations si nécessaire
   };
+  console.log(planteData);
   // Utilisez AJAX pour appeler l'action du contrôleur
   $.ajax({
     url: url,
@@ -134,7 +136,7 @@ function ajouterAuPanier(url, nom, prix, image) {
         // Stockez la nouvelle valeur de nb_counts dans localStorage
         localStorage.setItem("nb_counts", nb_counts);
         // localStorage.clear('nb_counts');
-        location.reload();
+        // location.reload();
       } else {
         alert("ok");
       }
@@ -144,14 +146,57 @@ function ajouterAuPanier(url, nom, prix, image) {
     },
   });
 }
+
+function supprimerArticleDuPanier(url, id) {
+  // Faites une requête AJAX pour supprimer l'article du panier
+  $.ajax({
+    url: url,
+    type: "POST",
+    contentType: "application/json",
+    data: JSON.stringify({ id: id }),
+    success: function (response) {
+      if (response && response.success) {
+        // Si la suppression a réussi du côté serveur
+
+        // Mise à jour du nombre d'articles
+        nb_counts--;
+
+        if (nb_counts == 0) {
+          nb_articles.textContent = "";
+        }
+
+        // Mettez à jour l'affichage dans votre interface utilisateur
+        nb_articles.textContent = nb_counts;
+
+        // Mettez à jour le localStorage avec la nouvelle valeur de nb_counts
+        localStorage.setItem("nb_counts", nb_counts);
+
+        // Rechargez la page pour refléter les changements (vous pouvez ajuster ceci selon vos besoins)
+        // location.reload();
+      } else {
+        console.log("Erreur lors de la suppression de l'article du panier");
+        console.log(response);
+      }
+    },
+    error: function () {
+      console.log("Une erreur s'est produite lors de la requête AJAX");
+    },
+  });
+}
+
+// Utilisez cette fonction en appelant supprimerArticleDuPanier(url, id)
+// Assurez-vous d'avoir les variables url et id correctes
+
 window.onload = function () {
-  var nb_counts = parseInt(localStorage.getItem("nb_counts")) || 0;
+  nb_counts = parseInt(localStorage.getItem("nb_counts")) || 0;
   if (nb_counts > 0) {
+    // localStorage.clear('nb_counts ');
     document.getElementById("nb_articles").textContent = nb_counts;
   } else {
     document.getElementById("nb_articles").textContent = "";
   }
 };
+
 function commander(url) {
   // Récupérer tous les éléments de quantité
   var quantities = document.querySelectorAll(".quantity");
