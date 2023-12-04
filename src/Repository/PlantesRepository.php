@@ -2,9 +2,9 @@
 
 namespace App\Repository;
 
-use App\Entity\Plantes;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use App\Entity\Plantes;
 
 /**
  * @extends ServiceEntityRepository<Plantes>
@@ -21,7 +21,7 @@ class PlantesRepository extends ServiceEntityRepository
         parent::__construct($registry, Plantes::class);
     }
 
-//    /**
+    //    /**
 //     * @return Plantes[] Returns an array of Plantes objects
 //     */
 //    public function findByExampleField($value): array
@@ -36,7 +36,7 @@ class PlantesRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Plantes
+    //    public function findOneBySomeField($value): ?Plantes
 //    {
 //        return $this->createQueryBuilder('p')
 //            ->andWhere('p.exampleField = :val')

@@ -27,9 +27,11 @@ class CommandesController extends AbstractController
     public function recap(SessionInterface $session): Response
     {
         $sessionCommande = $session->get('commande');
+        $user = $this->getUser();
         // dd($sessionCommande);
         return $this->render('commandes/commandes.html.twig', [
             'dataCommande' => $sessionCommande,
+            'user' => $user
         ]);
     }
 }

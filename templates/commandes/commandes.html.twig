@@ -34,7 +34,11 @@
           </tr>
         </tfoot>
       </table>
-      <a href="{{ path('app_paiement', { total: dataCommande.totalGeneral }) }}">Payer</a>
+      <div class="livraison">
+        <h3>Adresse de livraison :</h3>
+        {# <a href="{{ path('app_paiement') }}">Définir</a> #}
+      </div>
+      <a href="{{ path('app_paiement', { ids: dataCommande['commandeData']|column('id')|join(','), total: dataCommande.totalGeneral }) }}">Payer</a>
     </div>
   {% endif %}
 {% endblock %}
