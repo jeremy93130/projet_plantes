@@ -35,11 +35,9 @@
         <li class="list-unstyled me-5">
           <a href="{{ path('app_panier') }}">
             {% if app.request.attributes.get('_route') != 'recapp_commande' %}
-              <i class="fa-solid fa-cart-shopping nav-link" id="nav_panier">
-                <span id="nb_articles">
-                </span>
-              </i>
+              <i class="fa-solid fa-cart-shopping nav-link" id="nav_panier"><span id="nb_articles"></span></i>
             {% else %}
+
             {% endif %}
           </a>
         </li>

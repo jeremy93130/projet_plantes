@@ -22,7 +22,7 @@
             <tr>
               <td class="td-nom">{{ data.alt }}</td>
               <td class="td-quantite">{{ data.quantite }}</td>
-              <td class="td-prix">{{ data.prix * data.quantite }}</td>
+              <td class="td-prix">{{ data.prix * data.quantite }}€</td>
             </tr>
           {% endfor %}
         </tbody>
@@ -30,14 +30,25 @@
           <tr>
             <td class="ttG"></td>
             <td class="ttG"></td>
-            <td class="ttG">{{ dataCommande.totalGeneral }}</td>
+            <td class="ttG">{{ dataCommande.totalGeneral }}€</td>
           </tr>
         </tfoot>
       </table>
-      <div class="livraison">
-        <h3>Adresse de livraison :</h3>
-        {# <a href="{{ path('app_paiement') }}">Définir</a> #}
-      </div>
+      <h3 class="livraisonh3">Adresse de livraison :</h3>
+      {% if adresseValide is defined %}
+        <div class="livraison">
+          <div class="adresselivraison">
+            <p>Mme/Mr</p>
+            <p>{{ userInfo.nom }} {{ userInfo.prenom }}</p>
+            <p></p>
+            <p>{{ adresseLivraison }}</p>
+            <p>{{ codePostal }} {{ ville }}</p>
+            <p>{{ pays }}</p>
+          </div>
+        </div>
+      {% else %}
+        <a href="{{ path('app_adresse') }}">Définir</a>
+      {% endif %}
       <a href="{{ path('app_paiement', { ids: dataCommande['commandeData']|column('id')|join(','), total: dataCommande.totalGeneral }) }}">Payer</a>
     </div>
   {% endif %}

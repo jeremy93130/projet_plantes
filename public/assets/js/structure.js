@@ -142,7 +142,7 @@ function ajouterAuPanier(url, nom, prix, image) {
       }
     },
     error: function () {
-      alert("Une erreur s'est produite lors de l'ajout au panier");
+      // alert("Une erreur s'est produite lors de l'ajout au panier");
     },
   });
 }

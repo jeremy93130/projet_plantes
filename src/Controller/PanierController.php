@@ -58,6 +58,14 @@ class PanierController extends AbstractController
         // Récupérer le panier actuel depuis la session
         $panier = $session->get('panier', []);
 
+        // Vérifier si la plante est déjà dans le panier
+        if (array_key_exists($id, $panier)) {
+            // La plante est déjà dans le panier, vous pouvez ajuster votre réponse en conséquence
+            return $this->render('details/details.html.twig', [
+                'errorPlante' => 'La plante est déjà dans le panier'
+            ]);
+        }
+
         // Ajouter la plante au panier
         // Vous devez adapter cela en fonction de la structure réelle de vos données
         $panier[$id] = [
@@ -90,7 +98,8 @@ class PanierController extends AbstractController
         foreach ($articles as $key => $article) {
             if ($article['id'] == $id) {
                 unset($articles[$key]);
-            };
+            }
+            ;
         }
         $session->set('panier', $articles);
         // $session->remove('panier');

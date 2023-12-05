@@ -14,7 +14,7 @@ class HomeController extends AbstractController
     #[Route('/home', name: 'app_home')]
     public function index(): Response
     {
-       return $this->redirectToRoute('app_achats');
+        return $this->redirectToRoute('app_achats');
     }
 
 
@@ -24,7 +24,8 @@ class HomeController extends AbstractController
         $plantes = $plantesRepository->find($id);
 
         return $this->render('details/details.html.twig', [
-            "plante" => $plantes
+            "plante" => $plantes,
+            'errorPlante' => null
         ]);
     }
 }

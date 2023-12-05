@@ -296,6 +296,22 @@ table.table td a {
     border: 3px solid white;
 }
 
+/* adresse livraison */
+.livraisonh3 {
+    color: #FFC107;
+    text-align: center;
+}
+
+.livraison {
+    border: 1px solid black;
+    background-color: #000000c2;
+    color: #FFC107;
+}
+
+.livraison p {
+    margin: 2px 0;
+}
+
 
 /* MEDIAS QUERIES */
 
