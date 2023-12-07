@@ -46,4 +46,14 @@ class PlantesRepository extends ServiceEntityRepository
 //        ;
 //    }
 
+    public function findOneById($value): ?Plantes
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.id = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+
 }

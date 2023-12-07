@@ -37,17 +37,14 @@ class Plantes
     #[ORM\Column(type: Types::TEXT)]
     private ?string $entretien = null;
 
-    #[ORM\ManyToMany(targetEntity: Commandes::class, mappedBy: 'plante_id')]
-    private Collection $commandes;
-
-    #[ORM\OneToMany(mappedBy: 'plante_id', targetEntity: DetailsCommande::class)]
-    private Collection $detailsCommandes;
-
     private ?string $search;
+
+    #[ORM\ManyToMany(targetEntity: DetailsCommandes::class, mappedBy: 'plante')]
+    private Collection $detailscommandes;
+
     public function __construct()
     {
-        $this->commandes = new ArrayCollection();
-        $this->detailsCommandes = new ArrayCollection();
+        $this->detailscommandes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -139,63 +136,6 @@ class Plantes
         return $this;
     }
 
-    /**
-     * @return Collection<int, Commandes>
-     */
-    public function getCommandes(): Collection
-    {
-        return $this->commandes;
-    }
-
-    public function addCommande(Commandes $commande): static
-    {
-        if (!$this->commandes->contains($commande)) {
-            $this->commandes->add($commande);
-            $commande->addPlanteId($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCommande(Commandes $commande): static
-    {
-        if ($this->commandes->removeElement($commande)) {
-            $commande->removePlanteId($this);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, DetailsCommande>
-     */
-    public function getDetailsCommandes(): Collection
-    {
-        return $this->detailsCommandes;
-    }
-
-    public function addDetailsCommande(DetailsCommande $detailsCommande): static
-    {
-        if (!$this->detailsCommandes->contains($detailsCommande)) {
-            $this->detailsCommandes->add($detailsCommande);
-            $detailsCommande->setPlanteId($this);
-        }
-
-        return $this;
-    }
-
-    public function removeDetailsCommande(DetailsCommande $detailsCommande): static
-    {
-        if ($this->detailsCommandes->removeElement($detailsCommande)) {
-            // set the owning side to null (unless already changed)
-            if ($detailsCommande->getPlanteId() === $this) {
-                $detailsCommande->setPlanteId(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getSearch(): ?string
     {
         return $this->search;
@@ -204,6 +144,33 @@ class Plantes
     public function setSearch($search): static
     {
         $this->search = $search;
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, DetailsCommandes>
+     */
+    public function getDetailscommandes(): Collection
+    {
+        return $this->detailscommandes;
+    }
+
+    public function addDetailscommande(DetailsCommandes $detailscommande): static
+    {
+        if (!$this->detailscommandes->contains($detailscommande)) {
+            $this->detailscommandes->add($detailscommande);
+            $detailscommande->addPlante($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDetailscommande(DetailsCommandes $detailscommande): static
+    {
+        if ($this->detailscommandes->removeElement($detailscommande)) {
+            $detailscommande->removePlante($this);
+        }
+
         return $this;
     }
 }

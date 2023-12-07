@@ -34,17 +34,17 @@ class User implements
     #[ORM\Column]
     private ?int $telephone = null;
 
-    #[ORM\OneToMany(mappedBy: 'client_id', targetEntity: Commandes::class)]
-    private Collection $commandes;
-
     #[ORM\Column(type:'json')]
     private array $roles = [];
 
+    #[ORM\OneToMany(mappedBy: 'client', targetEntity: DetailsCommandes::class)]
+    private Collection $detailsCommandes;
+
     public function __construct()
     {
-        $this->commandes = new ArrayCollection();
+        $this->detailsCommandes = new ArrayCollection();
     }
-
+    
     public function getId(): ?int
     {
         return $this->id;
@@ -110,36 +110,6 @@ class User implements
         return $this;
     }
 
-    /**
-     * @return Collection<int, Commandes>
-     */
-    public function getCommandes(): Collection
-    {
-        return $this->commandes;
-    }
-
-    public function addCommande(Commandes $commande): static
-    {
-        if (!$this->commandes->contains($commande)) {
-            $this->commandes->add($commande);
-            $commande->setClientId($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCommande(Commandes $commande): static
-    {
-        if ($this->commandes->removeElement($commande)) {
-            // set the owning side to null (unless already changed)
-            if ($commande->getClientId() === $this) {
-                $commande->setClientId(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getRoles(): array
     {
         $roles = $this->roles;
@@ -173,5 +143,35 @@ class User implements
     public function getPassword(): string
     {
         return $this->mot_de_passe;
+    }
+
+    /**
+     * @return Collection<int, DetailsCommandes>
+     */
+    public function getDetailsCommandes(): Collection
+    {
+        return $this->detailsCommandes;
+    }
+
+    public function addDetailsCommande(DetailsCommandes $detailsCommande): static
+    {
+        if (!$this->detailsCommandes->contains($detailsCommande)) {
+            $this->detailsCommandes->add($detailsCommande);
+            $detailsCommande->setClient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDetailsCommande(DetailsCommandes $detailsCommande): static
+    {
+        if ($this->detailsCommandes->removeElement($detailsCommande)) {
+            // set the owning side to null (unless already changed)
+            if ($detailsCommande->getClient() === $this) {
+                $detailsCommande->setClient(null);
+            }
+        }
+
+        return $this;
     }
 }

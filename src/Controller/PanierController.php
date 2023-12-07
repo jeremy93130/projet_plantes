@@ -83,9 +83,7 @@ class PanierController extends AbstractController
 
         // Retourner une réponse JSON
         // return new JsonResponse(['message' => 'Plante ajoutée au panier avec succès', 'success' => true, 'data' => $dataToView]);
-        return $this->render('panier/panier.html.twig', [
-            'panier' => $panier,
-        ]);
+        return $this->redirectToRoute('app_achats');
     }
 
     #[Route('/supprimer/{id}', name: 'app_supp')]

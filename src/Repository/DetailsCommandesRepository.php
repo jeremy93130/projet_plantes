@@ -2,27 +2,27 @@
 
 namespace App\Repository;
 
-use App\Entity\DetailsCommande;
+use App\Entity\DetailsCommandes;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<DetailsCommande>
+ * @extends ServiceEntityRepository<DetailsCommandes>
  *
- * @method DetailsCommande|null find($id, $lockMode = null, $lockVersion = null)
- * @method DetailsCommande|null findOneBy(array $criteria, array $orderBy = null)
- * @method DetailsCommande[]    findAll()
- * @method DetailsCommande[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method DetailsCommandes|null find($id, $lockMode = null, $lockVersion = null)
+ * @method DetailsCommandes|null findOneBy(array $criteria, array $orderBy = null)
+ * @method DetailsCommandes[]    findAll()
+ * @method DetailsCommandes[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class DetailsCommandeRepository extends ServiceEntityRepository
+class DetailsCommandesRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, DetailsCommande::class);
+        parent::__construct($registry, DetailsCommandes::class);
     }
 
 //    /**
-//     * @return DetailsCommande[] Returns an array of DetailsCommande objects
+//     * @return DetailsCommandes[] Returns an array of DetailsCommandes objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -36,7 +36,7 @@ class DetailsCommandeRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?DetailsCommande
+//    public function findOneBySomeField($value): ?DetailsCommandes
 //    {
 //        return $this->createQueryBuilder('d')
 //            ->andWhere('d.exampleField = :val')
