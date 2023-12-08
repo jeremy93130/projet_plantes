@@ -21,7 +21,7 @@ class DetailsCommandesRepository extends ServiceEntityRepository
         parent::__construct($registry, DetailsCommandes::class);
     }
 
-//    /**
+    //    /**
 //     * @return DetailsCommandes[] Returns an array of DetailsCommandes objects
 //     */
 //    public function findByExampleField($value): array
@@ -36,7 +36,7 @@ class DetailsCommandesRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?DetailsCommandes
+    //    public function findOneBySomeField($value): ?DetailsCommandes
 //    {
 //        return $this->createQueryBuilder('d')
 //            ->andWhere('d.exampleField = :val')
@@ -45,4 +45,16 @@ class DetailsCommandesRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+    public function findByIdWithPlantes($value): array
+    {
+        return $this->createQueryBuilder('d')
+            ->leftJoin('d.plante', 'p') // Assurez-vous que 'plante' correspond au nom de l'association dans l'entité DetailsCommandes
+            ->andWhere('d.id = :val')
+            ->setParameter('val', $value)
+            ->orderBy('d.id', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }

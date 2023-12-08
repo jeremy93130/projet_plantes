@@ -1,15 +1,49 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HistoriqueCommandesController!{% endblock %}
+{% block title %}
+  Hello HistoriqueCommandesController!
+{% endblock %}
 
 {% block body %}
-<table>
-    <tr>
-        <th>Date de la commande</th>
-        <th>Adresse de livraison</th>
+  {% include 'navbar/navbar.html.twig' %}
+  <h1 class="historiqueH1">Historique des commandes</h1>
+  <table class="table">
+    <tr class="text-warning">
+      <th>Date de la commande</th>
+      <th>Nom Client</th>
+      <th>Adresse de livraison</th>
+      <th>Produit(s)</th>
+      <th>prix</th>
+      <th>Quantité</th>
+      <th>Total</th>
     </tr>
-</table>
-{% for commande in historicCommande %}
-    
-{% endfor %}
+    {% for commande in historicCommande %}
+      <tr class="text-warning">
+        <td>{{ commande.dateCommande|date('Y-m-d') }}</td>
+        <td>{{ commande.client.nom }}</td>
+        <td>{{ commande.adresseLivraison }} , {{ commande.ville }} , {{ commande.codePostal }} , {{ commande.pays }}</td>
+        <td>
+          {% for plante in commande.plante %}
+            {{ plante.nomPlante }}
+            {% if not loop.last %}, {% endif %}
+          {% endfor %}
+        </td>
+        <td>
+          {% for plante in commande.plante %}
+            {{ plante.prixPlante }} €{% if not loop.last %}
+              /
+            {% endif %}
+          {% endfor %}
+        </td>
+        <td>
+          {% for quantitee in quantite|keys %}
+            {{ quantite[quantitee] }} {% if not loop.last %}
+              /
+            {% endif %}
+          {% endfor %}
+        </td>
+        <td>{{ commande.total|number_format(2, ',', 'fr') }} €</td>
+      </tr>
+    {% endfor %}
+  </table>
 {% endblock %}

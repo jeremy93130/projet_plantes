@@ -136,7 +136,7 @@ function ajouterAuPanier(url, nom, prix, image) {
         // Stockez la nouvelle valeur de nb_counts dans localStorage
         localStorage.setItem("nb_counts", nb_counts);
         // localStorage.clear('nb_counts');
-        location.href = '/achats';
+        location.href = "/achats";
       } else {
         alert("ok");
       }
@@ -192,6 +192,8 @@ window.onload = function () {
   if (nb_counts > 0) {
     // localStorage.clear('nb_counts');
     document.getElementById("nb_articles").textContent = nb_counts;
+  } else if (nb_counts == 0) {
+    document.getElementById("nb_articles").textContent = "";
   } else {
     document.getElementById("nb_articles").textContent = "";
   }
@@ -255,4 +257,3 @@ function commander(url) {
 var stripe = Stripe(
   "pk_test_51OICEgC3GA5BR02AuVfYushtuoMQHtv99wK9FATC9PnIHCwDhOR2jlvTOAcZIoGmnxNOSeU9JDvP7OHMAeg0AX0B00E7MKlVNK"
 );
-

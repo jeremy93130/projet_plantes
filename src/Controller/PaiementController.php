@@ -26,11 +26,18 @@ class PaiementController extends AbstractController
         $sessionCommande = $session->get('commande');
         $user = $this->getUser();
 
+        // if ($commande == null || $sessionCommande == null || $user == null) {
+        //     $this->redirectToRoute('app_home');
+        // }
+
+        // Récupérer les informations nécessaires de la session ou ailleurs
+        $successMessage = $session->get('success_url');
+
         return $this->render('commandes/commandes.html.twig', [
             'adresseInfos' => $commande,
             "adresseValide" => true,
             'dataCommande' => $sessionCommande,
-            'userInfo' => $user
+            'userInfo' => $user,
         ]);
     }
 
@@ -77,7 +84,11 @@ class PaiementController extends AbstractController
     {
         \Stripe\Stripe::setApiKey('sk_test_51OICEgC3GA5BR02Af7eTScs2GgI29d4FpjzMiWRo625SCPzvudJNRQPg0A3ICZ9wTnCiXJadx9TrO7MRr9lVaXV800sjafT7mP'); // Remplacez par votre clé secrète Stripe
 
-        $commandeData = $sessionInterface->get('commande')['commandeData'];
+        if (!isset($sessionInterface->get('commande')['totalGeneral']) || $sessionInterface->get('commande')['totalGeneral'] == null) {
+            return $this->redirectToRoute('app_home');
+        } else {
+            $commandeData = $sessionInterface->get('commande')['commandeData'];
+        }
         $totalGeneral = $sessionInterface->get('commande')['totalGeneral'];
 
         $lineItems = [];
@@ -114,7 +125,7 @@ class PaiementController extends AbstractController
         $userId = $this->getUser()->getId();
 
         //Récuperer les plantes dans la session panier 
-        $panier = $session->get('panier', []);
+        $panier = $session->get('commande', []);
         // dd($panier);
 
         // Récupérer l'objet User correspondant depuis la base de données
@@ -130,32 +141,45 @@ class PaiementController extends AbstractController
         $commande->setVille($adresseInfo['ville']);
         $commande->setCodePostal($adresseInfo['codePostal']);
         $commande->setPays($adresseInfo['pays']);
-        foreach ($panier as $item) {
-            $plante = $plantesRepository->findOneById($item['id']);
+
+        $total = 0;
+        $quantiteTotale = 0;
+        foreach ($panier['commandeData'] as $item) {
+            $plante = $plantesRepository->findOneById((int) $item['id']);
             if ($plante) {
                 $quantite = $item['quantite'];
                 $prix = $item['prix'];
-                $total = $quantite * $prix;
+                $total += $quantite * $prix;
+                // Accumuler la quantité totale
+                $quantiteTotale += $quantite;
+                $plante->setStock($plante->getStock() - $quantite);
 
                 $commande->addPlante($plante);
             }
         }
-        $commande->setTotal($total);
-        try {
-            $entityManager->persist($commande);
-            $entityManager->flush();
-        } catch (\Exception $e) {
-            $e->getMessage();
-        }
+        $commande->setQuantite($quantiteTotale);
+        $commande->setTotal((float) $total);
+
+        $entityManager->persist($commande);
+        $entityManager->flush();
+
         // Supprimer les éléments du panier
-        $session->remove('commande');
+        // $session->remove('commande');
         $session->remove('panier');
 
-        // Récupérer les informations nécessaires de la session ou ailleurs
-        $successMessage = $session->get('success_url');
+
+        // dd($session->get('quantite', []));
+
+
+
+        // Marquer la variable de session pour indiquer que la redirection a eu lieu
+        $session->set('redirected', true);
+
+        // Réinitialiser le localStorage à zéro
+        echo '<script>localStorage.setItem("nb_counts", 0);</script>';
 
         // Fournir une réponse appropriée à l'utilisateur (redirection, affichage de confirmation, etc.)
-        return $this->render('commandes/commandes.html.twig', ['successMessage' => $successMessage]);
+        return $this->render('commandes/commandes.html.twig', ['successMessage' => 'Felicitations']);
     }
 }
 

@@ -313,6 +313,17 @@ table.table td a {
 }
 
 
+/* Page historique commandes  */
+
+.historiqueH1 {
+    color: #FFC107;
+    text-align: center;
+    margin: 30px 0 0 0;
+    background-color: #000000;
+    border-bottom: 2px solid white;
+}
+
+
 /* MEDIAS QUERIES */
 
 @media (max-width: 1600px) {
