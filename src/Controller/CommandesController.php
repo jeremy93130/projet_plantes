@@ -28,32 +28,27 @@ class CommandesController extends AbstractController
     {
         $sessionCommande = $session->get('commande');
         // dd($sessionCommande);
-        // Récupérer les informations nécessaires de la session ou ailleurs
-        $successMessage = $session->get('success_url');
         // dd($sessionPanier);
+        // dd($successMessage);
         $nouvelleSession = [];
 
-        foreach ($sessionCommande['commandeData'] as $produit) {
+        foreach ($sessionCommande['commandeData'] as $key => $produit) {
+            $commandeId = $key;
             $produitId = $produit['id'];
             $nbArticles = $produit['quantite'];
 
-            // Stocker le nombre d'articles dans la nouvelle variable de session avec l'ID du produit comme clé
-            $nouvelleSession['nbArticles_' . $produitId] = $nbArticles;
+            // Stocker la quantité par produit pour chaque commande
+            $nouvelleSession[$commandeId]['quantites'][$produitId] = $nbArticles;
         }
 
-        // Enregistrez la nouvelle variable de session avec les quantités par produit
-        $anciennesQuantites = $session->get('quantites', []);
-        $nouvellesQuantites = array_merge($anciennesQuantites, $nouvelleSession);
-        $session->set('quantites', $nouvellesQuantites);
-        // dd($session->get('quantites'));
-
+        // Enregistrez la nouvelle variable de session avec les quantités pour chaque commande
+        $session->set('quantites', $nouvelleSession);
         $user = $this->getUser();
         // dd($sessionCommande);
         return $this->render('commandes/commandes.html.twig', [
             'dataCommande' => $sessionCommande,
             'user' => $user,
-            'successMessage' => $successMessage
+            'successMessage' => null
         ]);
     }
 }
-

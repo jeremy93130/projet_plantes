@@ -31,13 +31,14 @@ class PaiementController extends AbstractController
         // }
 
         // Récupérer les informations nécessaires de la session ou ailleurs
-        $successMessage = $session->get('success_url');
+        $successMessage = $session->has('success_url') ? $session->get('success_url') : null;
 
         return $this->render('commandes/commandes.html.twig', [
             'adresseInfos' => $commande,
             "adresseValide" => true,
             'dataCommande' => $sessionCommande,
             'userInfo' => $user,
+            'successMessage' => null
         ]);
     }
 
@@ -179,7 +180,6 @@ class PaiementController extends AbstractController
         echo '<script>localStorage.setItem("nb_counts", 0);</script>';
 
         // Fournir une réponse appropriée à l'utilisateur (redirection, affichage de confirmation, etc.)
-        return $this->render('commandes/commandes.html.twig', ['successMessage' => 'Felicitations']);
+        return $this->render('commandes/commandes.html.twig', ['successMessage' => true]);
     }
 }
-

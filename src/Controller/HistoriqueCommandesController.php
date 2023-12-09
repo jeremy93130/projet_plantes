@@ -31,7 +31,7 @@ class HistoriqueCommandesController extends AbstractController
         return $this->render('historique_commandes/historique.html.twig', [
             'historicCommande' => $commandesHistorique,
             'user' => $user,
-            'quantite' => $nbArticles
+            'nbArticles' => $nbArticles,
         ]);
     }
 }
