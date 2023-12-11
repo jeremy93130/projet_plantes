@@ -2,5 +2,8 @@
 
 {% block body %}
   {% include 'navbar/navbar.html.twig' %}
-  {{ form(formAdresse) }}
+  <div class="adresse_livraison">
+    <h1>Veuillez inscrire vos informations de livraison</h1>
+    {{ form(formAdresse) }}
+  </div>
 {% endblock %}

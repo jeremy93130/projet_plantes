@@ -15,23 +15,22 @@ class HistoriqueCommandesController extends AbstractController
     public function index(DetailsCommandesRepository $commandes, SessionInterface $session): Response
     {
         $user = $this->getUser();
-        $nbArticles = $session->get('quantites', []);
-        // dd($nbArticles);
+        $commande = $session->get('commande', []);
         if (!$user) {
             return $this->redirectToRoute('app_login');
         }
         // Forcez l'initialisation de la collection
         $user->getDetailsCommandes()->initialize();
         // Boucle sur les commandes et forcez l'initialisation de la collection plantes
-        foreach ($user->getDetailsCommandes() as $commande) {
-            $commande->getPlante()->initialize();
+        foreach ($user->getDetailsCommandes() as $commandePlante) {
+            $commandePlante->getPlante()->initialize();
+            $commandePlante->getQuantites()->initialize();
         }
 
         $commandesHistorique = $user->getDetailsCommandes();
         return $this->render('historique_commandes/historique.html.twig', [
             'historicCommande' => $commandesHistorique,
             'user' => $user,
-            'nbArticles' => $nbArticles,
         ]);
     }
 }

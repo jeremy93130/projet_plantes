@@ -42,14 +42,15 @@ class DetailsCommandes
     private Collection $plante;
 
     #[ORM\Column]
-    private ?int $quantite = null;
-
-    #[ORM\Column]
     private ?float $total = null;
+
+    #[ORM\OneToMany(mappedBy: 'commande', targetEntity: Quantites::class, cascade: ["persist"])]
+    private Collection $quantites;
 
     public function __construct()
     {
         $this->plante = new ArrayCollection();
+        $this->quantites = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -165,26 +166,44 @@ class DetailsCommandes
         return $this;
     }
 
-    public function getQuantite(): ?int
-    {
-        return $this->quantite;
-    }
-
-    public function setQuantite(int $quantite): static
-    {
-        $this->quantite = $quantite;
-
-        return $this;
-    }
-
-    public function getTotal(): ?int
+    public function getTotal(): ?float
     {
         return $this->total;
     }
 
-    public function setTotal(int $total): static
+    public function setTotal(float $total): static
     {
         $this->total = $total;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Quantites>
+     */
+    public function getQuantites(): Collection
+    {
+        return $this->quantites;
+    }
+
+    public function addQuantite(Quantites $quantite): static
+    {
+        if (!$this->quantites->contains($quantite)) {
+            $this->quantites->add($quantite);
+            $quantite->setCommande($this);
+        }
+
+        return $this;
+    }
+
+    public function removeQuantite(Quantites $quantite): static
+    {
+        if ($this->quantites->removeElement($quantite)) {
+            // set the owning side to null (unless already changed)
+            if ($quantite->getCommande() === $this) {
+                $quantite->setCommande(null);
+            }
+        }
 
         return $this;
     }

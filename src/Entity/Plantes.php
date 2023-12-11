@@ -42,9 +42,13 @@ class Plantes
     #[ORM\ManyToMany(targetEntity: DetailsCommandes::class, mappedBy: 'plante')]
     private Collection $detailscommandes;
 
+    #[ORM\OneToMany(mappedBy: 'plante', targetEntity: Quantites::class, cascade: ["persist"])]
+    private Collection $quantites;
+
     public function __construct()
     {
         $this->detailscommandes = new ArrayCollection();
+        $this->quantites = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -169,6 +173,36 @@ class Plantes
     {
         if ($this->detailscommandes->removeElement($detailscommande)) {
             $detailscommande->removePlante($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Quantites>
+     */
+    public function getQuantites(): Collection
+    {
+        return $this->quantites;
+    }
+
+    public function addQuantite(Quantites $quantite): static
+    {
+        if (!$this->quantites->contains($quantite)) {
+            $this->quantites->add($quantite);
+            $quantite->setPlante($this);
+        }
+
+        return $this;
+    }
+
+    public function removeQuantite(Quantites $quantite): static
+    {
+        if ($this->quantites->removeElement($quantite)) {
+            // set the owning side to null (unless already changed)
+            if ($quantite->getPlante() === $this) {
+                $quantite->setPlante(null);
+            }
         }
 
         return $this;

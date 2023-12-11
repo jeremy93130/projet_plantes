@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class AchatsController extends AbstractController
 {
@@ -17,6 +18,7 @@ class AchatsController extends AbstractController
         $form = $this->createForm(PlanteSearchType::class);
         $form->handleRequest($request);
         $plantes = $plantesRepository->findAll();
+
 
         return $this->render('achats/achats.html.twig', [
             'controller_name' => 'AchatsController',

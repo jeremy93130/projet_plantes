@@ -3,10 +3,10 @@
 /* Body */
 body {
     /* background-color: rgb(4, 70, 4); */
-    background-image     : url('https://w.forfun.com/fetch/28/28efb1394876b5ab7708a986a93292d5.jpeg');
-    background-position  : center;
-    background-size      : cover;
-    background-repeat    : no-repeat;
+    background-image: url('https://w.forfun.com/fetch/28/28efb1394876b5ab7708a986a93292d5.jpeg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
     background-attachment: fixed;
 }
 
@@ -15,7 +15,7 @@ body {
 nav h2 {
     text-shadow: 15px 12px 4px rgba(0, 0, 0, 0.603);
     font-family: 'Kolker Brush', cursive;
-    font-size  : 55px;
+    font-size: 55px;
 }
 
 
@@ -23,45 +23,45 @@ nav h2 {
 
 
 .titre-plante h2 {
-    color      : #FFC107;
+    color: #FFC107;
     text-shadow: 4px 3px rgba(0, 0, 0, 0.603);
 }
 
 #relative-div {
     position: relative;
-    display : flex;
-    width   : 550px;
+    display: flex;
+    width: 550px;
 }
 
 #relative-div form {
-    width          : 420px;
-    display        : flex;
-    align-items    : center;
+    width: 420px;
+    display: flex;
+    align-items: center;
     justify-content: space-between;
 }
 
 #relative-div form a {
-    font-size       : 1rem;
+    font-size: 1rem;
     background-color: #FFC107;
-    border          : 1px solid black;
-    padding         : 8px 7px;
-    border-radius   : 10%;
-    vertical-align  : middle;
-    text-decoration : none;
-    color           : black;
+    border: 1px solid black;
+    padding: 8px 7px;
+    border-radius: 10%;
+    vertical-align: middle;
+    text-decoration: none;
+    color: black;
 }
 
 .rechercher {
     background-color: #FFC107;
-    border-color    : #FFC107;
+    border-color: #FFC107;
 }
 
 #relative-div form a:hover,
 #relative-div form button:hover {
     background-color: #212529;
-    color           : white;
-    transition      : 1.5s;
-    border-color    : black;
+    color: white;
+    transition: 1.5s;
+    border-color: black;
 }
 
 .plantesResults {
@@ -77,20 +77,20 @@ nav h2 {
 }
 
 .absolute-prix {
-    position        : absolute;
+    position: absolute;
     background-color: #212529;
-    color           : #FFC107;
-    border-radius   : 50%;
-    padding         : 5px;
-    width           : 50px;
-    height          : 50px;
-    display         : flex;
-    align-items     : center;
-    text-align      : center;
-    font-size       : 13px;
-    font-weight     : bold;
-    right           : 0;
-    top             : 0;
+    color: #FFC107;
+    border-radius: 50%;
+    padding: 5px;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    font-size: 13px;
+    font-weight: bold;
+    right: 0;
+    top: 0;
 }
 
 /* #btn-btn {
@@ -110,11 +110,11 @@ nav h2 {
 
 #btn-btn:hover {
     background-color: #FFC107;
-    border-color    : transparent;
+    border-color: transparent;
 }
 
 #btn-btn img {
-    width         : 25px;
+    width: 25px;
     vertical-align: middle;
 }
 
@@ -124,14 +124,14 @@ nav h2 {
 }
 
 .img-card img {
-    width : 100%;
+    width: 100%;
     height: 300px;
 }
 
 .change-btn:hover {
     background: #212529;
     transition: 2s;
-    color     : white;
+    color: white;
 }
 
 /* ACCUEIL  */
@@ -154,13 +154,13 @@ nav h2 {
 
 /* PAGE INSCRIPTION */
 .formInscription {
-    border    : 2px solid #FFC107;
-    width     : 500px;
-    height    : 600px;
+    border: 2px solid #FFC107;
+    width: 500px;
+    height: 600px;
     box-shadow: 3px 3px 3px #FFC107;
-    margin    : 30px auto;
+    margin: 30px auto;
     text-align: center;
-    color     : #FFC107;
+    color: #FFC107;
 }
 
 .formInscription h1 {
@@ -168,8 +168,8 @@ nav h2 {
 }
 
 .formInscription form {
-    display        : flex;
-    flex-direction : column;
+    display: flex;
+    flex-direction: column;
     justify-content: space-between;
 }
 
@@ -179,14 +179,14 @@ nav h2 {
 
 .formInscription form #register_form div {
     align-items: center;
-    width      : 200px;
-    margin     : 10px auto;
+    width: 200px;
+    margin: 10px auto;
 }
 
 .formInscription label {
-    margin          : 10px 0;
+    margin: 10px 0;
     background-color: rgba(0, 0, 0, 0.623);
-    width           : 100%;
+    width: 100%;
 }
 
 /* FIN PAGE INSCRIPTION */
@@ -194,16 +194,16 @@ nav h2 {
 
 /* Page Details */
 .absolutePrix {
-    position     : absolute;
-    top          : 20px;
-    left         : 570px;
-    padding      : 20px;
+    position: absolute;
+    top: 20px;
+    left: 570px;
+    padding: 20px;
     border-radius: 50%;
 }
 
 .detail-img {
     height: 100%;
-    width : 400px;
+    width: 400px;
     margin: auto;
 }
 
@@ -221,13 +221,13 @@ table.table tr,
 table.table th,
 table.table td {
     background-color: black;
-    color           : #FFC107;
+    color: #FFC107;
 }
 
 table.table td a {
-    text-decoration : none;
-    color           : #FFC107;
-    border          : 2px solid black;
+    text-decoration: none;
+    color: #FFC107;
+    border: 2px solid black;
     background-color: rgba(0, 0, 0, 0.671);
 }
 
@@ -235,17 +235,17 @@ table.table td a {
 /* Panier vide */
 
 .panier-vide-div {
-    display         : flex;
-    flex-direction  : column;
-    height          : 93vh;
-    align-items     : center;
-    justify-content : center;
+    display: flex;
+    flex-direction: column;
+    height: 93vh;
+    align-items: center;
+    justify-content: center;
     background-color: rgba(0, 0, 0, 0.377);
 }
 
 .panier-vide-div a {
     font-size: 33px;
-    color    : red;
+    color: red;
 }
 
 /* FIN PARTIE PANIER */
@@ -254,15 +254,15 @@ table.table td a {
 /* PARTIE COMMANDE */
 
 .recap {
-    width : 700px;
+    width: 700px;
     height: 700px;
     margin: auto;
     border: 3px solid black;
 }
 
 .recap h1 {
-    text-align      : center;
-    color           : #FFC107;
+    text-align: center;
+    color: #FFC107;
     background-color: #21252970;
 }
 
@@ -278,7 +278,8 @@ table.table td a {
     text-align: right;
 }
 
-.td-quantite, .td-prix {
+.td-quantite,
+.td-prix {
     text-align: right;
 }
 
@@ -291,7 +292,7 @@ table.table td a {
     color: #FFC107;
 }
 
-.paiements{
+.paiements {
     padding: 20px;
     border: 3px solid white;
 }
@@ -312,6 +313,48 @@ table.table td a {
     margin: 2px 0;
 }
 
+.adresse_link {
+    margin: 30px 0;
+}
+
+.paiement_links {
+    color: #FFC107;
+    padding: 5px 20px;
+    background-color: #000000;
+}
+
+/* Page adresse Livraison */
+
+.adresse_livraison {
+    display: flex;
+    flex-direction: column;
+    width: 600px;
+    margin: 20px auto;
+    background-color: #2125299c;
+    color: #FFC107;
+}
+
+.adresse_livraison h1 {
+    font-size: 26px;
+    text-align: center;
+}
+
+#adresse_livraison>div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 450px;
+    margin: auto;
+}
+
+#adresse_livraison>div>button {
+    margin: auto;
+}
+
+#adresse_livraison>div>select,
+#adresse_livraison>div>input {
+    width: 150px;
+}
 
 /* Page historique commandes  */
 
@@ -332,7 +375,7 @@ table.table td a {
     }
 
     #relative-div {
-        width          : 375px;
+        width: 375px;
         justify-content: center;
     }
 
@@ -341,7 +384,7 @@ table.table td a {
     }
 
     .achat-accueil>div>div>h2 {
-        font-size : 26px;
+        font-size: 26px;
         text-align: right;
     }
 

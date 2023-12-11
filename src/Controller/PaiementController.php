@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Entity\Plantes;
+use App\Entity\Quantites;
 use App\Entity\DetailsCommandes;
 use App\Form\AdresseLivraisonType;
 use App\Repository\PlantesRepository;
@@ -111,7 +112,7 @@ class PaiementController extends AbstractController
             'line_items' => $lineItems,
             'mode' => 'payment',
             'success_url' => $urlGenerator->generate('handle_successful_payment', [], UrlGeneratorInterface::ABSOLUTE_URL),
-            'cancel_url' => $urlGenerator->generate('recapp_commande', [], UrlGeneratorInterface::ABSOLUTE_URL),
+            'cancel_url' => $urlGenerator->generate('cancel_payment', [], UrlGeneratorInterface::ABSOLUTE_URL),
         ]);
         return new RedirectResponse($checkout_session->url, 303);
     }
@@ -153,12 +154,31 @@ class PaiementController extends AbstractController
                 $total += $quantite * $prix;
                 // Accumuler la quantité totale
                 $quantiteTotale += $quantite;
-                $plante->setStock($plante->getStock() - $quantite);
 
-                $commande->addPlante($plante);
+                // Vérifiez si le stock est suffisant
+                if ($plante->getStock() >= $quantite) {
+                    // Soustrayez la quantité du stock
+                    $plante->setStock($plante->getStock() - $quantite);
+
+                    // Ajoutez la plante à la commande
+                    $commande->addPlante($plante);
+
+                    // Créez une nouvelle entité Quantites
+                    $quantiteEntity = new Quantites();
+                    $quantiteEntity->setQuantite($quantite);
+
+                    // Associez la quantité à la plante et à la commande
+                    $quantiteEntity->setPlante($plante);
+                    $quantiteEntity->setCommande($commande);
+
+                    // Ajoutez la quantité à la collection dans Plantes
+                    $plante->addQuantite($quantiteEntity);
+
+                    // Ajoutez la quantité à la collection dans DetailsCommandes
+                    $commande->addQuantite($quantiteEntity);
+                }
             }
         }
-        $commande->setQuantite($quantiteTotale);
         $commande->setTotal((float) $total);
 
         $entityManager->persist($commande);
@@ -168,11 +188,6 @@ class PaiementController extends AbstractController
         // $session->remove('commande');
         $session->remove('panier');
 
-
-        // dd($session->get('quantite', []));
-
-
-
         // Marquer la variable de session pour indiquer que la redirection a eu lieu
         $session->set('redirected', true);
 
@@ -181,5 +196,13 @@ class PaiementController extends AbstractController
 
         // Fournir une réponse appropriée à l'utilisateur (redirection, affichage de confirmation, etc.)
         return $this->render('commandes/commandes.html.twig', ['successMessage' => true]);
+    }
+
+    #[Route('/cancel-payment', name: 'cancel_payment')]
+    public function cancelPayment(SessionInterface $session): Response
+    {
+        $session->remove('commande');
+
+        return $this->redirectToRoute('app_home');
     }
 }
