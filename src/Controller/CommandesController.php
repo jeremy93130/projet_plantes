@@ -27,6 +27,13 @@ class CommandesController extends AbstractController
     public function recap(SessionInterface $session): Response
     {
         $sessionCommande = $session->get('commande');
+
+        $linksParameters = [];
+        if (!$this->getUser()) {
+            $linksParameters = ['errorPanier' => 'Veuillez vous connecter'];
+            $url = $this->generateUrl('app_login', $linksParameters);
+            return $this->redirect($url);
+        }
         // dd($sessionCommande);
         // dd($sessionPanier);
         // dd($successMessage);

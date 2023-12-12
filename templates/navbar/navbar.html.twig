@@ -39,10 +39,10 @@
           <a href="{{ path('app_panier') }}">
             {% if app.request.attributes.get('_route') != 'recapp_commande' %}
               <i class="fa-solid fa-cart-shopping nav-link" id="nav_panier"><span id="nb_articles"></span></i>
-            {% else %}
-
             {% endif %}
           </a>
+            {% else %}
+            <a href="{{ path('app_panier') }}"><i class="fa-solid fa-cart-shopping nav-link me-5" id="nav_panier"><span id="nb_articles" class="ms-1"></span></i></a>
         </li>
       {% endif %}
     </div>
