@@ -2,11 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\QuantitesRepository;
+use App\Repository\DetailsCommandeRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: QuantitesRepository::class)]
-class Quantites
+#[ORM\Entity(repositoryClass: DetailsCommandeRepository::class)]
+class DetailsCommande
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -16,12 +18,17 @@ class Quantites
     #[ORM\Column]
     private ?int $quantite = null;
 
-    #[ORM\ManyToOne(inversedBy: 'quantites')]
+    #[ORM\ManyToOne(inversedBy: 'detailsCommandes')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Plantes $plante = null;
 
-    #[ORM\ManyToOne(inversedBy: 'quantites')]
-    private ?DetailsCommandes $commande = null;
+    #[ORM\ManyToOne(inversedBy: 'detailsCommandes')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Commande $commande = null;
+
+    public function __construct()
+    {
+    }
 
     public function getId(): ?int
     {
@@ -52,15 +59,16 @@ class Quantites
         return $this;
     }
 
-    public function getCommande(): ?DetailsCommandes
+    public function getCommande(): ?Commande
     {
         return $this->commande;
     }
 
-    public function setCommande(?DetailsCommandes $commande): static
+    public function setCommande(?Commande $commande): static
     {
         $this->commande = $commande;
 
         return $this;
     }
+
 }

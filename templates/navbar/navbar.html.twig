@@ -2,8 +2,9 @@
   <nav class="navbar navbar-expand-lg bg-dark">
     <div class="container-fluid">
       <h2 class="me-3 text-warning">Le Naturel Au Vert</h2>
+      <button class="navbar-toggler btn-hamburger" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <ul class="navbar-nav me-auto mb-2">
           <li class="nav-item">
             <a class="nav-link active text-warning" aria-current="page" href="{{ path('app_achats') }}">Accueil</a>
           </li>
@@ -32,19 +33,19 @@
             </li>
           {% endif %}
         </ul>
-      </div>
-      {% if app.user %}
-        <a class="navbar-brand text-warning">Bienvenu(e) {{ app.user.prenom }}</a>
-        <li class="list-unstyled me-5">
-          <a href="{{ path('app_panier') }}">
-            {% if app.request.attributes.get('_route') != 'recapp_commande' %}
-              <i class="fa-solid fa-cart-shopping nav-link" id="nav_panier"><span id="nb_articles"></span></i>
-            {% endif %}
-          </a>
+        {% if app.user %}
+          <a class="navbar-brand text-warning">Bienvenu(e) {{ app.user.prenom }}</a>
+          <li class="list-unstyled me-5">
+            <a href="{{ path('app_panier') }}">
+              {% if app.request.attributes.get('_route') != 'recapp_commande' %}
+                <i class="fa-solid fa-cart-shopping nav-link" id="nav_panier"><span id="nb_articles"></span></i>
+              {% endif %}
+            </a>
             {% else %}
             <a href="{{ path('app_panier') }}"><i class="fa-solid fa-cart-shopping nav-link me-5" id="nav_panier"><span id="nb_articles" class="ms-1"></span></i></a>
-        </li>
-      {% endif %}
+          </li>
+        {% endif %}
+      </div>
     </div>
   </nav>
 {% endblock %}

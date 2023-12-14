@@ -6,7 +6,7 @@ use App\Entity\User;
 use App\Entity\Plantes;
 use App\Entity\Commandes;
 
-use App\Entity\DetailsCommandes;
+use App\Entity\Commande;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -53,7 +53,7 @@ class AdresseLivraisonType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => DetailsCommandes::class,
+            'data_class' => Commande::class,
         ]);
     }
 }

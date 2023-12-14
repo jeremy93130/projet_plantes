@@ -5,7 +5,8 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Entity\Plantes;
 use App\Entity\Quantites;
-use App\Entity\DetailsCommandes;
+use App\Entity\Commande;
+use App\Entity\DetailsCommande;
 use App\Form\AdresseLivraisonType;
 use App\Repository\PlantesRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -47,7 +48,7 @@ class PaiementController extends AbstractController
     public function adresse(Request $request, SessionInterface $session): Response
     {
 
-        $adresse = new DetailsCommandes();
+        $adresse = new Commande();
 
         $form = $this->createForm(AdresseLivraisonType::class, $adresse);
         $form->handleRequest($request);
@@ -135,7 +136,7 @@ class PaiementController extends AbstractController
         $user = $userRepository->find($userId);
 
         //Créer une nouvelle entité Commandes
-        $commande = new DetailsCommandes();
+        $commande = new Commande();
         $commande->setClient($user);
         $commande->setDateCommande(new \DateTime()); // ou utilisez une date appropriée
         $commande->setEtatCommande('En Attente'); // ou utilisez l'état par défaut souhaité
@@ -159,23 +160,15 @@ class PaiementController extends AbstractController
                 if ($plante->getStock() >= $quantite) {
                     // Soustrayez la quantité du stock
                     $plante->setStock($plante->getStock() - $quantite);
-
-                    // Ajoutez la plante à la commande
-                    $commande->addPlante($plante);
-
                     // Créez une nouvelle entité Quantites
-                    $quantiteEntity = new Quantites();
-                    $quantiteEntity->setQuantite($quantite);
+                    $detailsCommande = new DetailsCommande();
+                    $detailsCommande->setQuantite($quantite);
 
                     // Associez la quantité à la plante et à la commande
-                    $quantiteEntity->setPlante($plante);
-                    $quantiteEntity->setCommande($commande);
+                    $detailsCommande->setPlante($plante);
+                    $detailsCommande->setCommande($commande);
+                    $entityManager->persist($detailsCommande);
 
-                    // Ajoutez la quantité à la collection dans Plantes
-                    $plante->addQuantite($quantiteEntity);
-
-                    // Ajoutez la quantité à la collection dans DetailsCommandes
-                    $commande->addQuantite($quantiteEntity);
                 }
             }
         }

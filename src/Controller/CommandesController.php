@@ -13,7 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class CommandesController extends AbstractController
 {
     #[Route('/commandes', name: 'app_commandes')]
-    public function index(SessionInterface $session, Request $request): Response
+    public function index(SessionInterface $session, Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
         $session->set('commande', $data);

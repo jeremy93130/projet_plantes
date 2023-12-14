@@ -56,6 +56,17 @@ nav h2 {
     border-color: #FFC107;
 }
 
+#plante_search {
+    background-color: #000000;
+    border-radius: 20px;
+    border: none;
+}
+
+#plante_search::placeholder {
+    color: #FFC107;
+    padding: 0 0 0 5px;
+}
+
 #relative-div form a:hover,
 #relative-div form button:hover {
     background-color: #212529;
@@ -369,7 +380,7 @@ table.table td a {
 
 /* MEDIAS QUERIES */
 
-@media (max-width: 1600px) {
+@media (min-width: 769px) and (max-width: 1600px) {
     .titre-plante {
         width: 700px;
     }
@@ -396,3 +407,55 @@ table.table td a {
         left: 490px;
     }
 }
+
+@media (max-width: 1168px) {
+
+    /* NAVBAR ET ACHATS */
+
+    .block-mobile {
+        display: block !important;
+    }
+
+    .block-mobile>div {
+        width: 100% !important;
+        margin: auto;
+    }
+
+    #relative-div {
+        display: block !important;
+        text-align: center;
+        width: 100%;
+    }
+
+    .none-mobile {
+        display: none;
+    }
+
+    .navbar-brand {
+        display: none;
+    }
+
+    .navbar h2 {
+        font-size: 35px;
+    }
+
+    .titre-plante h2 {
+        font-size: 16px;
+    }
+
+    #relative-div {
+        width: 25%;
+    }
+
+    .btn-hamburger {
+        background-color: #FFC107;
+    }
+
+    /* Panier */
+
+    .panier-vide-div h1 {
+        font-size: 30px;
+    }
+
+}
+

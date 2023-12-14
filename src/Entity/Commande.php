@@ -2,28 +2,28 @@
 
 namespace App\Entity;
 
-use App\Repository\DetailsCommandesRepository;
+use App\Repository\CommandeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: DetailsCommandesRepository::class)]
-class DetailsCommandes
+#[ORM\Entity(repositoryClass: CommandeRepository::class)]
+class Commande
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'DetailsCommandes')]
+    #[ORM\ManyToOne(inversedBy: 'Commande')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $client = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $dateCommande = null;
 
-    #[ORM\Column(type: "string", columnDefinition: "ENUM('En Attente','Confirmée', 'En Préparation', 'Expédiée')")]
+    #[ORM\Column(length: 255)]
     private string $etatCommande = 'En Attente';
 
     #[ORM\Column(length: 255)]
@@ -38,19 +38,15 @@ class DetailsCommandes
     #[ORM\Column(length: 255)]
     private ?string $pays = null;
 
-    #[ORM\ManyToMany(targetEntity: Plantes::class, inversedBy: 'DetailsCommandes')]
-    private Collection $plante;
-
     #[ORM\Column]
     private ?float $total = null;
 
-    #[ORM\OneToMany(mappedBy: 'commande', targetEntity: Quantites::class, cascade: ["persist"])]
-    private Collection $quantites;
+    #[ORM\OneToMany(mappedBy: 'commande', targetEntity: DetailsCommande::class)]
+    private Collection $detailsCommandes;
 
     public function __construct()
     {
-        $this->plante = new ArrayCollection();
-        $this->quantites = new ArrayCollection();
+        $this->detailsCommandes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -142,30 +138,6 @@ class DetailsCommandes
         return $this;
     }
 
-    /**
-     * @return Collection<int, Plantes>
-     */
-    public function getPlante(): Collection
-    {
-        return $this->plante;
-    }
-
-    public function addPlante(Plantes $plante): static
-    {
-        if (!$this->plante->contains($plante)) {
-            $this->plante->add($plante);
-        }
-
-        return $this;
-    }
-
-    public function removePlante(Plantes $plante): static
-    {
-        $this->plante->removeElement($plante);
-
-        return $this;
-    }
-
     public function getTotal(): ?float
     {
         return $this->total;
@@ -179,29 +151,29 @@ class DetailsCommandes
     }
 
     /**
-     * @return Collection<int, Quantites>
+     * @return Collection<int, DetailsCommande>
      */
-    public function getQuantites(): Collection
+    public function getDetailsCommandes(): Collection
     {
-        return $this->quantites;
+        return $this->detailsCommandes;
     }
 
-    public function addQuantite(Quantites $quantite): static
+    public function addDetailsCommande(DetailsCommande $detailsCommande): static
     {
-        if (!$this->quantites->contains($quantite)) {
-            $this->quantites->add($quantite);
-            $quantite->setCommande($this);
+        if (!$this->detailsCommandes->contains($detailsCommande)) {
+            $this->detailsCommandes->add($detailsCommande);
+            $detailsCommande->setCommande($this);
         }
 
         return $this;
     }
 
-    public function removeQuantite(Quantites $quantite): static
+    public function removeDetailsCommande(DetailsCommande $detailsCommande): static
     {
-        if ($this->quantites->removeElement($quantite)) {
+        if ($this->detailsCommandes->removeElement($detailsCommande)) {
             // set the owning side to null (unless already changed)
-            if ($quantite->getCommande() === $this) {
-                $quantite->setCommande(null);
+            if ($detailsCommande->getCommande() === $this) {
+                $detailsCommande->setCommande(null);
             }
         }
 

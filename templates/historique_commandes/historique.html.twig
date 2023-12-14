@@ -17,45 +17,39 @@
       <th>Quantité</th>
       <th>Total</th>
     </tr>
-    {% for commande in historicCommande %}
-      {% if commande.id is defined %}
-        <tr class="text-warning">
-          <td>{{ commande.dateCommande|date('Y-m-d') }}</td>
-          <td>{{ commande.client.nom }} {{ commande.client.prenom }}</td>
-          <td>{{ commande.adresseLivraison }}
-            ,
-            {{ commande.ville }}
-            ,
-            {{ commande.codePostal }}
-            ,
-            {{ commande.pays }}</td>
-          <td>
-            {% for plante in commande.plante %}
-              {{ plante.nomPlante }}
-              {% if not loop.last %}
-                ,<div style="padding: 8px 0 ;"></div>
-              {% endif %}
-            {% endfor %}
-          </td>
-          <td>
-            {% for plante in commande.plante %}
-              {{ plante.prixPlante }}
-              €{% if not loop.last %}
-                <div style="padding: 8px 0 ;"></div>
-              {% endif %}
-            {% endfor %}
-          </td>
-          <td>
-            {% for quantite in commande.quantites %}
-              {{ quantite.quantite }} {% if not loop.last %}
-                <div style="padding: 8px 0 ;"></div>
-              {% endif %}
-            {% endfor %}
-          </td>
-          <td>{{ commande.total|number_format(2, ',', 'fr') }}
-            €</td>
-        </tr>
-      {% endif %}
+    {% for commandeAvecDetails in commandesAvecDetails %}
+      <tr class="text-warning">
+        <td>{{ commandeAvecDetails.commande.dateCommande|date('Y-m-d') }}</td>
+        <td>{{ commandeAvecDetails.commande.client.nom }} {{ commandeAvecDetails.commande.client.prenom }}</td>
+        <td>{{ commandeAvecDetails.commande.adresseLivraison }},
+          {{ commandeAvecDetails.commande.ville }},
+          {{ commandeAvecDetails.commande.codePostal }},
+          {{ commandeAvecDetails.commande.pays }}</td>
+        <td>
+          {% for detail in commandeAvecDetails.details %}
+            {{ detail.plante.nomPlante }}
+            {% if not loop.last %}
+              ,<div style="padding: 8px 0 ;"></div>
+            {% endif %}
+          {% endfor %}
+        </td>
+        <td>
+          {% for detail in commandeAvecDetails.details %}
+            {{ detail.plante.prixPlante }} €{% if not loop.last %}
+              <div style="padding: 8px 0 ;"></div>
+            {% endif %}
+          {% endfor %}
+        </td>
+        <td>
+          {% for detail in commandeAvecDetails.details %}
+            {{ detail.quantite }}
+            {% if not loop.last %}
+              <div style="padding: 8px 0 ;"></div>
+            {% endif %}
+          {% endfor %}
+        </td>
+        <td>{{ commandeAvecDetails.commande.total|number_format(2, ',', 'fr') }} €</td>
+      </tr>
     {% endfor %}
   </table>
 {% endblock %}

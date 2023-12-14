@@ -34,17 +34,17 @@ class User implements
     #[ORM\Column]
     private ?int $telephone = null;
 
-    #[ORM\Column(type:'json')]
+    #[ORM\Column(type: 'json')]
     private array $roles = [];
 
-    #[ORM\OneToMany(mappedBy: 'client', targetEntity: DetailsCommandes::class)]
-    private Collection $detailsCommandes;
+    #[ORM\OneToMany(mappedBy: 'client', targetEntity: Commande::class)]
+    private Collection $commande;
 
     public function __construct()
     {
-        $this->detailsCommandes = new ArrayCollection();
+        $this->commande = new ArrayCollection();
     }
-    
+
     public function getId(): ?int
     {
         return $this->id;
@@ -146,26 +146,26 @@ class User implements
     }
 
     /**
-     * @return Collection<int, DetailsCommandes>
+     * @return Collection<int, Commande>
      */
-    public function getDetailsCommandes(): Collection
+    public function getCommande(): Collection
     {
-        return $this->detailsCommandes;
+        return $this->commande;
     }
 
-    public function addDetailsCommande(DetailsCommandes $detailsCommande): static
+    public function addCommande(Commande $detailsCommande): static
     {
-        if (!$this->detailsCommandes->contains($detailsCommande)) {
-            $this->detailsCommandes->add($detailsCommande);
+        if (!$this->commande->contains($detailsCommande)) {
+            $this->commande->add($detailsCommande);
             $detailsCommande->setClient($this);
         }
 
         return $this;
     }
 
-    public function removeDetailsCommande(DetailsCommandes $detailsCommande): static
+    public function removeCommande(Commande $detailsCommande): static
     {
-        if ($this->detailsCommandes->removeElement($detailsCommande)) {
+        if ($this->commande->removeElement($detailsCommande)) {
             // set the owning side to null (unless already changed)
             if ($detailsCommande->getClient() === $this) {
                 $detailsCommande->setClient(null);
