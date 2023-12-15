@@ -4,10 +4,10 @@
 {% endblock %}
 {% block body %}
   {% include 'navbar/navbar.html.twig' %}
-  <div class="w-50 m-auto mt-5">
+  <div class="w-50 m-auto mt-5 details_mobile">
     <div class="card bg-transparent border border-0 relative-details" style="height: 300px;">
       <img src="{{ asset('images/plantes/' ~ plante.image) }}" class="card-img-top detail-img" alt="{{ plante.nomPlante }}" />
-      <div class="card-body bg-success" style="width: 400px; margin:auto;">
+      <div class="card-body bg-success details_mobile" style="width: 400px; margin:auto;">
         <h5 class="card-title">{{ plante.nomPlante }}</h5>
         <div class="accordion accordion-flush bg-transparent" id="accordionFlushExample">
           <div class="accordion-item">
