@@ -211,15 +211,24 @@ function commander(url) {
       .closest(".delete_article")
       .querySelector("img")
       .getAttribute("alt");
+
+    // Define prix before using it in calculations
+    var prix = parseFloat(
+      quantityElement.parentNode.previousElementSibling.textContent
+        .replace("€", "")
+        .trim()
+    );
+
+    // Calculate tva and prixTTC based on prix
+    var tva = parseFloat(prix * 0.1);
+    var prixTTC = parseFloat(prix + tva);
     return {
       id: quantityElement.getAttribute("data-article"),
       quantite: parseInt(quantityElement.value),
       alt: altText,
-      prix: parseFloat(
-        quantityElement.parentNode.previousElementSibling.textContent
-          .replace("€", "")
-          .trim()
-      ),
+      prix: prix,
+      tva: tva,
+      prixTTC: prixTTC,
     };
   });
 

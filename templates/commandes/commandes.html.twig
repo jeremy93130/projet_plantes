@@ -21,7 +21,8 @@
             <tr>
               <th>Produit</th>
               <th class="td-quantite">Quantité</th>
-              <th class="td-prix">Total</th>
+              <th class="td-prix">Total HT</th>
+              <th class="td-prix">Total TTC (tva 10%)</th>
             </tr>
           </thead>
           <tbody>
@@ -30,6 +31,7 @@
                 <td class="td-nom">{{ data.alt }}</td>
                 <td class="td-quantite">{{ data.quantite }}</td>
                 <td class="td-prix">{{ data.prix * data.quantite }}€</td>
+                <td class="td-prix">{{ data.prixTTC * data.quantite }}€</td>
               </tr>
             {% endfor %}
           </tbody>
@@ -37,23 +39,25 @@
             <tr>
               <td class="ttG"></td>
               <td class="ttG"></td>
+              <td class="ttG"></td>
               <td class="ttG">{{ dataCommande.totalGeneral }}€</td>
             </tr>
           </tfoot>
         </table>
         <h3 class="livraisonh3">Adresse de livraison :</h3>
-        {% if adresseValide is defined %}
+        {% if app.session.get('adresseValide') %}
           <div class="livraison">
             <div class="adresselivraison">
               <p>Mme/Mr</p>
-              <p>{{ userInfo.nom }}
-                {{ userInfo.prenom }}</p>
+              <p>{{ adresseInfos.nomComplet }}</p>
               <p></p>
               <p>{{ adresseInfos.adresseLivraison }}</p>
               <p>{{ adresseInfos.codePostal }}
                 {{ adresseInfos.ville }}</p>
               <p>{{ adresseInfos.pays }}</p>
+              <p>{{adresseInfos.instructions}}</p>
             </div>
+            <a href="{{ path('app_adresse') }}">Modifier</a>
           </div>
         {% else %}
           <div class="adresse_link">

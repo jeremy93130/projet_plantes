@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\PlantesRepository;
+use Faker\Core\Number;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -27,19 +28,44 @@ class CommandesController extends AbstractController
     public function recap(SessionInterface $session): Response
     {
         $sessionCommande = $session->get('commande');
+        // dd($sessionCommande);
+        foreach ($sessionCommande['commandeData'] as $key => $value) {
+            $sessionCommande['commandeData'][$key]['tva'] = floatval(round($value['tva'], 3));
+            $sessionCommande['commandeData'][$key]['prixTTC'] = floatval($value['prixTTC']);
 
+            $prixTTC = $value['prix'] + $value['tva'];
+
+            $sessionCommande['commandeData'][$key]['prixTTC'] = round($prixTTC, 2);
+        }
+
+        $totalTVA = 0;
+
+        foreach ($sessionCommande['commandeData'] as $tva) {
+            $totalTVA += $tva['prixTTC'] * $tva['quantite'];
+        }
+
+        $sessionCommande['totalGeneral'] = round($totalTVA, 2);
+
+        // dd($sessionCommande['commandeData']);
         $linksParameters = [];
         if (!$this->getUser()) {
             $linksParameters = ['errorPanier' => 'Veuillez vous connecter'];
             $url = $this->generateUrl('app_login', $linksParameters);
             return $this->redirect($url);
         }
+
+        // dd($tva);
         // dd($sessionCommande);
         // dd($sessionPanier);
         // dd($successMessage);
         $user = $this->getUser();
+
+
+        $commande = $session->get('adresseData');
+
         // dd($sessionCommande);
         return $this->render('commandes/commandes.html.twig', [
+            'adresseInfos' => $commande,
             'dataCommande' => $sessionCommande,
             'user' => $user,
             'successMessage' => null

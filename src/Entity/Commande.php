@@ -26,18 +26,6 @@ class Commande
     #[ORM\Column(length: 255)]
     private string $etatCommande = 'En Attente';
 
-    #[ORM\Column(length: 255)]
-    private ?string $adresseLivraison = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $ville = null;
-
-    #[ORM\Column]
-    private ?int $codePostal = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $pays = null;
-
     #[ORM\Column]
     private ?float $total = null;
 
@@ -86,54 +74,6 @@ class Commande
     public function setEtatCommande(string $etatCommande): static
     {
         $this->etatCommande = $etatCommande;
-
-        return $this;
-    }
-
-    public function getAdresseLivraison(): ?string
-    {
-        return $this->adresseLivraison;
-    }
-
-    public function setAdresseLivraison(string $adresseLivraison): static
-    {
-        $this->adresseLivraison = $adresseLivraison;
-
-        return $this;
-    }
-
-    public function getVille(): ?string
-    {
-        return $this->ville;
-    }
-
-    public function setVille(string $ville): static
-    {
-        $this->ville = $ville;
-
-        return $this;
-    }
-
-    public function getCodePostal(): ?int
-    {
-        return $this->codePostal;
-    }
-
-    public function setCodePostal(int $codePostal): static
-    {
-        $this->codePostal = $codePostal;
-
-        return $this;
-    }
-
-    public function getPays(): ?string
-    {
-        return $this->pays;
-    }
-
-    public function setPays(string $pays): static
-    {
-        $this->pays = $pays;
 
         return $this;
     }

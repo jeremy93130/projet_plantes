@@ -40,9 +40,13 @@ class Plantes
     #[ORM\OneToMany(mappedBy: 'plante', targetEntity: DetailsCommande::class)]
     private Collection $detailsCommandes;
 
+    #[ORM\OneToMany(mappedBy: 'plante', targetEntity: Images::class)]
+    private Collection $images;
+
     public function __construct()
     {
         $this->detailsCommandes = new ArrayCollection();
+        $this->images = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -158,6 +162,36 @@ class Plantes
             // set the owning side to null (unless already changed)
             if ($detailsCommande->getPlante() === $this) {
                 $detailsCommande->setPlante(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Images>
+     */
+    public function getImages(): Collection
+    {
+        return $this->images;
+    }
+
+    public function addImage(Images $image): static
+    {
+        if (!$this->images->contains($image)) {
+            $this->images->add($image);
+            $image->setPlante($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImage(Images $image): static
+    {
+        if ($this->images->removeElement($image)) {
+            // set the owning side to null (unless already changed)
+            if ($image->getPlante() === $this) {
+                $image->setPlante(null);
             }
         }
 

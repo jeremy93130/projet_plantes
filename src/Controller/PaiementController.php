@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Adresse;
 use App\Entity\User;
 use App\Entity\Plantes;
 use App\Entity\Quantites;
@@ -9,6 +10,7 @@ use App\Entity\Commande;
 use App\Entity\DetailsCommande;
 use App\Form\AdresseLivraisonType;
 use App\Repository\PlantesRepository;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,8 +26,9 @@ class PaiementController extends AbstractController
     #[Route('/paiement', name: 'app_paiements')]
     public function index(Request $request, EntityManagerInterface $entityManager, SessionInterface $session): Response
     {
-        $commande = $session->get('adresseData');
+
         $sessionCommande = $session->get('commande');
+        dd($sessionCommande);
         $user = $this->getUser();
 
         // if ($commande == null || $sessionCommande == null || $user == null) {
@@ -36,8 +39,6 @@ class PaiementController extends AbstractController
         $successMessage = $session->has('success_url') ? $session->get('success_url') : null;
 
         return $this->render('commandes/commandes.html.twig', [
-            'adresseInfos' => $commande,
-            "adresseValide" => true,
             'dataCommande' => $sessionCommande,
             'userInfo' => $user,
             'successMessage' => null
@@ -48,32 +49,43 @@ class PaiementController extends AbstractController
     public function adresse(Request $request, SessionInterface $session): Response
     {
 
-        $adresse = new Commande();
+        $adresse = new Adresse();
+        $user = $this->getUser();
 
         $form = $this->createForm(AdresseLivraisonType::class, $adresse);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $adresseLivraison = $form->get('adresse_livraison')->getData();
+            $nomLivraison = $form->get('Nom_complet')->getData();
+            $adresseLivraison = $form->get('adresse')->getData();
             $codePostal = $form->get('code_postal')->getData();
             $ville = $form->get('ville')->getData();
             $pays = $form->get('pays')->getData();
+            $instructions = $form->get('instructionLivraison')->getData();
 
-            $adresse->setAdresseLivraison($adresseLivraison);
+            $adresse->setNomComplet($nomLivraison);
+            $adresse->setAdresse($adresseLivraison);
             $adresse->setCodePostal($codePostal);
             $adresse->setVille($ville);
             $adresse->setPays($pays);
+            $adresse->setClient($user);
+            $adresse->setInstructionLivraison($instructions);
 
             //Stocker les données dans la session : 
             $session->set('adresseData', [
+                'nomComplet' => $nomLivraison,
                 'adresseLivraison' => $adresseLivraison,
                 'codePostal' => $codePostal,
                 'ville' => $ville,
                 'pays' => $pays,
+                'instructions' => $instructions,
             ]);
 
-            return $this->redirectToRoute('app_paiements');
+            // Set la session à true adresse pour afficher l'adresse
+            $session->set('adresseValide', true);
+
+            return $this->redirectToRoute('recapp_commande');
         }
 
 
@@ -91,23 +103,22 @@ class PaiementController extends AbstractController
             return $this->redirectToRoute('app_home');
         } else {
             $commandeData = $sessionInterface->get('commande')['commandeData'];
-        }
-        $totalGeneral = $sessionInterface->get('commande')['totalGeneral'];
 
-        $lineItems = [];
-        foreach ($commandeData as $item) {
-            $lineItems[] = [
-                'price_data' => [
-                    'currency' => 'eur',
-                    'product_data' => [
-                        'name' => $item['alt'],
+            $lineItems = [];
+            foreach ($commandeData as $item) {
+                $unitAmount = round($item['prixTTC'] * 100);
+                $lineItems[] = [
+                    'price_data' => [
+                        'currency' => 'eur',
+                        'product_data' => [
+                            'name' => $item['alt'],
+                        ],
+                        'unit_amount' => $unitAmount, // Le prix doit être en centimes
                     ],
-                    'unit_amount' => $item['prix'] * 100, // Le prix doit être en centimes
-                ],
-                'quantity' => $item['quantite'],
-            ];
+                    'quantity' => $item['quantite'],
+                ];
+            }
         }
-
         $checkout_session = \Stripe\Checkout\Session::create([
             'payment_method_types' => ['card'],
             'line_items' => $lineItems,
@@ -122,8 +133,11 @@ class PaiementController extends AbstractController
     public function handleSuccessfulPayment(SessionInterface $session, EntityManagerInterface $entityManager, PlantesRepository $plantesRepository): Response
     {
 
+        $session->set('adresseValide', false);
         // Récupérer les informations de la session
         $adresseInfo = $session->get('adresseData');
+
+        // dd($adresseInfo);
         // Récupérer l'identifiant de l'utilisateur depuis votre tableau de données
         $userId = $this->getUser()->getId();
 
@@ -138,12 +152,12 @@ class PaiementController extends AbstractController
         //Créer une nouvelle entité Commandes
         $commande = new Commande();
         $commande->setClient($user);
-        $commande->setDateCommande(new \DateTime()); // ou utilisez une date appropriée
+        $commande->setDateCommande(new \DateTimeImmutable()); // ou utilisez une date appropriée
         $commande->setEtatCommande('En Attente'); // ou utilisez l'état par défaut souhaité
-        $commande->setAdresseLivraison($adresseInfo['adresseLivraison']);
-        $commande->setVille($adresseInfo['ville']);
-        $commande->setCodePostal($adresseInfo['codePostal']);
-        $commande->setPays($adresseInfo['pays']);
+        // $commande->setAdresseLivraison($adresseInfo['adresseLivraison']);
+        // $commande->setVille($adresseInfo['ville']);
+        // $commande->setCodePostal($adresseInfo['codePostal']);
+        // $commande->setPays($adresseInfo['pays']);
 
         $total = 0;
         $quantiteTotale = 0;
@@ -151,7 +165,7 @@ class PaiementController extends AbstractController
             $plante = $plantesRepository->findOneById((int) $item['id']);
             if ($plante) {
                 $quantite = $item['quantite'];
-                $prix = $item['prix'];
+                $prix = $item['prixTTC'];
                 $total += $quantite * $prix;
                 // Accumuler la quantité totale
                 $quantiteTotale += $quantite;
@@ -172,7 +186,17 @@ class PaiementController extends AbstractController
                 }
             }
         }
-        $commande->setTotal((float) $total);
+        $adresse = new Adresse();
+        $adresse->setNomComplet($adresseInfo['nomComplet']);
+        $adresse->setAdresse($adresseInfo['adresseLivraison']);
+        $adresse->setClient($user);
+        $adresse->setCodePostal($adresseInfo['codePostal']);
+        $adresse->setInstructionLivraison($adresseInfo['instructions']);
+        $adresse->setPays($adresseInfo['pays']);
+        $adresse->setVille($adresseInfo['ville']);
+
+        $entityManager->persist($adresse);
+        $commande->setTotal((float) number_format($total, 2));
 
         $entityManager->persist($commande);
         $entityManager->flush();

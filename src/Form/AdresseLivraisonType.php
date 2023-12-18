@@ -2,11 +2,8 @@
 
 namespace App\Form;
 
-use App\Entity\User;
-use App\Entity\Plantes;
-use App\Entity\Commandes;
+use App\Entity\Adresse;
 
-use App\Entity\Commande;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -14,13 +11,20 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class AdresseLivraisonType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('adresse_livraison', TextType::class, [
+            ->add('Nom_complet', TextType::class, [
+                'label' => "Nom Complet",
+                'constraints' => [
+                    new Assert\NotBlank(),
+                ]
+            ])
+            ->add('adresse', TextType::class, [
                 'label' => 'Entrez votre adresse de livraison',
                 'constraints' => [
                     new Assert\NotBlank(),
@@ -46,6 +50,9 @@ class AdresseLivraisonType extends AbstractType
 
                 ]
             ])
+            ->add('instructionLivraison', TextareaType::class, [
+                'label' => 'Ajouter des instructions de livraison',
+            ])
             ->add('Ajouter', SubmitType::class)
         ;
     }
@@ -53,7 +60,7 @@ class AdresseLivraisonType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Commande::class,
+            'data_class' => Adresse::class,
         ]);
     }
 }

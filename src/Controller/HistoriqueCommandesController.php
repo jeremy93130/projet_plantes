@@ -22,6 +22,7 @@ class HistoriqueCommandesController extends AbstractController
 
         // Si vous avez besoin d'accéder à toutes les commandes de l'utilisateur, utilisez $user->getCommandes() au lieu de $detailsCommande
         $commandesHistorique = $user->getCommande();
+        $adresseHistorique = $user->getAdresses();
         // Récupérez les détails de la commande pour l'utilisateur actuel à l'aide du repository
         $details = $detailsCommande->findByJoin($commandesHistorique);
         // dd($details);
@@ -35,12 +36,29 @@ class HistoriqueCommandesController extends AbstractController
                 $commandesAvecDetails[$commandeId] = [
                     'commande' => $detail->getCommande(),
                     'details' => [],
+                    'adresse' => []
                 ];
             }
 
             // Ajoutez le détail à la commande correspondante
             $commandesAvecDetails[$commandeId]['details'][] = $detail;
         }
+
+        // Ajouter les adresses de chaque commande
+
+        foreach ($commandesAvecDetails as &$commande) {
+            $commandeUser = $commande['commande']->getClient();
+
+            foreach ($adresseHistorique as $adresse) {
+                if ($adresse->getClient()->getId() == $commandeUser->getId()) {
+                    $commande['adresse'] = $adresse;
+                }
+            }
+        }
+        unset($commande);
+
+        dd($commandesAvecDetails);
+
         return $this->render('historique_commandes/historique.html.twig', [
             'commandesAvecDetails' => $commandesAvecDetails,
             'user' => $user,

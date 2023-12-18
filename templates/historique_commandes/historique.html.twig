@@ -19,12 +19,10 @@
     </tr>
     {% for commandeAvecDetails in commandesAvecDetails %}
       <tr class="text-warning">
-        <td>{{ commandeAvecDetails.commande.dateCommande|date('Y-m-d') }}</td>
-        <td>{{ commandeAvecDetails.commande.client.nom }} {{ commandeAvecDetails.commande.client.prenom }}</td>
-        <td>{{ commandeAvecDetails.commande.adresseLivraison }},
-          {{ commandeAvecDetails.commande.ville }},
-          {{ commandeAvecDetails.commande.codePostal }},
-          {{ commandeAvecDetails.commande.pays }}</td>
+        <td>{{ commandeAvecDetails.commande.dateCommande|date('d-m-Y') }}</td>
+        {% for adresse in commandeAvecDetails.adresse %}
+          <td>{{adresse.nomComplet}}</td>
+        {% endfor %}
         <td>
           {% for detail in commandeAvecDetails.details %}
             {{ detail.plante.nomPlante }}
