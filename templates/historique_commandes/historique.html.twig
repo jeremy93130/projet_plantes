@@ -20,7 +20,7 @@
     {% for commandeAvecDetails in commandesAvecDetails %}
       <tr class="text-warning">
         <td>{{ commandeAvecDetails.commande.dateCommande|date('d-m-Y') }}</td>
-        {% for adresse in commandeAvecDetails.adresse %}
+        {% for adresse in commandeAvecDetails%}
           <td>{{adresse.nomComplet}}</td>
         {% endfor %}
         <td>

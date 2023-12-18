@@ -14,6 +14,9 @@ class HistoriqueCommandesController extends AbstractController
     #[Route('/historique/commandes', name: 'app_historique_commandes')]
     public function index(SessionInterface $session, DetailsCommandeRepository $detailsCommande): Response
     {
+        /**
+         * @var $user
+         */
         $user = $this->getUser();
         $commande = $session->get('commande', []);
         if (!$user) {
@@ -46,7 +49,7 @@ class HistoriqueCommandesController extends AbstractController
 
         // Ajouter les adresses de chaque commande
 
-        foreach ($commandesAvecDetails as &$commande) {
+        foreach ($commandesAvecDetails as $commande) {
             $commandeUser = $commande['commande']->getClient();
 
             foreach ($adresseHistorique as $adresse) {
@@ -55,7 +58,7 @@ class HistoriqueCommandesController extends AbstractController
                 }
             }
         }
-        unset($commande);
+        // unset($commande);
 
         dd($commandesAvecDetails);
 

@@ -4,13 +4,10 @@ namespace App\Controller;
 
 use App\Entity\Adresse;
 use App\Entity\User;
-use App\Entity\Plantes;
-use App\Entity\Quantites;
 use App\Entity\Commande;
 use App\Entity\DetailsCommande;
 use App\Form\AdresseLivraisonType;
 use App\Repository\PlantesRepository;
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -136,9 +133,10 @@ class PaiementController extends AbstractController
         $session->set('adresseValide', false);
         // Récupérer les informations de la session
         $adresseInfo = $session->get('adresseData');
-
+        
         // dd($adresseInfo);
         // Récupérer l'identifiant de l'utilisateur depuis votre tableau de données
+        /** @var $userId */
         $userId = $this->getUser()->getId();
 
         //Récuperer les plantes dans la session panier 
