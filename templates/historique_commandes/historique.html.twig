@@ -20,12 +20,11 @@
     {% for commandeAvecDetails in commandesAvecDetails %}
       <tr class="text-warning">
         <td>{{ commandeAvecDetails.commande.dateCommande|date('d-m-Y') }}</td>
-        {% for adresse in commandeAvecDetails%}
-          <td>{{adresse.nomComplet}}</td>
-        {% endfor %}
+        <td>{{ commandeAvecDetails.adresse.nomComplet }}</td>
+        <td>{{ commandeAvecDetails.adresse.adresse }}</td>
         <td>
-          {% for detail in commandeAvecDetails.details %}
-            {{ detail.plante.nomPlante }}
+          {% for details in commandeAvecDetails.details %}
+            {{ details.plante.nomPlante }}
             {% if not loop.last %}
               ,<div style="padding: 8px 0 ;"></div>
             {% endif %}

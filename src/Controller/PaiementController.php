@@ -137,7 +137,8 @@ class PaiementController extends AbstractController
         // dd($adresseInfo);
         // Récupérer l'identifiant de l'utilisateur depuis votre tableau de données
         /** @var $userId */
-        $userId = $this->getUser()->getId();
+        $user = $this->getUser();
+        $userId = $user->getId();
 
         //Récuperer les plantes dans la session panier 
         $panier = $session->get('commande', []);

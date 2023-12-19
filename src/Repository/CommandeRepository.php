@@ -57,4 +57,22 @@ class CommandeRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+
+    public function getAllCommandesWithDetails()
+    {
+        return $this->createQueryBuilder('c')
+            ->select('c.id as commande_id, c.dateCommande, c.etatCommande, c.total')
+            ->addSelect('d.id as detail_id, d.quantite')
+            ->addSelect('p.id as plante_id, p.nom_plante, p.description_plante, p.prix_plante, p.stock, p.image, p.caracteristiques, p.entretien')
+            ->addSelect('u.id as user_id, u.nom as user_nom, u.prenom as user_prenom, u.email as user_email, u.telephone as user_telephone, u.roles as user_roles')
+            ->addSelect('a.id as adresse_id, a.adresse, a.codePostal, a.ville, a.pays, a.instruction_livraison, a.nomComplet')
+            ->leftJoin('c.detailsCommandes', 'd')
+            ->leftJoin('d.plante', 'p')
+            ->leftJoin('c.client', 'u')
+            ->leftJoin('u.adresses', 'a')
+            ->andWhere('u.id = :val')
+            ->setParameter('val', 4)
+            ->getQuery()
+            ->getResult();
+    }
 }

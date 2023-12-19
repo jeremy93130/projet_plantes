@@ -49,18 +49,18 @@ class HistoriqueCommandesController extends AbstractController
 
         // Ajouter les adresses de chaque commande
 
-        foreach ($commandesAvecDetails as $commande) {
+        foreach ($commandesAvecDetails as $index => $commande) {
             $commandeUser = $commande['commande']->getClient();
 
             foreach ($adresseHistorique as $adresse) {
                 if ($adresse->getClient()->getId() == $commandeUser->getId()) {
-                    $commande['adresse'] = $adresse;
+                    $commandesAvecDetails[$index]['adresse'] = $adresse;
                 }
             }
         }
         // unset($commande);
 
-        dd($commandesAvecDetails);
+        dd($adresseHistorique);
 
         return $this->render('historique_commandes/historique.html.twig', [
             'commandesAvecDetails' => $commandesAvecDetails,
