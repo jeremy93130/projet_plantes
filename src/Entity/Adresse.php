@@ -36,6 +36,10 @@ class Adresse
     #[ORM\JoinColumn(nullable: false)]
     private ?User $client = null;
 
+    #[ORM\OneToOne(inversedBy: 'adresse', cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?commande $commande = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -121,6 +125,18 @@ class Adresse
     public function setClient(?User $client): static
     {
         $this->client = $client;
+
+        return $this;
+    }
+
+    public function getCommande(): ?commande
+    {
+        return $this->commande;
+    }
+
+    public function setCommande(commande $commande): static
+    {
+        $this->commande = $commande;
 
         return $this;
     }

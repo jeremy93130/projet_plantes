@@ -47,4 +47,23 @@ class Images
 
         return $this;
     }
+
+    function buildForm(\Symfony\Component\Form\FormBuilderInterface $builder, array $options)
+    {
+    }
+    function buildView(\Symfony\Component\Form\FormView $view, \Symfony\Component\Form\FormInterface $form, array $options)
+    {
+    }
+    function finishView(\Symfony\Component\Form\FormView $view, \Symfony\Component\Form\FormInterface $form, array $options)
+    {
+    }
+    function configureOptions(\Symfony\Component\OptionsResolver\OptionsResolver $resolver)
+    {
+    }
+    function getBlockPrefix()
+    {
+    }
+    function getParent()
+    {
+    }
 }

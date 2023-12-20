@@ -202,10 +202,31 @@ nav h2 {
     border-radius: 50%;
 }
 
+.details-img {
+display: flex;
+justify-content: center;
+}
+
 .detail-img {
     height: 100%;
     width: 400px;
     margin: auto;
+}
+
+.carousel-control-next
+{
+    right: 220px;
+}
+
+.carousel-control-prev{
+    left: 220px;
+}
+
+.carousel-control-prev span {
+    background-color: black;
+}
+.carousel-control-next span {
+    background-color: black;
 }
 
 .accordion-item,

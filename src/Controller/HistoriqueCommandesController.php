@@ -2,12 +2,12 @@
 
 namespace App\Controller;
 
-use App\Entity\DetailsCommande;
+use App\Repository\CommandeRepository;
 use App\Repository\DetailsCommandeRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class HistoriqueCommandesController extends AbstractController
 {
@@ -18,52 +18,49 @@ class HistoriqueCommandesController extends AbstractController
          * @var $user
          */
         $user = $this->getUser();
+        $userId = $user->getId();
         $commande = $session->get('commande', []);
         if (!$user) {
             return $this->redirectToRoute('app_login');
         }
 
         // Si vous avez besoin d'accéder à toutes les commandes de l'utilisateur, utilisez $user->getCommandes() au lieu de $detailsCommande
-        $commandesHistorique = $user->getCommande();
-        $adresseHistorique = $user->getAdresses();
-        // Récupérez les détails de la commande pour l'utilisateur actuel à l'aide du repository
-        $details = $detailsCommande->findByJoin($commandesHistorique);
-        // dd($details);
-        // Organisez les détails par commande
-        $commandesAvecDetails = [];
-        foreach ($details as $detail) {
-            $commandeId = $detail->getCommande()->getId();
+        $commandes = $detailsCommande->findAllbyUserId($userId);
 
-            // Créez un tableau pour chaque commande s'il n'existe pas encore
-            if (!isset($commandesAvecDetails[$commandeId])) {
-                $commandesAvecDetails[$commandeId] = [
-                    'commande' => $detail->getCommande(),
-                    'details' => [],
-                    'adresse' => []
+        $formattedResults = [];
+        foreach ($commandes as $detailsCommande) {
+            $commandeObj = $detailsCommande->getCommande();
+            $plante = $detailsCommande->getPlante();
+
+            $commandeId = $commandeObj->getId();
+
+            // Si la commande n'existe pas encore dans $formattedResults, crée une nouvelle entrée
+            if (!isset($formattedResults[$commandeId])) {
+                $formattedResults[$commandeId] = [
+                    'commande' => $commandeObj,
+                    'date_commande' => $commandeObj->getDateCommande(),
+                    'nom_client' => $commandeObj->getAdresse()->getNomComplet(),
+                    'adresse_livraison' => $commandeObj->getAdresse()->getAdresse(),
+                    'produits' => [],
+                    'total' => 0,
                 ];
             }
 
-            // Ajoutez le détail à la commande correspondante
-            $commandesAvecDetails[$commandeId]['details'][] = $detail;
+            // Ajoute le produit à la commande existante
+            $formattedResults[$commandeId]['produits'][] = [
+                'produit' => $plante->getNomPlante(),
+                'prix' => $plante->getPrixPlante(),
+                'quantite' => $detailsCommande->getQuantite(),
+            ];
+
+            // Ajoute le prix du produit au total de la commande
+            $formattedResults[$commandeId]['total'] += ($plante->getPrixPlante() * $detailsCommande->getQuantite());
         }
 
-        // Ajouter les adresses de chaque commande
-
-        foreach ($commandesAvecDetails as $index => $commande) {
-            $commandeUser = $commande['commande']->getClient();
-
-            foreach ($adresseHistorique as $adresse) {
-                if ($adresse->getClient()->getId() == $commandeUser->getId()) {
-                    $commandesAvecDetails[$index]['adresse'] = $adresse;
-                }
-            }
-        }
-        // unset($commande);
-
-        dd($adresseHistorique);
+        // dd($formattedResults);
 
         return $this->render('historique_commandes/historique.html.twig', [
-            'commandesAvecDetails' => $commandesAvecDetails,
+            'commandes' => $formattedResults,
             'user' => $user,
         ]);
     }

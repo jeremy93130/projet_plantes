@@ -58,4 +58,16 @@ class DetailsCommandeRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+
+    public function findAllbyUserId($user): array
+    {
+        return $this->createQueryBuilder('d')
+            ->select('d', 'plante', 'commande')
+            ->from('App\Entity\Adresse', 'adresse')
+            ->leftJoin('d.plante', 'plante')
+            ->leftJoin('d.commande', 'commande')
+            ->leftJoin('commande.adresse', 'a')
+            ->getQuery()
+            ->getResult();
+    }
 }

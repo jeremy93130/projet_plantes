@@ -32,6 +32,9 @@ class Commande
     #[ORM\OneToMany(mappedBy: 'commande', targetEntity: DetailsCommande::class)]
     private Collection $detailsCommandes;
 
+    #[ORM\OneToOne(mappedBy: 'commande', cascade: ['persist', 'remove'])]
+    private ?Adresse $adresse = null;
+
     public function __construct()
     {
         $this->detailsCommandes = new ArrayCollection();
@@ -116,6 +119,23 @@ class Commande
                 $detailsCommande->setCommande(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getAdresse(): ?Adresse
+    {
+        return $this->adresse;
+    }
+
+    public function setAdresse(Adresse $adresse): static
+    {
+        // set the owning side of the relation if necessary
+        if ($adresse->getCommande() !== $this) {
+            $adresse->setCommande($this);
+        }
+
+        $this->adresse = $adresse;
 
         return $this;
     }
