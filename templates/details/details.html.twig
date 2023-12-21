@@ -11,6 +11,11 @@
           <div class="carousel-item active detail-img">
             <img src="{{ asset('images/plantes/' ~ plante.image) }}" class="d-block w-100" alt="..." />
           </div>
+          {% for item in carousel %}
+            <div class="carousel-item detail-img">
+              <img src="{{ asset('images/plantes/' ~ item.imageName) }}" class="d-block w-100" alt="..." />
+            </div>
+          {% endfor %}
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
           <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -57,8 +62,15 @@
           </div>
         </div>
         <span class="bg-warning absolutePrix" style="text-align:center">{{ plante.prixPlante }}€</span>
+        {% if 'ROLE_ADMIN' in app.user.roles %}
+          <form action="{{ path('details', { id: plante.id }) }}" method="post" enctype="multipart/form-data">
+            <div class="add_image">
+              <input type="file" name="imagePlante" accept="image/*" />
+              <button type="submit">Ajouter image</button>
+            </div>
+          </form>
+        {% endif %}
       </div>
     </div>
   </div>
-  <input type="file" value="Ajouter une image" />
 {% endblock %}

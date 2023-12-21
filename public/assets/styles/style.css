@@ -203,8 +203,8 @@ nav h2 {
 }
 
 .details-img {
-display: flex;
-justify-content: center;
+    display: flex;
+    justify-content: center;
 }
 
 .detail-img {
@@ -213,18 +213,30 @@ justify-content: center;
     margin: auto;
 }
 
-.carousel-control-next
-{
+.add_image {
+    color: #FFC107;
+    display: block;
+    margin: 1rem 0 0 0;
+    padding-left: 1rem;
+}
+
+.add_image button {
+    margin-top: 10px;
+    height: 30px;
+}
+
+.carousel-control-next {
     right: 220px;
 }
 
-.carousel-control-prev{
+.carousel-control-prev {
     left: 220px;
 }
 
 .carousel-control-prev span {
     background-color: black;
 }
+
 .carousel-control-next span {
     background-color: black;
 }
@@ -449,7 +461,7 @@ table.table td a {
 }
 
 /* Tablettes */
-@media (min-width: 768px) and (max-width: 1600px) {
+@media (max-width: 768px){
     .titre-plante {
         width: 700px;
     }
@@ -473,8 +485,12 @@ table.table td a {
     }
 
     .absolutePrix {
-        left: 490px;
+        left: 90%;
     }
+
+
+
+
 
 
     /* Page Details */
@@ -494,7 +510,7 @@ table.table td a {
 
 }
 
-@media (max-width: 768px) {
+@media (max-width: 576px) {
     .adresse_livraison {
         width: 100%;
     }
@@ -506,6 +522,11 @@ table.table td a {
 
     .details_mobile {
         width: 100% !important;
+        margin-top: 0 !important;
+    }
+
+    .detail-img{
+        width: 100%;
     }
 
     .details_mobile img {
@@ -515,6 +536,20 @@ table.table td a {
     .details_mobile h5 {
         color: #FFC107;
         text-align: center;
+    }
+
+    .absolutePrix {
+        left: 82%;
+        top: 5%;
+        font-size: 13px;
+    }
+
+    .carousel-control-next {
+        right: 0;
+    }
+
+    .carousel-control-prev {
+        left: 0;
     }
 
     .table_historic,
@@ -569,4 +604,5 @@ table.table td a {
     .none {
         display: none;
     }
+
 }

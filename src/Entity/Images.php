@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ImagesRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: ImagesRepository::class)]
 class Images
@@ -46,24 +47,5 @@ class Images
         $this->imageName = $imageName;
 
         return $this;
-    }
-
-    function buildForm(\Symfony\Component\Form\FormBuilderInterface $builder, array $options)
-    {
-    }
-    function buildView(\Symfony\Component\Form\FormView $view, \Symfony\Component\Form\FormInterface $form, array $options)
-    {
-    }
-    function finishView(\Symfony\Component\Form\FormView $view, \Symfony\Component\Form\FormInterface $form, array $options)
-    {
-    }
-    function configureOptions(\Symfony\Component\OptionsResolver\OptionsResolver $resolver)
-    {
-    }
-    function getBlockPrefix()
-    {
-    }
-    function getParent()
-    {
     }
 }
