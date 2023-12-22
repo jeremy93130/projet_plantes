@@ -400,6 +400,7 @@ table.table td a {
     color: #FFC107;
     text-align: center;
     margin: 30px 0 0 0;
+    padding: 30px 0;
     background-color: #000000;
     border-bottom: 2px solid white;
 }

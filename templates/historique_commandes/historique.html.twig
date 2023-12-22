@@ -32,6 +32,7 @@
         </td>
         <td>
           {% for prix in commande.produits %}
+            {# {% set tva = prix.prix + prix.prix * 0.1 %} #}
             {{ prix.prix }}
             €{% if not loop.last %}
               <div style="padding: 8px 0 ;"></div>
@@ -40,13 +41,13 @@
         </td>
         <td>
           {% for quantite in commande.produits %}
-            {{quantite.quantite}}
-          {% if not loop.last %}
-            <div style="padding: 8px 0 ;"></div>
-          {% endif %}
+            {{ quantite.quantite }}
+            {% if not loop.last %}
+              <div style="padding: 8px 0 ;"></div>
+            {% endif %}
           {% endfor %}
         </td>
-        <td>{{commande.total|number_format(2, ',', 'fr')}} €</td>
+        <td>{{ commande.total|number_format(2, ',', 'fr') }} €</td>
       </tr>
     {% endfor %}
   </table>
