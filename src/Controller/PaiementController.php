@@ -100,7 +100,6 @@ class PaiementController extends AbstractController
             return $this->redirectToRoute('app_home');
         } else {
             $commandeData = $sessionInterface->get('commande')['commandeData'];
-
             $lineItems = [];
             foreach ($commandeData as $item) {
                 $unitAmount = round($item['prixTTC'] * 100);
@@ -133,7 +132,7 @@ class PaiementController extends AbstractController
         $session->set('adresseValide', false);
         // Récupérer les informations de la session
         $adresseInfo = $session->get('adresseData');
-        
+
         // dd($adresseInfo);
         // Récupérer l'identifiant de l'utilisateur depuis votre tableau de données
         /** @var $userId */
@@ -142,7 +141,6 @@ class PaiementController extends AbstractController
 
         //Récuperer les plantes dans la session panier 
         $panier = $session->get('commande', []);
-        // dd($panier);
 
         // Récupérer l'objet User correspondant depuis la base de données
         $userRepository = $entityManager->getRepository(User::class);
@@ -153,10 +151,6 @@ class PaiementController extends AbstractController
         $commande->setClient($user);
         $commande->setDateCommande(new \DateTimeImmutable()); // ou utilisez une date appropriée
         $commande->setEtatCommande('En Attente'); // ou utilisez l'état par défaut souhaité
-        // $commande->setAdresseLivraison($adresseInfo['adresseLivraison']);
-        // $commande->setVille($adresseInfo['ville']);
-        // $commande->setCodePostal($adresseInfo['codePostal']);
-        // $commande->setPays($adresseInfo['pays']);
 
         $total = 0;
         $quantiteTotale = 0;
@@ -181,7 +175,6 @@ class PaiementController extends AbstractController
                     $detailsCommande->setPlante($plante);
                     $detailsCommande->setCommande($commande);
                     $entityManager->persist($detailsCommande);
-
                 }
             }
         }
@@ -193,9 +186,11 @@ class PaiementController extends AbstractController
         $adresse->setInstructionLivraison($adresseInfo['instructions']);
         $adresse->setPays($adresseInfo['pays']);
         $adresse->setVille($adresseInfo['ville']);
+        $adresse->setCommande($commande);
 
         $entityManager->persist($adresse);
         $commande->setTotal((float) number_format($total, 2));
+        // dd($total);
 
         $entityManager->persist($commande);
         $entityManager->flush();

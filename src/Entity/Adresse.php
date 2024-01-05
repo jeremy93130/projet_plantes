@@ -29,7 +29,7 @@ class Adresse
     #[ORM\Column(length: 255)]
     private ?string $pays = null;
 
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $instruction_livraison = null;
 
     #[ORM\ManyToOne(inversedBy: 'adresses')]
