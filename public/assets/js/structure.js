@@ -138,7 +138,7 @@ function ajouterAuPanier(url, nom, prix, image) {
         // Stockez la nouvelle valeur de nb_counts dans localStorage
         localStorage.setItem("nb_counts", nb_counts);
         // localStorage.clear('nb_counts');
-        location.href = "/achats";
+        // window.history.back;
       } else {
         alert("ok");
       }
@@ -184,6 +184,11 @@ function supprimerArticleDuPanier(url, id) {
       console.log("Une erreur s'est produite lors de la requête AJAX");
     },
   });
+
+  function derouleMenu() {
+    
+  }
+
 }
 
 // Utilisez cette fonction en appelant supprimerArticleDuPanier(url, id)

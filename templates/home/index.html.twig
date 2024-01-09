@@ -3,5 +3,23 @@
   Hello HomeController!
 {% endblock %}
 {% block body %}
-
+  {% include 'navbar/navbar.html.twig' %}
+  <div>
+    <div class="banner">
+      <h1>Le Naturel Au Vert</h1>
+      <nav>
+        <ul>
+          <li>
+            <a href="{{ path('app_achats') }}">Voir nos plantes</a>
+          </li>
+          <li>
+            <a href="">Voir nos graines</a>
+          </li>
+          <li>
+            <a href="">Voir nos légumes</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
 {% endblock %}

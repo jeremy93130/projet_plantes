@@ -10,6 +10,24 @@ body {
     background-attachment: fixed;
 }
 
+
+/* Home */
+
+.banner {
+    height: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.banner h1 {
+    text-shadow: 15px 12px 4px rgba(0, 0, 0, 0.603);
+    font-family: 'Kolker Brush', cursive;
+    font-size: 70px;
+    color: #FFC107;
+}
+
 /* NavBar */
 
 nav h2 {
@@ -18,7 +36,12 @@ nav h2 {
     font-size: 55px;
 }
 
-
+.dropdown {
+    margin-right: 30px;
+}
+.drop-nav > li {
+    width: 100%;
+}
 /* Partie card achats.html.twig */
 
 
@@ -247,6 +270,11 @@ nav h2 {
     background-color: transparent;
 }
 
+#link-ajouter,
+#link-supp {
+    cursor: pointer;
+}
+
 /* FIN PAGE DETAILS */
 
 
@@ -459,7 +487,7 @@ table.table td a {
 }
 
 /* Tablettes */
-@media (max-width: 768px){
+@media (max-width: 768px) {
     .titre-plante {
         width: 700px;
     }
@@ -523,7 +551,7 @@ table.table td a {
         margin-top: 0 !important;
     }
 
-    .detail-img{
+    .detail-img {
         width: 100%;
     }
 
