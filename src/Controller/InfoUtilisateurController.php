@@ -12,10 +12,8 @@ class InfoUtilisateurController extends AbstractController
     #[Route('/info/utilisateur', name: 'app_info_utilisateur')]
     public function index(): Response
     {
-        $user = $this->getUser();
         return $this->render('info_utilisateur/infosUtilisateur.html.twig', [
             'controller_name' => 'InfoUtilisateurController',
-            'utilisateur' => $user,
         ]);
     }
 }

@@ -6,4 +6,23 @@
 
 {% block body %}
   {% include 'navbar/navbar.html.twig' %}
+  <div class="container">
+    <div>
+      <h1>Vos Informations personnelles</h1>
+      <hr />
+      <div>
+        <p>nom : {{ app.user.nom }} {{ app.user.prenom }}</p>
+        <a class="modifInfos" onclick="modifInfosPerso()">Modifier</a>
+      </div>
+      <div>
+        <p>email : {{ app.user.email }}</p> <a class="modifInfos" onclick="modifInfosPerso()">Modifier</a>
+      </div>
+      <div>
+        <p>Mot de Passe : {{ app.user.getMdpCache|slice(0, 20) }}</p><a class="modifInfos" onclick="modifInfosPerso()">Modifier</a>
+      </div>
+      <div>
+        <p>Numéro de téléphone : {{ app.user.telephone }}</p><a class="modifInfos" onclick="modifInfosPerso()">Modifier</a>
+      </div>
+    </div>
+  </div>
 {% endblock %}

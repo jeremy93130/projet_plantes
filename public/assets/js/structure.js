@@ -112,6 +112,11 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
+function modifInfosPerso() {
+  $(".modifInfos").on("click", (event) => {
+    console.log(event.target);
+  });
+}
 // Fonction ajout panier
 var nb_counts = parseInt(localStorage.getItem("nb_counts")) || 0;
 function ajouterAuPanier(url, nom, prix, image) {
@@ -184,11 +189,6 @@ function supprimerArticleDuPanier(url, id) {
       console.log("Une erreur s'est produite lors de la requête AJAX");
     },
   });
-
-  function derouleMenu() {
-    
-  }
-
 }
 
 // Utilisez cette fonction en appelant supprimerArticleDuPanier(url, id)

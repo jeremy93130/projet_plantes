@@ -14,7 +14,7 @@ body {
 /* Home */
 
 .banner {
-    height: 500px;
+    height: 250px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -28,6 +28,54 @@ body {
     color: #FFC107;
 }
 
+.main-produits {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.produits {
+    background-color: black;
+    height: 250px;
+    width: 600px;
+    margin: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.produits:nth-child(1){
+    background-image: url('../../images/plantes/presentation-plantes.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+.produits:nth-child(2){
+    background-image: url('../../images/graines/presentation-graines.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+.produits:nth-child(3){
+    background-image: url('../../images/legumes/presentation-legumes.webp');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+.produits:nth-child(4){
+    background-image: url('../../images/fruits/presentation-fruits.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.produits a {
+    text-decoration: none;
+    color: black;
+    font-size: 66px;
+    text-shadow: 8px 5px 3px #FFC107;
+}
+
 /* NavBar */
 
 nav h2 {
@@ -36,11 +84,31 @@ nav h2 {
     font-size: 55px;
 }
 
-.dropdown {
-    margin-right: 30px;
+.mainmenubtn {
+    background-color: transparent;
+    color: #FFC107;
+    border: none;
+    cursor: pointer;
+    margin-right: 25px;
 }
-.drop-nav > li {
-    width: 100%;
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-child {
+    display: none;
+}
+
+.dropdown-child ul {
+    color: #FFC107;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown:hover .dropdown-child {
+    display: block;
 }
 /* Partie card achats.html.twig */
 
@@ -431,6 +499,28 @@ table.table td a {
     padding: 30px 0;
     background-color: #000000;
     border-bottom: 2px solid white;
+}
+
+
+/* Page Infos utilisateur */
+
+.container>div>h1{
+    text-align: center;
+    color: #FFC107;
+}
+
+.container>div>div {
+    color: #FFC107;
+    background-color: #00000048;
+    display: flex;
+    margin: 10px;
+    justify-content: space-between;
+    width: 400px;
+    margin: auto;
+}
+
+.container>div>div>a {
+    color: white;
 }
 
 /* MEDIAS QUERIES */

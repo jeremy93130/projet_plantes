@@ -95,6 +95,12 @@ class User implements
         return $this->mot_de_passe;
     }
 
+    public function getMdpCache(): string
+    {
+        // Retourne une chaîne masquée avec des étoiles
+        return str_repeat('*', strlen($this->mot_de_passe));
+    }
+
     public function setMotDePasse(string $mot_de_passe): static
     {
         $this->mot_de_passe = $mot_de_passe;
