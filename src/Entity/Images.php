@@ -15,7 +15,7 @@ class Images
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'images')]
-    private ?Plantes $plante = null;
+    private ?Produits $produit = null;
 
     #[ORM\Column(length: 255)]
     private ?string $imageName = null;
@@ -25,14 +25,14 @@ class Images
         return $this->id;
     }
 
-    public function getPlante(): ?Plantes
+    public function getProduit(): ?Produits
     {
-        return $this->plante;
+        return $this->produit;
     }
 
-    public function setPlante(?Plantes $plante): static
+    public function setProduit(?Produits $produit): static
     {
-        $this->plante = $plante;
+        $this->produit = $produit;
 
         return $this;
     }

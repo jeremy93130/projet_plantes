@@ -20,7 +20,7 @@ class DetailsCommande
 
     #[ORM\ManyToOne(inversedBy: 'detailsCommandes')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Plantes $plante = null;
+    private ?Produits $produit = null;
 
     #[ORM\ManyToOne(inversedBy: 'detailsCommandes')]
     #[ORM\JoinColumn(nullable: false)]
@@ -47,14 +47,14 @@ class DetailsCommande
         return $this;
     }
 
-    public function getPlante(): ?Plantes
+    public function getProduit(): ?Produits
     {
-        return $this->plante;
+        return $this->produit;
     }
 
-    public function setPlante(?Plantes $plante): static
+    public function setProduit(?Produits $produit): static
     {
-        $this->plante = $plante;
+        $this->produit = $produit;
 
         return $this;
     }

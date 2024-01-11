@@ -49,8 +49,8 @@ class DetailsCommandeRepository extends ServiceEntityRepository
     public function findByJoin($commande): array
     {
         return $this->createQueryBuilder('d')
-            ->select('d', 'plante', 'commande')
-            ->leftJoin('d.plante', 'plante')
+            ->select('d', 'produits', 'commande')
+            ->leftJoin('d.produits', 'plante')
             ->leftJoin('d.commande', 'commande')
             ->where('commande IN (:commande)')
             ->setParameter('commande', $commande)
@@ -62,9 +62,9 @@ class DetailsCommandeRepository extends ServiceEntityRepository
     public function findAllbyUserId($user): array
     {
         return $this->createQueryBuilder('d')
-            ->select('d', 'plante', 'commande')
+            ->select('d', 'produits', 'commande')
             ->from('App\Entity\Adresse', 'adresse')
-            ->leftJoin('d.plante', 'plante')
+            ->leftJoin('d.produit', 'produits')
             ->leftJoin('d.commande', 'commande')
             ->leftJoin('commande.adresse', 'a')
             ->getQuery()

@@ -2,14 +2,14 @@
 
 namespace App\Entity;
 
-use App\Repository\PlantesRepository;
+use App\Repository\ProduitsRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: PlantesRepository::class)]
-class Plantes
+#[ORM\Entity(repositoryClass: ProduitsRepository::class)]
+class Produits
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -17,13 +17,13 @@ class Plantes
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $nom_plante = null;
+    private ?string $nom_produit = null;
 
     #[ORM\Column(type: Types::TEXT)]
-    private ?string $description_plante = null;
+    private ?string $description_produit = null;
 
     #[ORM\Column]
-    private ?float $prix_plante = null;
+    private ?float $prix_produit = null;
 
     #[ORM\Column]
     private ?int $stock = null;
@@ -37,11 +37,17 @@ class Plantes
     #[ORM\Column(type: Types::TEXT)]
     private ?string $entretien = null;
 
-    #[ORM\OneToMany(mappedBy: 'plante', targetEntity: DetailsCommande::class)]
+    #[ORM\OneToMany(mappedBy: 'produit', targetEntity: DetailsCommande::class)]
     private Collection $detailsCommandes;
 
-    #[ORM\OneToMany(mappedBy: 'plante', targetEntity: Images::class)]
+    #[ORM\OneToMany(mappedBy: 'produit', targetEntity: Images::class)]
     private Collection $images;
+
+    #[ORM\Column(length: 255)]
+    private ?int $categorie = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $lot = null;
 
     public function __construct()
     {
@@ -54,38 +60,38 @@ class Plantes
         return $this->id;
     }
 
-    public function getNomPlante(): ?string
+    public function getNomproduit(): ?string
     {
-        return $this->nom_plante;
+        return $this->nom_produit;
     }
 
-    public function setNomPlante(string $nom_plante): static
+    public function setNomproduit(string $nom_produit): static
     {
-        $this->nom_plante = $nom_plante;
+        $this->nom_produit = $nom_produit;
 
         return $this;
     }
 
-    public function getDescriptionPlante(): ?string
+    public function getDescriptionproduit(): ?string
     {
-        return $this->description_plante;
+        return $this->description_produit;
     }
 
-    public function setDescriptionPlante(string $description_plante): static
+    public function setDescriptionproduit(string $description_produit): static
     {
-        $this->description_plante = $description_plante;
+        $this->description_produit = $description_produit;
 
         return $this;
     }
 
-    public function getPrixPlante(): ?float
+    public function getPrixproduit(): ?float
     {
-        return $this->prix_plante;
+        return $this->prix_produit;
     }
 
-    public function setPrixPlante(float $prix_plante): static
+    public function setPrixproduit(float $prix_produit): static
     {
-        $this->prix_plante = $prix_plante;
+        $this->prix_produit = $prix_produit;
 
         return $this;
     }
@@ -150,7 +156,7 @@ class Plantes
     {
         if (!$this->detailsCommandes->contains($detailsCommande)) {
             $this->detailsCommandes->add($detailsCommande);
-            $detailsCommande->setPlante($this);
+            $detailsCommande->setProduit($this);
         }
 
         return $this;
@@ -160,8 +166,8 @@ class Plantes
     {
         if ($this->detailsCommandes->removeElement($detailsCommande)) {
             // set the owning side to null (unless already changed)
-            if ($detailsCommande->getPlante() === $this) {
-                $detailsCommande->setPlante(null);
+            if ($detailsCommande->getproduit() === $this) {
+                $detailsCommande->setProduit(null);
             }
         }
 
@@ -180,7 +186,7 @@ class Plantes
     {
         if (!$this->images->contains($image)) {
             $this->images->add($image);
-            $image->setPlante($this);
+            $image->setProduit($this);
         }
 
         return $this;
@@ -190,10 +196,34 @@ class Plantes
     {
         if ($this->images->removeElement($image)) {
             // set the owning side to null (unless already changed)
-            if ($image->getPlante() === $this) {
-                $image->setPlante(null);
+            if ($image->getProduit() === $this) {
+                $image->setProduit(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCategorie(): ?int
+    {
+        return $this->categorie;
+    }
+
+    public function setCategorie(int $categorie): static
+    {
+        $this->categorie = $categorie;
+
+        return $this;
+    }
+
+    public function getLot(): ?int
+    {
+        return $this->lot;
+    }
+
+    public function setLot(?int $lot): static
+    {
+        $this->lot = $lot;
 
         return $this;
     }

@@ -2,8 +2,7 @@
 
 /* Body */
 body {
-    /* background-color: rgb(4, 70, 4); */
-    background-image: url('https://w.forfun.com/fetch/28/28efb1394876b5ab7708a986a93292d5.jpeg');
+    background-color: #212529;
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -44,26 +43,29 @@ body {
     align-items: center;
 }
 
-.produits:nth-child(1){
-    background-image: url('../../images/plantes/presentation-plantes.jpg');
+.produits:nth-child(1) {
+    background-image: url('../../images/produits/presentation-plantes.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
 }
-.produits:nth-child(2){
-    background-image: url('../../images/graines/presentation-graines.jpg');
+
+.produits:nth-child(2) {
+    background-image: url('../../images/produits/presentation-graines.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
 }
-.produits:nth-child(3){
-    background-image: url('../../images/legumes/presentation-legumes.webp');
+
+.produits:nth-child(3) {
+    background-image: url('../../images/produits/presentation-legumes.webp');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
 }
-.produits:nth-child(4){
-    background-image: url('../../images/fruits/presentation-fruits.jpg');
+
+.produits:nth-child(4) {
+    background-image: url('../../images/produits/presentation-fruits.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -110,8 +112,65 @@ nav h2 {
 .dropdown:hover .dropdown-child {
     display: block;
 }
-/* Partie card achats.html.twig */
 
+/* Partie card achats.html.twig */
+.achat-accueil::before {
+    content: "";
+    /* Remplacez par le chemin de votre image */
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    /* Assure que l'image est en arrière-plan du contenu */
+}
+.achat-accueil {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    height: 90vh;
+}
+
+.achat-accueil-plantes::before {
+    background-image: url('https://img.freepik.com/photos-premium/feuilles-vertes-fond-ecran-naturel-texture-feuille-fabrique-par-aiintelligence-artificielle_41969-12049.jpg');
+    /* height: fit-content; */
+}
+
+.achat-accueil-graines {
+    background-image: url('../../images/produits/presentation-graines.webp');
+}
+
+.achat-accueil-legumes {
+    background-image: url('../../images/produits/presentation-legumes.webp');
+}
+
+.achat-accueil-fruits {
+    background-image: url('../../images/produits/presentation-fruits.jpg');
+}
+
+.produits-categories {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.categories {
+    height: 300px;
+    width: 200px;
+    text-align: center;
+}
+
+.categories h2,
+.categories p>a {
+    color: #212529;
+    font-weight: bold;
+    font-size: 15px;
+    margin: 10px 0;
+}
 
 .titre-plante h2 {
     color: #FFC107;
@@ -184,6 +243,8 @@ nav h2 {
 
 .relative-div-achats {
     position: relative;
+    background-color: #212529;
+    color: white;
 }
 
 .absolute-prix {
@@ -504,7 +565,7 @@ table.table td a {
 
 /* Page Infos utilisateur */
 
-.container>div>h1{
+.container>div>h1 {
     text-align: center;
     color: #FFC107;
 }
