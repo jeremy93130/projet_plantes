@@ -45,4 +45,21 @@ class UserRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+    // SELECT * FROM `user` u 
+// JOIN address a on a.user_id = u.id
+// JOIN my_order o ON u.id = o.user_id
+// // WHERE u.id = 18;
+//     public function getCommandeByUser($id)
+//     {
+//         return $this->createQueryBuilder('u')
+//             ->select('u', 'a', 'c')
+//             ->leftJoin('u.adresses', 'a')
+//             ->leftJoin('u.commande', 'c')
+//             ->where('u.id = :userId')
+//             ->setParameter('userId', $id)
+//             ->getQuery()
+//             ->getOneOrNullResult();
+//     }
+
 }

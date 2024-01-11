@@ -111,7 +111,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 });
-
 // Fonction ajout panier
 var nb_counts = parseInt(localStorage.getItem("nb_counts")) || 0;
 function ajouterAuPanier(url, nom, prix, image) {
@@ -138,7 +137,7 @@ function ajouterAuPanier(url, nom, prix, image) {
         // Stockez la nouvelle valeur de nb_counts dans localStorage
         localStorage.setItem("nb_counts", nb_counts);
         // localStorage.clear('nb_counts');
-        location.href = "/achats";
+        // window.history.back;
       } else {
         alert("ok");
       }
@@ -268,3 +267,66 @@ function commander(url) {
 var stripe = Stripe(
   "pk_test_51OICEgC3GA5BR02AuVfYushtuoMQHtv99wK9FATC9PnIHCwDhOR2jlvTOAcZIoGmnxNOSeU9JDvP7OHMAeg0AX0B00E7MKlVNK"
 );
+
+// Infos persos
+
+function modifInfosPerso(event) {
+  var fieldName = $(event.target).data("field");
+  var changeElement = $("#" + fieldName);
+
+  // Créez un champ d'entrée avec la valeur actuelle du paragraphe
+  var inputElement = $("<input type='text'>").val(changeElement.text());
+
+  // Remplacez le paragraphe par le champ d'entrée
+  changeElement.replaceWith(inputElement);
+
+  // Ajoutez un événement pour sauvegarder les modifications lorsque le champ d'entrée perd le focus
+  inputElement.focusout(function () {
+    // Récupérez la nouvelle valeur du champ d'entrée
+    var newValue = inputElement.val();
+
+    // Remplacez le champ d'entrée par un nouveau paragraphe avec la nouvelle valeur
+    inputElement.replaceWith(
+      "<span id='" + fieldName + "'>" + newValue + "</span>"
+    );
+
+    // Réattachez l'événement de modification au nouveau paragraphe
+    $("#" + fieldName)
+      .next("a.modifInfos")
+      .off("click")
+      .on("click", modifInfosPerso);
+  });
+
+  // Désactivez le lien "Modifier" pour éviter la création de champs d'entrée multiples
+  $(event.target).off("click");
+}
+
+function updateDataBase() {
+  var nom = $("#nom").text();
+  var prenom = $("#prenom").text();
+  var email = $("#email").text();
+  var telephone = $("#telephone").text();
+  var mdp = $("#motDePasse").val();
+
+  $.ajax({
+    url: "/update",
+    method: "post",
+    data: {
+      nom,
+      prenom,
+      email,
+      telephone,
+      mdp,
+    },
+    success: function (response) {
+      window.location.href = response.redirect;
+    },
+    error: function (error) {
+      console.error(error);
+    },
+  });
+}
+
+$(document).ready(function () {
+  $(".modifInfos").on("click", modifInfosPerso);
+});

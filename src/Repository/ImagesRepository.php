@@ -21,7 +21,7 @@ class ImagesRepository extends ServiceEntityRepository
         parent::__construct($registry, Images::class);
     }
 
-//    /**
+    //    /**
 //     * @return Images[] Returns an array of Images objects
 //     */
 //    public function findByExampleField($value): array
@@ -36,7 +36,7 @@ class ImagesRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Images
+    //    public function findOneBySomeField($value): ?Images
 //    {
 //        return $this->createQueryBuilder('i')
 //            ->andWhere('i.exampleField = :val')
@@ -45,4 +45,15 @@ class ImagesRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+    public function getImagesById($id): array
+    {
+        return $this->createQueryBuilder('i')
+            ->andWhere('i.plante = :val')
+            ->setParameter('val', $id)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
 }

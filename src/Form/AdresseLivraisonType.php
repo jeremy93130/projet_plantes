@@ -51,7 +51,8 @@ class AdresseLivraisonType extends AbstractType
                 ]
             ])
             ->add('instructionLivraison', TextareaType::class, [
-                'label' => 'Ajouter des instructions de livraison',
+                'label' => 'Ajouter des instructions de livraison (facultatif)',
+                'required' => false
             ])
             ->add('Ajouter', SubmitType::class)
         ;

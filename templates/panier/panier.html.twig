@@ -47,7 +47,7 @@
               <td class="total-column">{{ plante.prix }}
                 €</td>
               <td class="">
-                <a href="#" class="supprimer_article" data-article-id="{{ plante.id }}" onclick="supprimerArticleDuPanier('{{ path('app_supp', { id: plante.id }) }}')">Supprimer</a>
+                <a id="link-supp" class="supprimer_article" data-article-id="{{ plante.id }}" onclick="supprimerArticleDuPanier('{{ path('app_supp', { id: plante.id }) }}')">Supprimer</a>
               </td>
             </tr>
             {% set totalGeneral = totalGeneral + plante.prix * 1 %}
@@ -59,7 +59,7 @@
             <td class="total-column" id="total-general">{{ totalGeneral }}
               €</td>
             <td>
-              <a href="#" onclick="commander()">Passer la commande</a>
+              <a onclick="commander()">Passer la commande</a>
             </td>
           </tr>
         </tfoot>

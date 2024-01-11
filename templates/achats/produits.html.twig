@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+  Hello AchatsController!
+{% endblock %}
+{% block javascripts %}
+  <script src="{{ asset('assets/js/structure.js') }}"></script>
+{% endblock %}
+{% block body %}
+  {% include 'navbar/navbar.html.twig' %}
+  {% if app.request.attributes.get('_route') == 'recapp_commande' %}
+
+  {% endif %}
+  <div class="achat-accueil {{ css }}">
+    <div class="d-flex justify-content-around align-items-center block-mobile">
+      <div class="w-25 none-mobile"></div>
+      <div class="w-25 titre-plante">
+        <h2 class="text-center m-3">Produits disponibles à l'achat</h2>
+      </div>
+      <div class="d-flex justify-content-end" id="relative-div">
+        <input type="search" name="plante_search" id="plante_search" placeholder="Recherche" />
+      </div>
+    </div>
+    <div class="produits-categories">
+      <div class="d-flex flex-wrap justify-content-center">
+        {% for produit in produits %}
+          <div class="card m-5 plantesResults relative-div-achats" style="width: 18rem;" data-nom="{{ produit.nom_produit }}">
+            <div class="img-card">
+              <img src="{{ asset('images/produits/' ~ produit.image) }}" class="card-img-top" alt="{{ produit.nom_produit }}" />
+            </div>
+            <div class="card-body text-center">
+              <h5 class="card-title">{{ produit.nom_produit }}</h5>
+              <a href="{{ url('details', { id: produit.id }) }}" class="btn btn-warning change-btn">Voir la plante en détail</a>
+            </div>
+            <span class="absolute-prix" style="text-align:center">{{ produit.prix_produit }}€</span>
+          </div>
+        {% endfor %}
+      </div>
+      <div class="categories">
+        <h2>Autre catégorie</h2>
+        {% if app.request.get('categorie') != 1 %}
+          <p>
+            <a href="{{ path('app_achats', { categorie: 1 }) }}">Plantes</a>
+          </p>
+        {% endif %}
+        {% if app.request.get('categorie') != 2 %}
+          <p>
+            <a href="{{ path('app_achats', { categorie: 2 }) }}">Graines</a>
+          </p>
+        {% endif %}
+        {% if app.request.get('categorie') != 3 %}
+          <p>
+            <a href="{{ path('app_achats', { categorie: 3 }) }}">Légumes</a>
+          </p>
+        {% endif %}
+        {% if app.request.get('categorie') != 4 %}
+          <p>
+            <a href="{{ path('app_achats', { categorie: 4 }) }}">Fruits</a>
+          </p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+{% endblock %}

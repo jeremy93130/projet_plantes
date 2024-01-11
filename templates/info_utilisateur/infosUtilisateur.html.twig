@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+  Infos Personnelles
+{% endblock %}
+
+{% block body %}
+  {% include 'navbar/navbar.html.twig' %}
+  <div class="container">
+    <div>
+      <h1>Vos Informations personnelles</h1>
+      <hr />
+      <div>
+        <p>
+          nom : <span id="nom">{{ app.user.nom }}</span>
+        </p>
+        <a class="modifInfos" href="#" data-field="nom">Modifier</a>
+      </div>
+      <div>
+        <p>
+          prénom : <span id="prenom">{{ app.user.prenom }}</span>
+        </p>
+        <a class="modifInfos" href="#" data-field="prenom">Modifier</a>
+      </div>
+      <div>
+        <p>
+          email : <span id="email">{{ app.user.email }}</span>
+        </p> <a class="modifInfos" href="#" data-field="email">Modifier</a>
+      </div>
+      <div>
+        <p>
+          Mot de Passe : <span id="motDePasse">{{ app.user.getMdpCache|slice(0, 20) }}</span>
+        </p><a class="modifInfos" href="#" data-field="motDePasse">Modifier</a>
+      </div>
+      <div>
+        <p>
+          Numéro de téléphone : <span id="telephone">{{ app.user.telephone }}</span>
+        </p><a class="modifInfos" href="#" data-field="telephone">Modifier</a>
+      </div>
+      <button onclick="updateDataBase()">Enregistrer les modifications</button>
+    </div>
+  </div>
+{% endblock %}

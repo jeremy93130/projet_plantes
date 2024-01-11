@@ -4,25 +4,25 @@ namespace App\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use App\Entity\Plantes;
+use App\Entity\Produits;
 
 /**
- * @extends ServiceEntityRepository<Plantes>
+ * @extends ServiceEntityRepository<Produits>
  *
- * @method Plantes|null find($id, $lockMode = null, $lockVersion = null)
- * @method Plantes|null findOneBy(array $criteria, array $orderBy = null)
- * @method Plantes[]    findAll()
- * @method Plantes[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Produits|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Produits|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Produits[]    findAll()
+ * @method Produits[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class PlantesRepository extends ServiceEntityRepository
+class ProduitsRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Plantes::class);
+        parent::__construct($registry, Produits::class);
     }
 
     //    /**
-//     * @return Plantes[] Returns an array of Plantes objects
+//     * @return Produits[] Returns an array of Produits objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -36,7 +36,7 @@ class PlantesRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-    //    public function findOneBySomeField($value): ?Plantes
+    //    public function findOneBySomeField($value): ?Produits
 //    {
 //        return $this->createQueryBuilder('p')
 //            ->andWhere('p.exampleField = :val')
@@ -46,7 +46,7 @@ class PlantesRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-    public function findOneById($value): ?Plantes
+    public function findOneById($value): ?Produits
     {
         return $this->createQueryBuilder('p')
             ->andWhere('p.id = :val')
@@ -54,6 +54,15 @@ class PlantesRepository extends ServiceEntityRepository
             ->getQuery()
             ->getOneOrNullResult()
         ;
+    }
+
+    public function findByCategory($categorie): array
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.categorie = :val ')
+            ->setParameter('val', $categorie)
+            ->getQuery()
+            ->getArrayResult();
     }
 
 }

@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ImagesRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: ImagesRepository::class)]
 class Images
@@ -14,7 +15,7 @@ class Images
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'images')]
-    private ?Plantes $plante = null;
+    private ?Produits $produit = null;
 
     #[ORM\Column(length: 255)]
     private ?string $imageName = null;
@@ -24,14 +25,14 @@ class Images
         return $this->id;
     }
 
-    public function getPlante(): ?Plantes
+    public function getProduit(): ?Produits
     {
-        return $this->plante;
+        return $this->produit;
     }
 
-    public function setPlante(?Plantes $plante): static
+    public function setProduit(?Produits $produit): static
     {
-        $this->plante = $plante;
+        $this->produit = $produit;
 
         return $this;
     }
@@ -46,24 +47,5 @@ class Images
         $this->imageName = $imageName;
 
         return $this;
-    }
-
-    function buildForm(\Symfony\Component\Form\FormBuilderInterface $builder, array $options)
-    {
-    }
-    function buildView(\Symfony\Component\Form\FormView $view, \Symfony\Component\Form\FormInterface $form, array $options)
-    {
-    }
-    function finishView(\Symfony\Component\Form\FormView $view, \Symfony\Component\Form\FormInterface $form, array $options)
-    {
-    }
-    function configureOptions(\Symfony\Component\OptionsResolver\OptionsResolver $resolver)
-    {
-    }
-    function getBlockPrefix()
-    {
-    }
-    function getParent()
-    {
     }
 }

@@ -3,7 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\User;
-use App\Entity\Plantes;
+use App\Entity\Produits;
 use App\Entity\Commande;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -23,7 +23,7 @@ class DashboardController extends AbstractDashboardController
         //
         // if($this->getUser()->getRoles() == "ROLE_ADMIN"){
             $adminUrlGenerator = $this->container->get(AdminUrlGenerator::class);
-            return $this->redirect($adminUrlGenerator->setController(PlantesCrudController::class)->generateUrl());
+            return $this->redirect($adminUrlGenerator->setController(ProduitsCrudController::class)->generateUrl());
         // } else {
         //     return $this->redirectToRoute("app_home");
         // }
@@ -43,13 +43,13 @@ class DashboardController extends AbstractDashboardController
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('Plantes');
+            ->setTitle('Produits');
     }
 
     public function configureMenuItems(): iterable
     {
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
-        yield MenuItem::linkToCrud('Plantes', 'fas fa-list', Plantes::class);
+        yield MenuItem::linkToCrud('Produits', 'fas fa-list', Produits::class);
         yield MenuItem::linkToCrud('Clients', 'fas fa-list', User::class);
         yield MenuItem::linkToCrud('Commandes', 'fas fa-list', Commande::class);
     }

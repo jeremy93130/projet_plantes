@@ -3,5 +3,24 @@
   Hello HomeController!
 {% endblock %}
 {% block body %}
-
+  {% include 'navbar/navbar.html.twig' %}
+  <div class="neutre">
+    <div class="banner">
+      <h1>Qu'est ce qui vous tente aujourd'hui ?</h1>
+    </div>
+    <div class="container main-produits">
+      <div class="produits">
+        <a href="{{ path('app_achats', { categorie: 1 }) }}">Plantes</a>
+      </div>
+      <div class="produits">
+        <a href="{{ path('app_achats', { categorie: 2 }) }}">Graines</a>
+      </div>
+      <div class="produits">
+        <a href="{{ path('app_achats', { categorie: 3 }) }}">Légumes</a>
+      </div>
+      <div class="produits">
+        <a href="{{ path('app_achats', { categorie: 4 }) }}">Fruits</a>
+      </div>
+    </div>
+  </div>
 {% endblock %}

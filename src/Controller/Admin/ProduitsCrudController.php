@@ -2,21 +2,21 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Plantes;
+use App\Entity\Images;
+use App\Entity\Produits;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
-class PlantesCrudController extends AbstractCrudController
+class ProduitsCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return Plantes::class;
+        return Produits::class;
     }
 
 
@@ -24,15 +24,17 @@ class PlantesCrudController extends AbstractCrudController
     {
         return [
             IdField::new('id')->hideOnForm(),
-            TextField::new('nom_plante', 'Nom de la plante'),
-            TextareaField::new('description_plante', 'description de la plante')->renderAsHtml(),
-            TextareaField::new('caracteristiques', 'caractéristiques de la plante')->renderAsHtml(),
+            TextField::new('nom_produit', 'Nom du produit'),
+            TextareaField::new('description_produit', 'description du produit')->renderAsHtml(),
+            TextareaField::new('caracteristiques', 'caractéristiques du produit')->renderAsHtml(),
             TextareaField::new('entretien', 'conseils d\'entretien')->renderAsHtml(true)->formatValue(function ($value) {
                 return nl2br($value);
             }),
-            NumberField::new('prix_plante', 'Prix de la plante'),
+            NumberField::new('prix_produit', 'Prix du produit'),
             NumberField::new('stock', 'En Stock'),
-            ImageField::new('image')->setBasePath('/images/plantes')->setUploadDir('public/images/plantes')->setRequired(false),
+            ImageField::new('image')->setBasePath('/images/produits')->setUploadDir('public/images/produits')->setRequired(false),
+            NumberField::new('categorie'),
+            NumberField::new('lot', 'Nombre de graines dans le lot')
         ];
     }
 }

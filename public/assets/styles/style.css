@@ -2,12 +2,80 @@
 
 /* Body */
 body {
-    /* background-color: rgb(4, 70, 4); */
-    background-image: url('https://w.forfun.com/fetch/28/28efb1394876b5ab7708a986a93292d5.jpeg');
+    background-color: #212529;
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
+}
+
+
+/* Home */
+
+.banner {
+    height: 250px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.banner h1 {
+    text-shadow: 15px 12px 4px rgba(0, 0, 0, 0.603);
+    font-family: 'Kolker Brush', cursive;
+    font-size: 70px;
+    color: #FFC107;
+}
+
+.main-produits {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.produits {
+    background-color: black;
+    height: 250px;
+    width: 600px;
+    margin: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.produits:nth-child(1) {
+    background-image: url('../../images/produits/presentation-plantes.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.produits:nth-child(2) {
+    background-image: url('../../images/produits/presentation-graines.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.produits:nth-child(3) {
+    background-image: url('../../images/produits/presentation-legumes.webp');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.produits:nth-child(4) {
+    background-image: url('../../images/produits/presentation-fruits.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.produits a {
+    text-decoration: none;
+    color: black;
+    font-size: 66px;
+    text-shadow: 8px 5px 3px #FFC107;
 }
 
 /* NavBar */
@@ -18,9 +86,91 @@ nav h2 {
     font-size: 55px;
 }
 
+.mainmenubtn {
+    background-color: transparent;
+    color: #FFC107;
+    border: none;
+    cursor: pointer;
+    margin-right: 25px;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-child {
+    display: none;
+}
+
+.dropdown-child ul {
+    color: #FFC107;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown:hover .dropdown-child {
+    display: block;
+}
 
 /* Partie card achats.html.twig */
+.achat-accueil::before {
+    content: "";
+    /* Remplacez par le chemin de votre image */
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    /* Assure que l'image est en arrière-plan du contenu */
+}
+.achat-accueil {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    height: 90vh;
+}
 
+.achat-accueil-plantes::before {
+    background-image: url('https://img.freepik.com/photos-premium/feuilles-vertes-fond-ecran-naturel-texture-feuille-fabrique-par-aiintelligence-artificielle_41969-12049.jpg');
+    /* height: fit-content; */
+}
+
+.achat-accueil-graines {
+    background-image: url('../../images/produits/presentation-graines.webp');
+}
+
+.achat-accueil-legumes {
+    background-image: url('../../images/produits/presentation-legumes.webp');
+}
+
+.achat-accueil-fruits {
+    background-image: url('../../images/produits/presentation-fruits.jpg');
+}
+
+.produits-categories {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.categories {
+    height: 300px;
+    width: 200px;
+    text-align: center;
+}
+
+.categories h2,
+.categories p>a {
+    color: #212529;
+    font-weight: bold;
+    font-size: 15px;
+    margin: 10px 0;
+}
 
 .titre-plante h2 {
     color: #FFC107;
@@ -93,6 +243,8 @@ nav h2 {
 
 .relative-div-achats {
     position: relative;
+    background-color: #212529;
+    color: white;
 }
 
 .absolute-prix {
@@ -203,8 +355,8 @@ nav h2 {
 }
 
 .details-img {
-display: flex;
-justify-content: center;
+    display: flex;
+    justify-content: center;
 }
 
 .detail-img {
@@ -213,18 +365,30 @@ justify-content: center;
     margin: auto;
 }
 
-.carousel-control-next
-{
+.add_image {
+    color: #FFC107;
+    display: block;
+    margin: 1rem 0 0 0;
+    padding-left: 1rem;
+}
+
+.add_image button {
+    margin-top: 10px;
+    height: 30px;
+}
+
+.carousel-control-next {
     right: 220px;
 }
 
-.carousel-control-prev{
+.carousel-control-prev {
     left: 220px;
 }
 
 .carousel-control-prev span {
     background-color: black;
 }
+
 .carousel-control-next span {
     background-color: black;
 }
@@ -233,6 +397,11 @@ justify-content: center;
 .accordion-button,
 .accordion-body {
     background-color: transparent;
+}
+
+#link-ajouter,
+#link-supp {
+    cursor: pointer;
 }
 
 /* FIN PAGE DETAILS */
@@ -388,12 +557,32 @@ table.table td a {
     color: #FFC107;
     text-align: center;
     margin: 30px 0 0 0;
+    padding: 30px 0;
     background-color: #000000;
     border-bottom: 2px solid white;
 }
 
 
+/* Page Infos utilisateur */
 
+.container>div>h1 {
+    text-align: center;
+    color: #FFC107;
+}
+
+.container>div>div {
+    color: #FFC107;
+    background-color: #00000048;
+    display: flex;
+    margin: 10px;
+    justify-content: space-between;
+    width: 400px;
+    margin: auto;
+}
+
+.container>div>div>a {
+    color: white;
+}
 
 /* MEDIAS QUERIES */
 /* entre tablette et desktop */
@@ -449,7 +638,7 @@ table.table td a {
 }
 
 /* Tablettes */
-@media (min-width: 768px) and (max-width: 1600px) {
+@media (max-width: 768px) {
     .titre-plante {
         width: 700px;
     }
@@ -473,8 +662,12 @@ table.table td a {
     }
 
     .absolutePrix {
-        left: 490px;
+        left: 90%;
     }
+
+
+
+
 
 
     /* Page Details */
@@ -494,7 +687,7 @@ table.table td a {
 
 }
 
-@media (max-width: 768px) {
+@media (max-width: 576px) {
     .adresse_livraison {
         width: 100%;
     }
@@ -506,6 +699,11 @@ table.table td a {
 
     .details_mobile {
         width: 100% !important;
+        margin-top: 0 !important;
+    }
+
+    .detail-img {
+        width: 100%;
     }
 
     .details_mobile img {
@@ -515,6 +713,20 @@ table.table td a {
     .details_mobile h5 {
         color: #FFC107;
         text-align: center;
+    }
+
+    .absolutePrix {
+        left: 82%;
+        top: 5%;
+        font-size: 13px;
+    }
+
+    .carousel-control-next {
+        right: 0;
+    }
+
+    .carousel-control-prev {
+        left: 0;
     }
 
     .table_historic,
@@ -569,4 +781,5 @@ table.table td a {
     .none {
         display: none;
     }
+
 }

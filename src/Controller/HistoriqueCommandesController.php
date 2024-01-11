@@ -42,10 +42,10 @@ class HistoriqueCommandesController extends AbstractController
                     'nom_client' => $commandeObj->getAdresse()->getNomComplet(),
                     'adresse_livraison' => $commandeObj->getAdresse()->getAdresse(),
                     'produits' => [],
-                    'total' => 0,
+                    'total' => $commandeObj->getTotal(),
                 ];
             }
-
+            
             // Ajoute le produit à la commande existante
             $formattedResults[$commandeId]['produits'][] = [
                 'produit' => $plante->getNomPlante(),
@@ -54,7 +54,7 @@ class HistoriqueCommandesController extends AbstractController
             ];
 
             // Ajoute le prix du produit au total de la commande
-            $formattedResults[$commandeId]['total'] += ($plante->getPrixPlante() * $detailsCommande->getQuantite());
+            // $formattedResults[$commandeId]['total'] += ($plante->getPrixPlante() * $detailsCommande->getQuantite());
         }
 
         // dd($formattedResults);

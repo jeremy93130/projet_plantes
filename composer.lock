@@ -4,7 +4,11 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
+<<<<<<< HEAD
     "content-hash": "f8027a81a9e72c8470bd204ad9743a2f",
+=======
+    "content-hash": "46609291d9625469f616180071323ada",
+>>>>>>> 86d63981e65b254cf2185a3d389f4b740348c5e7
     "packages": [
         {
             "name": "doctrine/cache",
@@ -1331,6 +1335,7 @@
         },
         {
             "name": "easycorp/easyadmin-bundle",
+<<<<<<< HEAD
             "version": "v4.8.8",
             "source": {
                 "type": "git",
@@ -1341,6 +1346,18 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/EasyCorp/EasyAdminBundle/zipball/a20064f6dd5079c682c512a197cdf7058abaa1f3",
                 "reference": "a20064f6dd5079c682c512a197cdf7058abaa1f3",
+=======
+            "version": "v4.8.9",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/EasyCorp/EasyAdminBundle.git",
+                "reference": "89991bb68127f7a862d79758eb4fffc8e10a8e73"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/EasyCorp/EasyAdminBundle/zipball/89991bb68127f7a862d79758eb4fffc8e10a8e73",
+                "reference": "89991bb68127f7a862d79758eb4fffc8e10a8e73",
+>>>>>>> 86d63981e65b254cf2185a3d389f4b740348c5e7
                 "shasum": ""
             },
             "require": {
@@ -1413,7 +1430,11 @@
             ],
             "support": {
                 "issues": "https://github.com/EasyCorp/EasyAdminBundle/issues",
+<<<<<<< HEAD
                 "source": "https://github.com/EasyCorp/EasyAdminBundle/tree/v4.8.8"
+=======
+                "source": "https://github.com/EasyCorp/EasyAdminBundle/tree/v4.8.9"
+>>>>>>> 86d63981e65b254cf2185a3d389f4b740348c5e7
             },
             "funding": [
                 {
@@ -1421,7 +1442,11 @@
                     "type": "github"
                 }
             ],
+<<<<<<< HEAD
             "time": "2024-01-03T18:31:59+00:00"
+=======
+            "time": "2024-01-09T18:54:55+00:00"
+>>>>>>> 86d63981e65b254cf2185a3d389f4b740348c5e7
         },
         {
             "name": "egulias/email-validator",
