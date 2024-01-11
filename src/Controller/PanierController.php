@@ -2,9 +2,8 @@
 
 namespace App\Controller;
 
-use App\Entity\Panier;
-use App\Entity\Plantes;
-use App\Repository\PlantesRepository;
+use App\Entity\Produits;
+use App\Repository\ProduitsRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,7 +17,7 @@ class PanierController extends AbstractController
 {
 
     #[Route('/panier', name: 'app_panier')]
-    public function index(SessionInterface $session, PlantesRepository $plantesRepository): Response
+    public function index(SessionInterface $session, ProduitsRepository $produitsRepository): Response
     {
 
         $panier = $session->get('panier', []);
@@ -48,7 +47,7 @@ class PanierController extends AbstractController
             return new JsonResponse(['message' => 'ID de plante manquant'], 400);
         }
         // Récupérer la plante depuis la base de données
-        $plante = $entityManagerInterface->getRepository(Plantes::class)->find($id);
+        $plante = $entityManagerInterface->getRepository(Produits::class)->find($id);
 
         // Vérifier si la plante existe
         if (!$plante) {
@@ -70,8 +69,8 @@ class PanierController extends AbstractController
         // Vous devez adapter cela en fonction de la structure réelle de vos données
         $panier[$id] = [
             'id' => $plante->getId(),
-            'nom' => $plante->getNomPlante(),
-            'prix' => $plante->getPrixPlante(),
+            'nom' => $plante->getNomproduit(),
+            'prix' => $plante->getPrixproduit(),
             'image' => $plante->getImage(),
             'quantite' => 1, // Vous pouvez ajuster cela selon vos besoins
             'nbArticles' => $data["nbArticles"],
@@ -83,7 +82,7 @@ class PanierController extends AbstractController
 
         // Retourner une réponse JSON
         // return new JsonResponse(['message' => 'Plante ajoutée au panier avec succès', 'success' => true, 'data' => $dataToView]);
-        return $this->redirectToRoute('app_achats');
+        return $this->redirectToRoute('app_home');
     }
 
     #[Route('/supprimer/{id}', name: 'app_supp')]

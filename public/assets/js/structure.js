@@ -115,21 +115,21 @@ document.addEventListener("DOMContentLoaded", function () {
 var nb_counts = parseInt(localStorage.getItem("nb_counts")) || 0;
 function ajouterAuPanier(url, nom, prix, image) {
   var nb_articles = document.getElementById("nb_articles");
-  var planteData = {
-    id: "{{ plante.id }}",
+  var produitData = {
+    id: "{{ produit.id }}",
     nom: nom,
     prix: prix,
     image: image,
     nbArticles: nb_counts + 1,
     // Ajoutez d'autres informations si nécessaire
   };
-  console.log(planteData);
+  console.log(produitData);
   // Utilisez AJAX pour appeler l'action du contrôleur
   $.ajax({
     url: url,
     type: "POST",
     contentType: "application/json",
-    data: JSON.stringify(planteData),
+    data: JSON.stringify(produitData),
     success: function (response) {
       if (response) {
         nb_counts++;
@@ -198,6 +198,9 @@ window.onload = function () {
   } else {
     document.getElementById("nb_articles").textContent = "";
   }
+  var stripe = Stripe(
+    "pk_test_51OICEgC3GA5BR02AuVfYushtuoMQHtv99wK9FATC9PnIHCwDhOR2jlvTOAcZIoGmnxNOSeU9JDvP7OHMAeg0AX0B00E7MKlVNK"
+  );
 };
 
 function commander(url) {
@@ -263,10 +266,6 @@ function commander(url) {
     },
   });
 }
-
-var stripe = Stripe(
-  "pk_test_51OICEgC3GA5BR02AuVfYushtuoMQHtv99wK9FATC9PnIHCwDhOR2jlvTOAcZIoGmnxNOSeU9JDvP7OHMAeg0AX0B00E7MKlVNK"
-);
 
 // Infos persos
 

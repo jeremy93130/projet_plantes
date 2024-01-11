@@ -12,6 +12,8 @@
         "doctrine/orm": "^2.16",
         "easycorp/easyadmin-bundle": "^4.8",
         "fakerphp/faker": "^1.23",
+        "knplabs/knp-paginator-bundle": "*",
+        "pagerfanta/pagerfanta": "*",
         "phpdocumentor/reflection-docblock": "^5.3",
         "phpstan/phpdoc-parser": "^1.24",
         "simplesamlphp/simplesamlphp": "*",

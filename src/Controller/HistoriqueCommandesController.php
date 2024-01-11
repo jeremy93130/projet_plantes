@@ -30,7 +30,7 @@ class HistoriqueCommandesController extends AbstractController
         $formattedResults = [];
         foreach ($commandes as $detailsCommande) {
             $commandeObj = $detailsCommande->getCommande();
-            $plante = $detailsCommande->getPlante();
+            $plante = $detailsCommande->getProduit();
 
             $commandeId = $commandeObj->getId();
 
@@ -48,8 +48,8 @@ class HistoriqueCommandesController extends AbstractController
             
             // Ajoute le produit à la commande existante
             $formattedResults[$commandeId]['produits'][] = [
-                'produit' => $plante->getNomPlante(),
-                'prix' => $plante->getPrixPlante(),
+                'produit' => $plante->getNomProduit(),
+                'prix' => $plante->getPrixProduit(),
                 'quantite' => $detailsCommande->getQuantite(),
             ];
 

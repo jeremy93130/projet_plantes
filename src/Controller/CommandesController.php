@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Repository\PlantesRepository;
+
 use Faker\Core\Number;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -70,5 +70,11 @@ class CommandesController extends AbstractController
             'user' => $user,
             'successMessage' => null
         ]);
+    }
+
+    #[Route('/confirmation', name: 'app_confirmation')]
+    public function confirm()
+    {
+       return $this->render('commandes/commandes.html.twig', ["successMessage" => true]);
     }
 }

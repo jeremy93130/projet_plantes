@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Images;
 use App\Repository\ImagesRepository;
 use App\Repository\PlantesRepository;
+use App\Repository\ProduitsRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,9 +25,9 @@ class HomeController extends AbstractController
 
 
     #[Route('/details/{id}', name: 'details')]
-    public function show(PlantesRepository $plantesRepository, $id, SessionInterface $session, Request $request, EntityManagerInterface $entityManagerInterface, ImagesRepository $images): Response
+    public function show(ProduitsRepository $produitRepository, $id, SessionInterface $session, Request $request, EntityManagerInterface $entityManagerInterface, ImagesRepository $images): Response
     {
-        $plantes = $plantesRepository->find($id);
+        $produit = $produitRepository->find($id);
 
         $uploadImage = $request->files->get('imagePlante');
         $imageName = null;
@@ -38,7 +39,7 @@ class HomeController extends AbstractController
                 // Créer et enregistrer une nouvelle image
                 $image = new Images();
                 $image->setImageName($imageName);
-                $image->setPlante($plantes);
+                $image->setProduit($produit);
 
                 $entityManagerInterface->persist($image);
                 $entityManagerInterface->flush();
@@ -57,7 +58,7 @@ class HomeController extends AbstractController
         // dd($imageCarousel);
 
         return $this->render('details/details.html.twig', [
-            "plante" => $plantes,
+            "produit" => $produit,
             'errorPlante' => null,
             'carousel' => $imageCarousel,
         ]);

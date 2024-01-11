@@ -1,51 +1,84 @@
-{% extends 'base.html.twig' %} {% block body %}
-  <nav class="navbar navbar-expand-lg bg-dark border-bottom">
-    <div class="container-fluid">
-      <h2 class="me-3 text-warning"><a class="nav-link active text-warning" aria-current="page" href="{{ path('app_home') }}">Le Naturel Au Vert</a></h2>
-      <button class="navbar-toggler btn-hamburger" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2">
-          {% if app.user is empty %}
-            <li class="nav-item">
-              <a class="nav-link text-warning" href="{{ path('app_login') }}">Connexion</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link text-warning" href="{{ path('app_register') }}">Inscription</a>
-            </li>
-          {% endif %}
-        </ul>
-        {% if app.user %}
-          <div class="dropdown">
-            <button class="mainmenubtn">Bienvenu(e) {{ app.user.prenom }}</button>
-            <div class="dropdown-child">
-              <ul class="dropdown-menu drop-nav bg-dark">
-                <li>
-                  <a href="{{ path('app_info_utilisateur') }}" class="nav-link text-warning dropdown-item p-2">Informations personnelles</a>
-                </li>
-                <li>
-                  <a class="nav-link text-warning dropdown-item p-2" href="{{ path('app_historique_commandes') }}">Historique des commandes</a>
-                </li>
-                {% if 'ROLE_ADMIN' in app.user.roles %}
-                  <li>
-                    <a class="nav-link text-danger dropdown-item p-2" href="{{ path('admin') }}">Admin</a>
-                  </li>
-                {% endif %}
-                <li>
-                  <a class="nav-link text-warning dropdown-item p-2" href="{{ path('app_logout') }}">Se déconnecter</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div></div>
-          <li class="list-unstyled me-5">
-            <a href="{{ path('app_panier') }}">
-              {% if app.request.attributes.get('_route') != 'recapp_commande' %}
-                <i class="fa-solid fa-cart-shopping nav-link" id="nav_panier"><span id="nb_articles"></span></i>
-              {% endif %}
-            </a>
-          </li>
-        {% endif %}
-      </div>
-    </div>
-  </nav>
+{% extends 'base.html.twig' %}
+{% block body %}
+	<nav class="navbar navbar-expand-lg bg-dark border-bottom">
+		<div class="container-fluid">
+			<h2 class="me-3 text-warning">
+				<a class="nav-link active text-warning" aria-current="page" href="{{ path('app_home') }}">Le Naturel Au Vert</a>
+			</h2>
+			<button class="navbar-toggler btn-hamburger" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<div class="categories">
+					{% if app.request.attributes.get('_route') != "handle_successful_payment" %}
+
+						{% if app.request.get('categorie') != 1 %}
+							<p>
+								<a href="{{ path('app_achats', { categorie: 1 }) }}">Plantes</a>
+							</p>
+						{% endif %}
+						{% if app.request.get('categorie') != 2 %}
+							<p>
+								<a href="{{ path('app_achats', { categorie: 2 }) }}">Graines</a>
+							</p>
+						{% endif %}
+						{% if app.request.get('categorie') != 3 %}
+							<p>
+								<a href="{{ path('app_achats', { categorie: 3 }) }}">Légumes</a>
+							</p>
+						{% endif %}
+						{% if app.request.get('categorie') != 4 %}
+							<p>
+								<a href="{{ path('app_achats', { categorie: 4 }) }}">Fruits</a>
+							</p>
+						{% endif %}
+					{% endif %}
+				</div>
+				<ul class="navbar-nav me-auto mb-2">
+					{% if app.user is empty %}
+						<li class="nav-item">
+							<a class="nav-link text-warning" href="{{ path('app_login') }}">Connexion</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link text-warning" href="{{ path('app_register') }}">Inscription</a>
+						</li>
+					{% endif %}
+				</ul>
+				{% if app.user %}
+					<div class="dropdown">
+						<button class="mainmenubtn">Bienvenu(e)
+							{{ app.user.prenom }}</button>
+						<div class="dropdown-child">
+							<ul class="dropdown-menu drop-nav bg-dark">
+								<li>
+									<a href="{{ path('app_info_utilisateur') }}" class="nav-link text-warning dropdown-item p-2">Informations personnelles</a>
+								</li>
+								<li>
+									<a class="nav-link text-warning dropdown-item p-2" href="{{ path('app_historique_commandes') }}">Historique des commandes</a>
+								</li>
+								{% if 'ROLE_ADMIN' in app.user.roles %}
+									<li>
+										<a class="nav-link text-danger dropdown-item p-2" href="{{ path('admin') }}">Admin</a>
+									</li>
+								{% endif %}
+								<li>
+									<a class="nav-link text-warning dropdown-item p-2" href="{{ path('app_logout') }}">Se déconnecter</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+					<div></div>
+					<li class="list-unstyled me-5">
+						<a href="{{ path('app_panier') }}">
+							{% if app.request.attributes.get('_route') != 'recapp_commande' %}
+								<i class="fa-solid fa-cart-shopping nav-link" id="nav_panier">
+									<span id="nb_articles"></span>
+								</i>
+							{% endif %}
+						</a>
+					</li>
+				{% endif %}
+			</div>
+		</div>
+	</nav>
 {% endblock %}

@@ -2,8 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Produits;
 use App\Form\ProduitSearchType;
 use App\Repository\ProduitsRepository;
+use Pagerfanta\Adapter\ArrayAdapter;
+use Pagerfanta\Pagerfanta;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -39,12 +42,34 @@ class AchatsController extends AbstractController
                 $cssClass .= '-defaut';
         }
 
+        $data = $produit;
+
+        // Créer un adaptateur PagerFanta avec les données
+
+        $adapter = new ArrayAdapter($data);
+
+        // Créer une instance de pagerFanta 
+
+        $pagerFanta = new Pagerfanta($adapter);
+
+        // Définir le nombre d'élément par pages :
+
+        $pagerFanta->setMaxPerPage(9);
+
+        // récuperer le numéro de page à partir de la requete 
+
+        $currentPage = $request->query->getInt('page',1);
+
+        // Définir la page actuelle
+
+        $pagerFanta->setCurrentPage($currentPage);
+
 
         return $this->render('achats/produits.html.twig', [
             'controller_name' => 'AchatsController',
             'form' => $form->createView(),
-            "produits" => $produit,
-            'css' => $cssClass
+            'css' => $cssClass,
+            'pagination' => $pagerFanta
         ]);
     }
 }

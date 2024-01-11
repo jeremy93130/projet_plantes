@@ -7,7 +7,6 @@ use App\Entity\User;
 use App\Entity\Commande;
 use App\Entity\DetailsCommande;
 use App\Form\AdresseLivraisonType;
-use App\Repository\PlantesRepository;
 use App\Repository\ProduitsRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -127,7 +126,7 @@ class PaiementController extends AbstractController
     }
 
     #[Route('/handle-successful-payment', name: 'handle_successful_payment')]
-    public function handleSuccessfulPayment(SessionInterface $session, EntityManagerInterface $entityManager, ProduitsRepository $plantesRepository): Response
+    public function handleSuccessfulPayment(SessionInterface $session, EntityManagerInterface $entityManager, ProduitsRepository $produitRepository): Response
     {
 
         $session->set('adresseValide', false);
@@ -156,7 +155,7 @@ class PaiementController extends AbstractController
         $total = 0;
         $quantiteTotale = 0;
         foreach ($panier['commandeData'] as $item) {
-            $plante = $plantesRepository->findOneById((int) $item['id']);
+            $plante = $produitRepository->findOneById((int) $item['id']);
             if ($plante) {
                 $quantite = $item['quantite'];
                 $prix = $item['prixTTC'];
@@ -206,8 +205,12 @@ class PaiementController extends AbstractController
         // Réinitialiser le localStorage à zéro
         echo '<script>localStorage.setItem("nb_counts", 0);</script>';
 
-        // Fournir une réponse appropriée à l'utilisateur (redirection, affichage de confirmation, etc.)
-        return $this->render('commandes/commandes.html.twig', ['successMessage' => true]);
+       $response = new RedirectResponse($this->generateUrl('app_confirmation'));
+
+        // Ajout d'un message flash pour informer l'utilisateur
+        $this->addFlash('success', 'Votre commande a été soumise avec succès !');
+
+        return $response;
     }
 
     #[Route('/cancel-payment', name: 'cancel_payment')]

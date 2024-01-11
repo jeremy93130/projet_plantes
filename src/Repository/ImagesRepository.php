@@ -49,7 +49,7 @@ class ImagesRepository extends ServiceEntityRepository
     public function getImagesById($id): array
     {
         return $this->createQueryBuilder('i')
-            ->andWhere('i.plante = :val')
+            ->andWhere('i.produit = :val')
             ->setParameter('val', $id)
             ->getQuery()
             ->getResult()

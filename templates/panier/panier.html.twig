@@ -9,7 +9,7 @@
   {% if app.session.get('panier') is empty %}
     <div class="panier-vide-div">
       <h1 class="text-warning">Ohhh ... votre panier est vide ... Pourquoi ne pas aller le remplir ?</h1>
-      <a href="{{ path('app_achats') }}">
+      <a href="{{ path('app_home') }}">
         Suivez nous !
         <i class="fa-solid fa-arrow-right" style="color: #d40c0c;"></i>
       </a>
@@ -35,7 +35,7 @@
           {% for plante in app.session.get('panier', []) %}
             <tr class="delete_article">
               <td>
-                <img src="{{ asset('images/plantes/' ~ plante.image) }}" alt="{{ plante.nom }}" />
+                <img src="{{ asset('images/produits/' ~ plante.image) }}" alt="{{ plante.nom }}" />
               </td>
               <td>{{ plante.nom }}</td>
               <td>{{ plante.prix }}€</td>
@@ -59,7 +59,7 @@
             <td class="total-column" id="total-general">{{ totalGeneral }}
               €</td>
             <td>
-              <a onclick="commander()">Passer la commande</a>
+              <a onclick="commander()" id="commander">Passer la commande</a>
             </td>
           </tr>
         </tfoot>
