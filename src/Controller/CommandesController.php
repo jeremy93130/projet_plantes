@@ -2,8 +2,11 @@
 
 namespace App\Controller;
 
-
+use App\Entity\User;
 use Faker\Core\Number;
+use App\Entity\Adresse;
+use App\Form\AdresseLivraisonType;
+use App\Repository\AdresseRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -25,7 +28,7 @@ class CommandesController extends AbstractController
     }
 
     #[Route('/recap', name: 'recapp_commande')]
-    public function recap(SessionInterface $session): Response
+    public function recap(SessionInterface $session, AdresseRepository $adresseRepository): Response
     {
         $sessionCommande = $session->get('commande');
         // dd($sessionCommande);
@@ -43,6 +46,9 @@ class CommandesController extends AbstractController
         foreach ($sessionCommande['commandeData'] as $tva) {
             $totalTVA += $tva['prixTTC'] * $tva['quantite'];
         }
+        if ($sessionCommande['totalGeneral'] < 50) {
+            $totalTVA += 3.99;
+        }
 
         $sessionCommande['totalGeneral'] = round($totalTVA, 2);
 
@@ -58,23 +64,85 @@ class CommandesController extends AbstractController
         // dd($sessionCommande);
         // dd($sessionPanier);
         // dd($successMessage);
+        /**
+         * @var User $user
+         */
         $user = $this->getUser();
-
+        $userId = $user->getId();
 
         $commande = $session->get('adresseData');
+
+
+
+        $usedAdresse = $adresseRepository->findByLast($userId);
 
         // dd($sessionCommande);
         return $this->render('commandes/commandes.html.twig', [
             'adresseInfos' => $commande,
+            'userLastAdresse' => $usedAdresse,
             'dataCommande' => $sessionCommande,
             'user' => $user,
             'successMessage' => null
         ]);
     }
 
+    #[Route('/adresse', name: 'app_adresse')]
+    public function adresse(Request $request, SessionInterface $session): Response
+    {
+
+        $adresse = new Adresse();
+        $user = $this->getUser();
+
+        $form = $this->createForm(AdresseLivraisonType::class, $adresse);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $nomLivraison = $form->get('Nom_complet')->getData();
+            $adresseLivraison = $form->get('adresse')->getData();
+            $codePostal = $form->get('code_postal')->getData();
+            $ville = $form->get('ville')->getData();
+            $pays = $form->get('pays')->getData();
+            $instructions = $form->get('instructionLivraison')->getData();
+
+            $adresse->setNomComplet($nomLivraison);
+            $adresse->setAdresse($adresseLivraison);
+            $adresse->setCodePostal($codePostal);
+            $adresse->setVille($ville);
+            $adresse->setPays($pays);
+            $adresse->setClient($user);
+            if ($instructions == null) {
+                $adresse->setInstructionLivraison("aucune instruction");
+            } else {
+                $adresse->setInstructionLivraison($instructions);
+            }
+
+            //Stocker les données dans la session : 
+            $session->set('adresseData', [
+                'nomComplet' => $nomLivraison,
+                'adresseLivraison' => $adresseLivraison,
+                'codePostal' => $codePostal,
+                'ville' => $ville,
+                'pays' => $pays,
+                'instructions' => $instructions,
+            ]);
+
+            // Set la session à true adresse pour afficher l'adresse
+            $session->set('adresseValide', true);
+
+            return $this->redirectToRoute('recapp_commande');
+        }
+
+
+        return $this->render('adresse/adresse.html.twig', [
+            'formAdresse' => $form->createView(),
+        ]);
+    }
+
     #[Route('/confirmation', name: 'app_confirmation')]
     public function confirm()
     {
-       return $this->render('commandes/commandes.html.twig', ["successMessage" => true]);
+
+        return $this->render('commandes/commandes.html.twig', ["successMessage" => true]);
     }
 }

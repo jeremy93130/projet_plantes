@@ -6,7 +6,6 @@ use App\Entity\Adresse;
 use App\Entity\User;
 use App\Entity\Commande;
 use App\Entity\DetailsCommande;
-use App\Form\AdresseLivraisonType;
 use App\Repository\ProduitsRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -42,55 +41,6 @@ class PaiementController extends AbstractController
         ]);
     }
 
-    #[Route('/adresse', name: 'app_adresse')]
-    public function adresse(Request $request, SessionInterface $session): Response
-    {
-
-        $adresse = new Adresse();
-        $user = $this->getUser();
-
-        $form = $this->createForm(AdresseLivraisonType::class, $adresse);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            $nomLivraison = $form->get('Nom_complet')->getData();
-            $adresseLivraison = $form->get('adresse')->getData();
-            $codePostal = $form->get('code_postal')->getData();
-            $ville = $form->get('ville')->getData();
-            $pays = $form->get('pays')->getData();
-            $instructions = $form->get('instructionLivraison')->getData();
-
-            $adresse->setNomComplet($nomLivraison);
-            $adresse->setAdresse($adresseLivraison);
-            $adresse->setCodePostal($codePostal);
-            $adresse->setVille($ville);
-            $adresse->setPays($pays);
-            $adresse->setClient($user);
-            $adresse->setInstructionLivraison($instructions);
-
-            //Stocker les données dans la session : 
-            $session->set('adresseData', [
-                'nomComplet' => $nomLivraison,
-                'adresseLivraison' => $adresseLivraison,
-                'codePostal' => $codePostal,
-                'ville' => $ville,
-                'pays' => $pays,
-                'instructions' => $instructions,
-            ]);
-
-            // Set la session à true adresse pour afficher l'adresse
-            $session->set('adresseValide', true);
-
-            return $this->redirectToRoute('recapp_commande');
-        }
-
-
-        return $this->render('adresse/adresse.html.twig', [
-            'formAdresse' => $form->createView(),
-        ]);
-    }
-
     #[Route('/order/create-session-stripe/{ids}/{total}', name: 'app_paiement')]
     public function stripeCheckout(SessionInterface $sessionInterface, $ids, $total, UrlGeneratorInterface $urlGenerator): RedirectResponse
     {
@@ -100,7 +50,23 @@ class PaiementController extends AbstractController
             return $this->redirectToRoute('app_home');
         } else {
             $commandeData = $sessionInterface->get('commande')['commandeData'];
+            $totalData = $sessionInterface->get('commande')['totalGeneral'];
             $lineItems = [];
+
+            // Ajouter des frais de livraison si le total est inférieur à 50
+            if ($totalData < 50) {
+                $unitAmount = round(3.99 * 100);
+                $lineItems[] = [
+                    'price_data' => [
+                        'currency' => 'eur',
+                        'product_data' => [
+                            'name' => 'Frais de livraison',
+                        ],
+                        'unit_amount' => $unitAmount, // Le prix doit être en centimes
+                    ],
+                    'quantity' => 1, // Vous pouvez ajuster la quantité si nécessaire
+                ];
+            }
             foreach ($commandeData as $item) {
                 $unitAmount = round($item['prixTTC'] * 100);
                 $lineItems[] = [
@@ -202,13 +168,10 @@ class PaiementController extends AbstractController
         // Marquer la variable de session pour indiquer que la redirection a eu lieu
         $session->set('redirected', true);
 
-        // Réinitialiser le localStorage à zéro
-        echo '<script>localStorage.setItem("nb_counts", 0);</script>';
-
-       $response = new RedirectResponse($this->generateUrl('app_confirmation'));
+        $response = new RedirectResponse($this->generateUrl('app_confirmation'));
 
         // Ajout d'un message flash pour informer l'utilisateur
-        $this->addFlash('success', 'Votre commande a été soumise avec succès !');
+        $this->addFlash('success', 'Votre paiement a bien été accepté, merci pour votre commande');
 
         return $response;
     }

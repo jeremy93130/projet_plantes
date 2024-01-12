@@ -3,7 +3,9 @@
   Hello HomeController!
 {% endblock %}
 {% block body %}
-  {% include 'navbar/navbar.html.twig' %}
+  {% block navbar %}
+    {% include 'navbar/navbar.html.twig' %}
+  {% endblock %}
   <div class="neutre">
     <div class="banner">
       <h1>Qu'est ce qui vous tente aujourd'hui ?</h1>
@@ -23,4 +25,7 @@
       </div>
     </div>
   </div>
+  {% block footer %}
+    {% include 'footer/footer.html.twig' %}
+  {% endblock %}
 {% endblock %}

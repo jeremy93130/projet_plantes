@@ -110,7 +110,7 @@ class Adresse
         return $this->instruction_livraison;
     }
 
-    public function setInstructionLivraison(string $instruction_livraison): static
+    public function setInstructionLivraison(?string $instruction_livraison): static
     {
         $this->instruction_livraison = $instruction_livraison;
 

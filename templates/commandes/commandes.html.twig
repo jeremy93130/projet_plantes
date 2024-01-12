@@ -1,78 +1,114 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-	commandes
+  commandes
 {% endblock %}
 
 {% block body %}
-	{% include 'navbar/navbar.html.twig' %}
-	{% if successMessage is not null %}
-		<div>
-			<h1>Votre paiement a bien été accepté, merci pour votre commande</h1>
-			<p>À très vite chez
-				<span>Le Naturel Au Vert</span>
-			</p>
-			<a href="{{ path('app_home') }}">Retour à l'accueil</a>
-		</div>
-	{% else %}
-		{% if app.session.get('commande') %}
-			<div class="recap">
-				<h1>Récapitulatif de la commande</h1>
-				<table class="table">
-					<thead>
-						<tr>
-							<th>Produit</th>
-							<th class="td-quantite">Quantité</th>
-							<th class="td-prix">Total HT</th>
-							<th class="td-prix">Total TTC (tva 10%)</th>
-						</tr>
-					</thead>
-					<tbody>
-						{% for data in dataCommande['commandeData'] %}
-							<tr>
-								<td class="td-nom">{{ data.alt }}</td>
-								<td class="td-quantite">{{ data.quantite }}</td>
-								<td class="td-prix">{{ data.prix * data.quantite }}€</td>
-								<td class="td-prix">{{ data.prixTTC * data.quantite }}€</td>
-							</tr>
-						{% endfor %}
-					</tbody>
-					<tfoot>
-						<tr>
-							<td class="ttG"></td>
-							<td class="ttG"></td>
-							<td class="ttG"></td>
-							<td class="ttG">{{ dataCommande.totalGeneral }}€</td>
-						</tr>
-					</tfoot>
-				</table>
-				<h3 class="livraisonh3">Adresse de livraison :</h3>
-				{% if app.session.get('adresseValide') %}
-					<div class="livraison">
-						<div class="adresselivraison">
-							<p>Mme/Mr</p>
-							<p>{{ adresseInfos.nomComplet }}</p>
-							<p></p>
-							<p>{{ adresseInfos.adresseLivraison }}</p>
-							<p>{{ adresseInfos.codePostal }}
-								{{ adresseInfos.ville }}</p>
-							<p>{{ adresseInfos.pays }}</p>
-							<p>{{adresseInfos.instructions}}</p>
-						</div>
-						<a href="{{ path('app_adresse') }}">Modifier</a>
-					</div>
-				{% else %}
-					<div class="adresse_link">
-						<a class="paiement_links" href="{{ path('app_adresse') }}">Définir l'adresse de livraison</a>
-					</div>
-				{% endif %}
-				<a class="paiement_links" href="{{ path('app_paiement', { ids: dataCommande['commandeData']|column('id')|join(','), total: dataCommande.totalGeneral }) }}">Payer</a>
-			</div>
-		{% else %}
-			{% set redirectionUrl = path('app_achats') %}
-			<script>
-				window.location.href = '{{ redirectionUrl }}'
-			</script>
-		{% endif %}
-	{% endif %}
+  {% include 'navbar/navbar.html.twig' %}
+  {% if successMessage is same as(true) %}
+    <script>
+      localStorage.setItem('nb_counts', 0)
+    </script>
+    <div>
+      {% for message in app.flashes('success') %}
+        <h1>{{ message }}</h1>
+      {% endfor %}
+      <p>
+        À très vite chez
+        <span class="titre-site">Le Naturel Au Vert</span>
+      </p>
+      <a href="{{ path('app_home') }}">Retour à l'accueil</a>
+    </div>
+  {% else %}
+    {% if app.session.get('commande') %}
+      <div class="recap">
+        <h1>Récapitulatif de la commande</h1>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Produit</th>
+              <th class="td-quantite">Quantité</th>
+              <th class="td-prix">Total HT</th>
+              <th class="td-prix">
+                Total TTC<br />(TVA 10%)
+              </th>
+              {% if dataCommande['totalGeneral'] < 50 %}
+                <th class="td-prix">Frais de livraison</th>
+              {% endif %}
+            </tr>
+          </thead>
+          <tbody>
+            {% for data in dataCommande['commandeData'] %}
+              <tr>
+                <td class="td-nom">{{ data.alt }}</td>
+                <td class="td-quantite">{{ data.quantite }}</td>
+                <td class="td-prix">{{ data.prix * data.quantite }}€</td>
+                <td class="td-prix">{{ data.prixTTC * data.quantite }}€</td>
+                {% if dataCommande['totalGeneral'] < 50 %}
+                  <td class="td-prix"></td>
+                {% endif %}
+              </tr>
+            {% endfor %}
+          </tbody>
+          <tfoot>
+            <tr>
+              <td class="ttG"></td>
+              <td class="ttG"></td>
+              <td class="ttG"></td>
+              {% if dataCommande.totalGeneral < 50 %}
+                <td class="ttG">{{ dataCommande.totalGeneral }}€</td>
+                <td class="ttG">3.99€</td>
+              {% else %}
+                <td class="ttG">{{ dataCommande.totalGeneral }}€</td>
+              {% endif %}
+            </tr>
+          </tfoot>
+        </table>
+        <h3 class="livraisonh3">Adresse de livraison :</h3>
+        {% if app.session.get('adresseValide') %}
+          <div class="livraison">
+            <div class="adresselivraison">
+              <p>Mme/Mr</p>
+              <p>{{ adresseInfos.nomComplet }}</p>
+              <p></p>
+              <p>{{ adresseInfos.adresseLivraison }}</p>
+              <p>{{ adresseInfos.codePostal }}
+                {{ adresseInfos.ville }}</p>
+              <p>{{ adresseInfos.pays }}</p>
+              <p>{{ adresseInfos.instructions }}</p>
+            </div>
+            <a href="{{ path('app_adresse') }}">Modifier</a>
+          </div>
+        {% elseif userLastAdresse is not null %}
+          <div class="livraison">
+            <div class="adresselivraison">
+              <p>Mme/Mr</p>
+              <p>{{ userLastAdresse.nomComplet }}</p>
+              <p></p>
+              <p>{{ userLastAdresse.adresse }}</p>
+              <p>{{ userLastAdresse.codePostal }}
+                {{ userLastAdresse.ville }}</p>
+              <p>{{ userLastAdresse.pays }}</p>
+              <p>{{ userLastAdresse.instructionLivraison }}</p>
+            </div>
+            <a href="{{ path('app_adresse') }}">Modifier</a>
+          </div>
+        {% else %}
+          <div class="adresse_link">
+            <a class="paiement_links" href="{{ path('app_adresse') }}">Définir l'adresse de livraison</a>
+          </div>
+        {% endif %}
+        <a class="paiement_links" href="{{ path('app_paiement', { ids: dataCommande['commandeData']|column('id')|join(','), total: dataCommande.totalGeneral }) }}">Payer</a>
+      </div>
+    {% else %}
+      {% set redirectionUrl = path('app_achats') %}
+      <script>
+        window.location.href = '{{ redirectionUrl }}'
+      </script>
+    {% endif %}
+  {% endif %}
+  {% block footer %}
+    {% include 'footer/footer.html.twig' %}
+  {% endblock %}
 {% endblock %}
