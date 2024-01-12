@@ -2,12 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\AdresseRepository;
-use Doctrine\DBAL\Types\Types;
+use App\Repository\AdresseFactureRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: AdresseRepository::class)]
-class Adresse
+#[ORM\Entity(repositoryClass: AdresseFactureRepository::class)]
+class AdresseFacture
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -29,16 +28,11 @@ class Adresse
     #[ORM\Column(length: 255)]
     private ?string $pays = null;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $instruction_livraison = null;
-
-    #[ORM\ManyToOne(inversedBy: 'adresses')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(inversedBy: 'adresseFactures')]
     private ?User $client = null;
 
-    #[ORM\OneToOne(inversedBy: 'adresse', cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?commande $commande = null;
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    private ?Commande $commande = null;
 
     #[ORM\Column]
     private ?int $telephone = null;
@@ -108,18 +102,6 @@ class Adresse
         return $this;
     }
 
-    public function getInstructionLivraison(): ?string
-    {
-        return $this->instruction_livraison;
-    }
-
-    public function setInstructionLivraison(?string $instruction_livraison): static
-    {
-        $this->instruction_livraison = $instruction_livraison;
-
-        return $this;
-    }
-
     public function getClient(): ?User
     {
         return $this->client;
@@ -132,12 +114,12 @@ class Adresse
         return $this;
     }
 
-    public function getCommande(): ?commande
+    public function getCommande(): ?Commande
     {
         return $this->commande;
     }
 
-    public function setCommande(commande $commande): static
+    public function setCommande(?Commande $commande): static
     {
         $this->commande = $commande;
 

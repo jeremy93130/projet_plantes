@@ -43,10 +43,14 @@ class User implements
     #[ORM\OneToMany(mappedBy: 'client', targetEntity: Adresse::class)]
     private Collection $adresses;
 
+    #[ORM\OneToMany(mappedBy: 'client', targetEntity: AdresseFacture::class)]
+    private Collection $adresseFactures;
+
     public function __construct()
     {
         $this->commande = new ArrayCollection();
         $this->adresses = new ArrayCollection();
+        $this->adresseFactures = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -209,6 +213,36 @@ class User implements
             // set the owning side to null (unless already changed)
             if ($adress->getClient() === $this) {
                 $adress->setClient(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, AdresseFacture>
+     */
+    public function getAdresseFactures(): Collection
+    {
+        return $this->adresseFactures;
+    }
+
+    public function addAdresseFacture(AdresseFacture $adresseFacture): static
+    {
+        if (!$this->adresseFactures->contains($adresseFacture)) {
+            $this->adresseFactures->add($adresseFacture);
+            $adresseFacture->setClient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAdresseFacture(AdresseFacture $adresseFacture): static
+    {
+        if ($this->adresseFactures->removeElement($adresseFacture)) {
+            // set the owning side to null (unless already changed)
+            if ($adresseFacture->getClient() === $this) {
+                $adresseFacture->setClient(null);
             }
         }
 

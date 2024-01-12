@@ -1,44 +1,37 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}
-  footer
-{% endblock %}
-
 {% block body %}
-  <footer>
-    <div class="middle-footer">
-      <div class="d-flex justify-content-around">
-        <div class="d-flex align-items-center">
-          <div class="footer-logos">
-            <img src="{{ asset('images/footer/picto-livraison.webp') }}" alt="livraison logo" />
-          </div>
-          <p>Livraison gratuite à partir de 50€ d'achats</p>
-        </div>
-        <div class="d-flex align-items-center">
-          <div class="footer-logos">
-            <img src="{{ asset('images/footer/Logo_CB.png') }}" alt="paiement CB" />
-          </div>
-          <p>Paiement CB sécurisé</p>
-        </div>
-        <div class="d-flex align-items-center">
-          <div class="footer-logos">
-            <img src="{{ asset('images/footer/fraicheur.webp') }}" alt="Fraîcheur logo" />
-          </div>
-          <p>Fraîcheur garantie, camions frigorifiques</p>
-        </div>
-      </div>
-    </div>
-    <div>
-      <nav>
-        <ul>
-          <li>
-            <a href="{{ path('app_cgv') }}">voir nos CGV</a>
-          </li>
-          <li>
-            <a href="{{ path('app_mentions') }}">qui sommes-nous ?</a>
-          </li>
-        </ul>
-      </nav>
-    </div>
-  </footer>
+	<footer>
+		<div class="middle-footer">
+			<div class="d-flex justify-content-around">
+				<div class="d-flex align-items-center">
+					<div class="footer-logos">
+						<img src="{{ asset('images/footer/picto-livraison.webp') }}" alt="livraison logo"/>
+					</div>
+					<p>Livraison gratuite à partir de 50€ d'achats</p>
+				</div>
+				<div class="d-flex align-items-center">
+					<div class="footer-logos">
+						<img src="{{ asset('images/footer/paiement.png') }}" alt="paiement CB"/>
+					</div>
+					<p>Paiement CB sécurisé</p>
+				</div>
+				<div class="d-flex align-items-center">
+					<div class="footer-logos">
+						<img src="{{ asset('images/footer/fraicheur.webp') }}" alt="Fraîcheur logo"/>
+					</div>
+					<p>Fraîcheur garantie, camions frigorifiques</p>
+				</div>
+			</div>
+		</div>
+		<div class="nav-footer">
+			<nav>
+				<ul>
+					<li><a id=""href="{{path('app_cgv')}}"><i class="fa-solid fa-scale-balanced pe-2"></i>Voir nos CGV</a></li>
+					<li><a id=""href="{{path('app_mentions')}}"><i class="fa-solid fa-book-open pe-2"></i>Mentions légales</a></li>
+					<li><a id=""href="{{path('app_info_entreprise')}}"><i class="fa-solid fa-person-circle-question pe-2"></i>Qui sommes-nous?</a></li>
+				</ul>
+			</nav>
+		</div>
+	</footer>
 {% endblock %}

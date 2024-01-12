@@ -16,8 +16,7 @@
 				<h2 class="text-center m-3 titre-site">Produits disponibles à l'achat</h2>
 				<input type="search" name="plante_search" id="plante_search" placeholder="Recherche"/>
 			</div>
-			<div class="d-flex justify-content-end w-25" id="relative-div">
-			</div>
+			<div class="d-flex justify-content-end w-25" id="relative-div"></div>
 		</div>
 		<div class="produits-categories">
 			<div class="d-flex flex-wrap justify-content-center relative">
@@ -42,5 +41,7 @@
 			</div>
 		</div>
 	</div>
-
+	{% block footer %}
+		{% include 'footer/footer.html.twig' %}
+	{% endblock %}
 {% endblock %}

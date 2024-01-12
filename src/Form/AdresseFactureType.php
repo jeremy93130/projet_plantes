@@ -2,20 +2,17 @@
 
 namespace App\Form;
 
-use App\Entity\Adresse;
-
+use App\Entity\AdresseFacture;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\CountryType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\CountryType;
-use Symfony\Component\Form\Extension\Core\Type\TelType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Validator\Constraints\Length;
 
-class AdresseLivraisonType extends AbstractType
+class AdresseFactureType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -51,23 +48,13 @@ class AdresseLivraisonType extends AbstractType
                 'constraints' => []
             ])
             ->add('telephone', TelType::class, [])
-            ->add('instructionLivraison', TextareaType::class, [
-                'label' => 'Ajouter des instructions de livraison (facultatif)',
-                'required' => false,
-                'constraints' => [
-                    new Length([
-                        'max' => 200,
-                        'maxMessage' => 'nombre maximum de caractère atteint !'
-                    ])
-                ]
-            ])
             ->add('Ajouter', SubmitType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Adresse::class,
+            'data_class' => AdresseFacture::class,
         ]);
     }
 }

@@ -1,904 +1,970 @@
-@import url('https://fonts.googleapis.com/css2?family=Kolker+Brush&display=swap');
-
-/* Body */
-body {
-    background-color: #212529;
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-}
-
-
-/* Home */
-
-.banner {
-    height: 250px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-}
-
-.banner h1 {
-    text-shadow: 15px 12px 4px rgba(0, 0, 0, 0.603);
-    font-family: 'Kolker Brush', cursive;
-    font-size: 70px;
-    color: #FFC107;
-}
-
-.main-produits {
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-}
-
-.produits {
-    background-color: black;
-    height: 250px;
-    width: 600px;
-    margin: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.produits:hover {
-    transform: scale(1.1);
-    transition: 1.5s;
-    z-index: 1;
-}
-
-.produits:not(hover) {
-    transform: scale(1);
-    transition: 1.5s;
-}
-
-.produits:nth-child(1) {
-    background-image: url('../../images/produits/presentation-plantes.jpg');
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-}
-
-.produits:nth-child(2) {
-    background-image: url('../../images/produits/presentation-graines.webp');
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-}
-
-.produits:nth-child(3) {
-    background-image: url('../../images/produits/presentation-legumes.webp');
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-}
-
-.produits:nth-child(4) {
-    background-image: url('../../images/produits/presentation-fruits.jpg');
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-}
-
-.produits a {
-    text-decoration: none;
-    color: black;
-    font-size: 66px;
-    text-shadow: 8px 5px 3px #FFC107;
-}
-
-/* NavBar */
-
-nav h2 {
-    text-shadow: 15px 12px 4px rgba(0, 0, 0, 0.603);
-    font-family: 'Kolker Brush', cursive;
-    font-size: 55px;
-}
-
-.mainmenubtn {
-    background-color: transparent;
-    color: #FFC107;
-    border: none;
-    cursor: pointer;
-    margin-right: 25px;
-}
-
-.dropdown {
-    position: relative;
-    display: inline-block;
-}
-
-.dropdown-child {
-    display: none;
-}
-
-.dropdown-child ul {
-    color: #FFC107;
-    text-decoration: none;
-    display: block;
-}
-
-.dropdown:hover .dropdown-child {
-    display: block;
-}
-
-.categories {
-    display: flex;
-    align-items: center;
-    width: 75%;
-    justify-content: space-around;
-}
-
-.categories>p {
-    margin: 0;
-}
-
-.categories p>a {
-    /* position: absolute; */
-    color: #FFC107;
-    font-weight: bold;
-    font-size: 15px;
-    margin: 10px 0;
-}
-
-.categories>p>a:nth-child(1) {
-    left: 0;
-}
-
-/* Partie card achats.html.twig */
-.achat-accueil::before {
-    content: "";
-    /* Remplacez par le chemin de votre image */
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-attachment: fixed;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    /* Assure que l'image est en arrière-plan du contenu */
-}
-
-.achat-accueil {
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-attachment: fixed;
-    height: 90vh;
-}
-
-.achat-accueil-plantes::before {
-    background-image: url('https://img.freepik.com/photos-premium/feuilles-vertes-fond-ecran-naturel-texture-feuille-fabrique-par-aiintelligence-artificielle_41969-12049.jpg');
-    /* height       : fit-content; */
-}
-
-.achat-accueil-graines {
-    background-image: url('../../images/produits/presentation-graines.webp');
-}
-
-.achat-accueil-legumes {
-    background-image: url('../../images/produits/presentation-legumes.webp');
-}
-
-.achat-accueil-fruits {
-    background-image: url('../../images/produits/presentation-fruits.jpg');
-}
-
-.produits-categories {
-    display: flex;
-    justify-content: center;
-}
-
-.titre-plante {
-    display: flex;
-    flex-direction: column;
-}
-
-.titre-site {
-    color: #FFC107;
-    text-shadow: 4px 3px rgba(0, 0, 0, 0.603);
-}
-
-#relative-div {
-    position: relative;
-    display: flex;
-    width: 550px;
-}
-
-#relative-div form {
-    width: 420px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-#relative-div form a {
-    font-size: 1rem;
-    background-color: #FFC107;
-    border: 1px solid black;
-    padding: 8px 7px;
-    border-radius: 10%;
-    vertical-align: middle;
-    text-decoration: none;
-    color: black;
-}
-
-.rechercher {
-    background-color: #FFC107;
-    border-color: #FFC107;
-}
-
-#plante_search {
-    background-color: #000000;
-    border-radius: 20px;
-    border: none;
-    color: #FFC107;
-    padding: 0 0 0 5px;
-    text-align: center;
-}
-
-#plante_search::placeholder {
-    color: #FFC107;
-}
-
-#plante_search:focus::placeholder {
-    color: transparent;
-}
-
-
-
-#relative-div form a:hover,
-#relative-div form button:hover {
-    background-color: #212529;
-    color: white;
-    transition: 1.5s;
-    border-color: black;
-}
-
-.plantesResults {
-    box-shadow: 10px 10px 3px rgba(0, 0, 0, 0.603);
-}
-
-#plante_search_search {
-    padding: 5px 10px;
-}
-
-.relative-div-achats {
-    position: relative;
-    background-color: #212529;
-    color: white;
-}
-
-.absolute-prix {
-    position: absolute;
-    background-color: #212529;
-    color: #FFC107;
-    border-radius: 50%;
-    padding: 5px;
-    width: 50px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    text-align: center;
-    font-size: 13px;
-    font-weight: bold;
-    right: 0;
-    top: 0;
-}
-
-/* #btn-btn {
-    position: absolute;
-    left: 25px;
-    top: -20px;
-    border: 2px solid transparent;
-    border-color: yellow;
-    outline: none;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: yellow;
-    transition: 0.5s ease-in-out;
-} */
-
-
-#btn-btn:hover {
-    background-color: #FFC107;
-    border-color: transparent;
-}
-
-#btn-btn img {
-    width: 25px;
-    vertical-align: middle;
-}
-
-
-.img-card {
-    height: 300px;
-}
-
-.img-card img {
-    width: 100%;
-    height: 300px;
-}
-
-.change-btn:hover {
-    background: #212529;
-    transition: 2s;
-    color: white;
-}
-
-/* PAGE INSCRIPTION */
-.formInscription {
-    border: 2px solid #FFC107;
-    width: 500px;
-    height: 600px;
-    box-shadow: 3px 3px 3px #FFC107;
-    margin: 30px auto;
-    text-align: center;
-    color: #FFC107;
-}
-
-.formInscription h1 {
-    text-decoration: underline;
-}
-
-.formInscription form {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.formInscription form #register_form {
-    align-items: center;
-}
-
-.formInscription form #register_form div {
-    align-items: center;
-    width: 200px;
-    margin: 10px auto;
-}
-
-.formInscription label {
-    margin: 10px 0;
-    background-color: rgba(0, 0, 0, 0.623);
-    width: 100%;
-}
-
-#next,
-#previous {
-    position: absolute;
-    color: #FFC107;
-    /* background-color: #212529; */
-    font-size: 25px;
-}
-
-#next {
-    bottom: 50px;
-    right: 500px;
-}
-
-#previous {
-    bottom: 50px;
-    right: 250px;
-    width: 100%;
-    
-}
-
-.relative {
-    position: relative;
-}
-
-/* FIN PAGE INSCRIPTION */
-
-
-/* Page Details */
-.absolutePrix {
-    position: absolute;
-    top: 20px;
-    left: 570px;
-    padding: 20px;
-    border-radius: 50%;
-}
-
-.details-img {
-    display: flex;
-    justify-content: center;
-}
-
-.detail-img {
-    height: 100%;
-    width: 400px;
-    margin: auto;
-}
-
-.add_image {
-    color: #FFC107;
-    display: block;
-    margin: 1rem 0 0 0;
-    padding-left: 1rem;
-}
-
-.add_image button {
-    margin-top: 10px;
-    height: 30px;
-}
-
-.carousel-control-next {
-    right: 220px;
-}
-
-.carousel-control-prev {
-    left: 220px;
-}
-
-.carousel-control-prev span {
-    background-color: black;
-}
-
-.carousel-control-next span {
-    background-color: black;
-}
-
-.accordion-item,
-.accordion-button,
-.accordion-body {
-    background-color: transparent;
-}
-
-#link-ajouter,
-#link-supp {
-    cursor: pointer;
-}
-
-/* FIN PAGE DETAILS */
-
-
-/* PARTIE PANIER */
-table.table tr,
-table.table th,
-table.table td {
-    background-color: black;
-    color: #FFC107;
-}
-
-table.table td a {
-    text-decoration: none;
-    color: #FFC107;
-    border: 2px solid black;
-    background-color: rgba(0, 0, 0, 0.671);
-}
-
-.delete_article img {
-    width: 200px;
-}
-
-#commander {
-    cursor: pointer;
-}
-
-/* Panier vide */
-
-.panier-vide-div {
-    display: flex;
-    flex-direction: column;
-    height: 93vh;
-    align-items: center;
-    justify-content: center;
-    background-color: rgba(0, 0, 0, 0.377);
-}
-
-.panier-vide-div a {
-    font-size: 33px;
-    color: red;
-}
-
-
-/* FIN PARTIE PANIER */
-
-
-/* PARTIE COMMANDE */
-
-.recap {
-    width: 700px;
-    height: 700px;
-    margin: auto;
-    border: 3px solid black;
-}
-
-.recap h1 {
-    text-align: center;
-    color: #FFC107;
-    background-color: #21252970;
-}
-
-.recap h2 {
-    text-align: center;
-    color: #FFC107;
-    background-color: #212529bb;
-    padding: 30px 0;
-}
-
-.ttG {
-    width: 25%;
-    text-align: right;
-}
-
-.td-quantite,
-.td-prix {
-    text-align: right;
-}
-
-/* Paiement */
-.paiements {
-    margin: auto;
-    width: 500px;
-    height: 500px;
-    background-color: rgba(0, 0, 0, 0.651);
-    color: #FFC107;
-}
-
-.paiements {
-    padding: 20px;
-    border: 3px solid white;
-}
-
-/* adresse livraison */
-.livraisonh3 {
-    color: #FFC107;
-    text-align: center;
-}
-
-.livraison {
-    border: 1px solid black;
-    background-color: #000000c2;
-    color: #FFC107;
-}
-
-.livraison p {
-    margin: 2px 0;
-}
-
-.adresse_link {
-    margin: 30px 0;
-}
-
-.paiement_links {
-    color: #FFC107;
-    padding: 5px 20px;
-    background-color: #000000;
-}
-
-/* Page adresse Livraison */
-
-.adresse_livraison {
-    display: flex;
-    flex-direction: column;
-    width: 600px;
-    margin: 20px auto;
-    background-color: #2125299c;
-    color: #FFC107;
-}
-
-.adresse_livraison h1 {
-    font-size: 26px;
-    text-align: center;
-}
-
-#adresse_livraison>div {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 450px;
-    margin: auto;
-}
-
-#adresse_livraison>div>button {
-    margin: auto;
-}
-
-#adresse_livraison>div>select,
-#adresse_livraison>div>input {
-    width: 150px;
-}
-
-/* Page historique commandes  */
-
-.historiqueH1 {
-    color: #FFC107;
-    text-align: center;
-    margin: 30px 0 0 0;
-    padding: 30px 0;
-    background-color: #000000;
-    border-bottom: 2px solid white;
-}
-
-
-/* Page Infos utilisateur */
-
-.container>div>h1 {
-    text-align: center;
-    color: #FFC107;
-}
-
-.container>div>div {
-    color: #FFC107;
-    background-color: #00000048;
-    display: flex;
-    margin: 10px;
-    justify-content: space-between;
-    width: 400px;
-    margin: auto;
-}
-
-.container>div>div>a {
-    color: white;
-}
-
-
-/* Page legalite */
-
-.legalite-div {
-    color: #FFC107;
-    text-align: justify;
-    width: 1000px;
-    margin: 20px auto;
-}
-
-.legalite-div h1 {
-    text-align: center;
-    margin: 20px 0;
-}
-
-.legalite-div h2 {
-    margin: 10px 0;
-}
-
-
-/* Page Footer */
-
-footer {
-    background-color: #FFC107;
-}
-
-.footer-logos {
-    width: 100px;
-}
-
-.footer-logos>img {
-    width: 100%;
-}
-
-.middle-footer p {
-    margin-left: 20px;
-}
-
-/* MEDIAS QUERIES */
-/* entre tablette et desktop */
-
-@media (max-width: 1600px) {
-    .absolutePrix {
-        position: absolute;
-        top: 20px;
-        left: 480px;
-        padding: 15px;
-        border-radius: 50%;
+    @import url('https://fonts.googleapis.com/css2?family=Kolker+Brush&display=swap');
+
+    /* Body */
+
+    body {
+        background-image     : url('../../images/fond/nature.jpg');
+        background-position  : top;
+        background-size      : cover;
+        background-repeat    : no-repeat;
+        background-attachment: fixed;
+        margin               : 0;
+        padding              : 0;
+        display              : flex;
+        flex-direction       : column;
+        min-height           : 100vh;
+        /* Assure que le body occupe au moins la hauteur de l'écran */
     }
 
-    .absoluteNext {
-        right: 150px;
+
+    /* Home */
+
+    .banner {
+        height         : 250px;
+        display        : flex;
+        justify-content: center;
+        align-items    : center;
+        flex-direction : column;
     }
 
-    .absolutePrev {
-        left: 150px;
+    .banner h1 {
+        text-shadow: 15px 12px 4px rgba(0, 0, 0, 0.603);
+        font-family: 'Kolker Brush', cursive;
+        font-size  : 70px;
+        color      : #FFC107;
     }
 
-    #next {
-        bottom: 10px;
-        right: 30px;
+    .main-produits {
+        display        : flex;
+        justify-content: space-around;
+        flex-wrap      : wrap;
     }
 
-    #previous {
-        bottom: 10px;
-        left: 30px;
-    }
-}
-
-@media (max-width: 1168px) {
-
-    /* NAVBAR ET ACHATS */
-
-    .block-mobile {
-        display: block !important;
+    .produits {
+        background-color: black;
+        height          : 250px;
+        width           : 600px;
+        margin          : 10px;
+        display         : flex;
+        justify-content : center;
+        align-items     : center;
     }
 
-    .block-mobile>div {
-        width: 100% !important;
-        margin: auto;
+    .produits:hover {
+        transform : scale(1.1);
+        transition: 1.5s;
+        z-index   : 1;
     }
 
-    #relative-div {
-        display: block !important;
-        text-align: center;
-        width: 100%;
+    .produits:not(hover) {
+        transform : scale(1);
+        transition: 1.5s;
     }
 
-    .none-mobile {
+    .produits:nth-child(1) {
+        background-image   : url('../../images/produits/presentation-plantes.jpg');
+        background-repeat  : no-repeat;
+        background-size    : cover;
+        background-position: center;
+    }
+
+    .produits:nth-child(2) {
+        background-image   : url('../../images/produits/presentation-graines.webp');
+        background-repeat  : no-repeat;
+        background-size    : cover;
+        background-position: center;
+    }
+
+    .produits:nth-child(3) {
+        background-image   : url('../../images/produits/presentation-legumes.webp');
+        background-repeat  : no-repeat;
+        background-size    : cover;
+        background-position: center;
+    }
+
+    .produits:nth-child(4) {
+        background-image   : url('../../images/produits/presentation-fruits.jpg');
+        background-repeat  : no-repeat;
+        background-size    : cover;
+        background-position: center;
+    }
+
+    .produits a {
+        text-decoration: none;
+        color          : black;
+        font-size      : 66px;
+        text-shadow    : 8px 5px 3px #FFC107;
+    }
+
+    /* NavBar */
+
+    nav {
+        background-repeat    : no-repeat;
+        background-size      : cover;
+        background-attachment: fixed;
+    }
+
+
+    nav h2 {
+        text-shadow: 15px 12px 4px rgba(0, 0, 0, 0.603);
+        font-family: 'Kolker Brush', cursive;
+        font-size  : 55px;
+    }
+
+    .mainmenubtn {
+        background-color: #000000;
+        color           : #FFC107;
+        border          : none;
+        cursor          : pointer;
+        margin-right    : 25px;
+    }
+
+    .dropdown {
+        position: relative;
+        display : inline-block;
+    }
+
+    .dropdown-child {
         display: none;
     }
 
-    .navbar-brand {
-        display: none;
+    .dropdown-child ul {
+        color          : #FFC107;
+        text-decoration: none;
+        display        : block;
     }
 
-    .navbar h2 {
-        font-size: 35px;
+    .dropdown:hover .dropdown-child {
+        display: block;
     }
 
-    .titre-plante h2 {
-        font-size: 16px;
+    .categories {
+        display        : flex;
+        align-items    : center;
+        width          : 75%;
+        justify-content: space-around;
     }
 
-    #relative-div {
-        width: 25%;
+    .categories>p {
+        margin: 0;
     }
 
-    .btn-hamburger {
-        background-color: #FFC107;
+    .categories p>a {
+        /* position: absolute; */
+        color      : #FFC107;
+        font-weight: bold;
+        font-size  : 15px;
+        margin     : 10px 0;
     }
 
-    /* Panier */
-
-    .panier-vide-div h1 {
-        font-size: 30px;
-    }
-}
-
-/* Tablettes */
-@media (max-width: 768px) {
-    .titre-plante {
-        width: 700px;
-    }
-
-    #relative-div {
-        width: 375px;
-        justify-content: center;
-    }
-
-    #relative-div #plante_search {
-        margin: auto;
-    }
-
-    .achat-accueil>div>div>h2 {
-        font-size: 26px;
-        text-align: right;
-    }
-
-    .absolute-prix {
-        justify-content: center;
-    }
-
-    .absolutePrix {
-        left: 90%;
-    }
-
-
-
-
-
-
-    /* Page Details */
-
-    .absolutePrix {
-        top: 0;
-        left: 360px;
-        font-size: 13px;
-        padding: 15px;
-    }
-
-    /* Panier plein */
-    .delete_article img {
-        width: 100px;
-    }
-
-
-}
-
-@media (max-width: 576px) {
-    .adresse_livraison {
-        width: 100%;
-    }
-
-    #adresse_livraison>div {
-        flex-direction: column;
-        width: 100%;
-    }
-
-    .details_mobile {
-        width: 100% !important;
-        margin-top: 0 !important;
-    }
-
-    .detail-img {
-        width: 100%;
-    }
-
-    .details_mobile img {
-        width: 200px;
-    }
-
-    .details_mobile h5 {
-        color: #FFC107;
-        text-align: center;
-    }
-
-    .absolutePrix {
-        left: 82%;
-        top: 5%;
-        font-size: 13px;
-    }
-
-    .carousel-control-next {
-        right: 0;
-    }
-
-    .carousel-control-prev {
+    .categories>p>a:nth-child(1) {
         left: 0;
     }
 
-    .table_historic,
-    .table_historic tbody>tr,
-    .table_historic thead,
-    .table_historic tfoot {
-        display: flex;
+    /* Partie card achats.html.twig */
+    .achat-accueil::before {
+        content              : "";
+        /* Remplacez par le chemin de votre image */
+        background-repeat    : no-repeat;
+        background-size      : cover;
+        background-attachment: fixed;
+        position             : fixed;
+        top                  : 0;
+        left                 : 0;
+        width                : 100%;
+        height               : 100%;
+        z-index              : -1;
+        /* Assure que l'image est en arrière-plan du contenu */
+    }
+
+    .achat-accueil {
+        background-repeat    : no-repeat;
+        background-size      : cover;
+        background-attachment: fixed;
+        height               : 100%;
+    }
+
+    .achat-accueil-plantes::before {
+        background-image: url('https://img.freepik.com/photos-premium/feuilles-vertes-fond-ecran-naturel-texture-feuille-fabrique-par-aiintelligence-artificielle_41969-12049.jpg');
+        /* height       : fit-content; */
+    }
+
+    .achat-accueil-graines {
+        background-image: url('../../images/produits/presentation-graines.webp');
+    }
+
+    .achat-accueil-legumes {
+        background-image: url('../../images/produits/presentation-legumes.webp');
+    }
+
+    .achat-accueil-fruits {
+        background-image: url('../../images/produits/presentation-fruits.jpg');
+    }
+
+    .produits-categories {
+        display        : flex;
+        justify-content: center;
+    }
+
+    .titre-plante {
+        display       : flex;
         flex-direction: column;
-        font-size: 11px;
-        width: 100%;
     }
 
-    .table_panier_div {
-        max-width: 768px;
+    .titre-site {
+        color      : #FFC107;
+        text-shadow: 4px 3px rgba(0, 0, 0, 0.603);
     }
 
-    .table_panier {
-        display: flex;
-        flex-wrap: wrap;
-        width: 100%;
-        font-size: 7px;
+    #relative-div {
+        position: relative;
+        display : flex;
+        width   : 550px;
     }
 
-    .table_panier>thead,
-    .table_panier>tbody,
-    .table_panier>tfoot,
-    .table_panier tr {
-        display: flex;
-        flex-wrap: wrap;
-        width: 100%;
+    #relative-div form {
+        width          : 420px;
+        display        : flex;
+        align-items    : center;
+        justify-content: space-between;
     }
 
-    .table_panier tbody tr td:nth-child(2) {
-        width: 50px;
+    #relative-div form a {
+        font-size       : 1rem;
+        background-color: #FFC107;
+        border          : 1px solid black;
+        padding         : 8px 7px;
+        border-radius   : 10%;
+        vertical-align  : middle;
+        text-decoration : none;
+        color           : black;
     }
 
-    .table_panier tr td,
-    .table_panier tr th {
+    .rechercher {
+        background-color: #FFC107;
+        border-color    : #FFC107;
+    }
+
+    #plante_search {
+        background-color: #000000;
+        border-radius   : 20px;
+        border          : none;
+        color           : #FFC107;
+        padding         : 0 0 0 5px;
+        text-align      : center;
+    }
+
+    #plante_search::placeholder {
+        color: #FFC107;
+    }
+
+    #plante_search:focus::placeholder {
+        color: transparent;
+    }
+
+
+
+    #relative-div form a:hover,
+    #relative-div form button:hover {
+        background-color: #212529;
+        color           : white;
+        transition      : 1.5s;
+        border-color    : black;
+    }
+
+    .plantesResults {
+        box-shadow: 10px 10px 3px rgba(0, 0, 0, 0.603);
+    }
+
+    #plante_search_search {
+        padding: 5px 10px;
+    }
+
+    .relative-div-achats {
+        position        : relative;
+        background-color: #212529;
+        color           : white;
+    }
+
+    .absolute-prix {
+        position        : absolute;
+        background-color: #212529;
+        color           : #FFC107;
+        border-radius   : 50%;
+        padding         : 5px;
+        width           : 50px;
+        height          : 50px;
+        display         : flex;
+        align-items     : center;
+        text-align      : center;
+        font-size       : 13px;
+        font-weight     : bold;
+        right           : 0;
+        top             : 0;
+        justify-content : center;
+    }
+
+    /* #btn-btn {
+        position: absolute;
+        left: 25px;
+        top: -20px;
+        border: 2px solid transparent;
+        border-color: yellow;
+        outline: none;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: yellow;
+        transition: 0.5s ease-in-out;
+    } */
+
+
+    #btn-btn:hover {
+        background-color: #FFC107;
+        border-color    : transparent;
+    }
+
+    #btn-btn img {
+        width         : 25px;
+        vertical-align: middle;
+    }
+
+
+    .img-card {
+        height: 300px;
+    }
+
+    .img-card img {
+        width : 100%;
+        height: 300px;
+    }
+
+    .change-btn:hover {
+        background: #212529;
+        transition: 2s;
+        color     : white;
+    }
+
+    /* PAGE INSCRIPTION */
+    .formInscription {
+        border    : 2px solid #FFC107;
+        width     : 500px;
+        height    : 600px;
+        box-shadow: 3px 3px 3px #FFC107;
+        margin    : 30px auto;
+        text-align: center;
+        color     : #FFC107;
+    }
+
+    .formInscription h1 {
+        text-decoration: underline;
+    }
+
+    .formInscription form {
+        display        : flex;
+        flex-direction : column;
+        justify-content: space-between;
+    }
+
+    .formInscription form #register_form {
+        align-items: center;
+    }
+
+    .formInscription form #register_form div {
+        align-items: center;
+        width      : 200px;
+        margin     : 10px auto;
+    }
+
+    .formInscription label {
+        margin          : 10px 0;
+        background-color: rgba(0, 0, 0, 0.623);
+        width           : 100%;
+    }
+
+    #next,
+    #previous {
+        position           : absolute;
+        color              : #FFC107;
+        /* background-color: #212529; */
+        font-size          : 25px;
+    }
+
+    #next {
+        bottom: 50px;
+        right : 500px;
+    }
+
+    #previous {
+        bottom: 50px;
+        right : 250px;
+        width : 100%;
+
+    }
+
+    .relative {
+        position: relative;
+    }
+
+    /* FIN PAGE INSCRIPTION */
+
+
+    /* Page Details */
+    .absolutePrix {
+        position     : absolute;
+        top          : 20px;
+        left         : 570px;
+        padding      : 20px;
+        border-radius: 50%;
+    }
+
+    .details-img {
+        display        : flex;
+        justify-content: center;
+    }
+
+    .detail-img {
+        height: 100%;
+        width : 400px;
         margin: auto;
     }
 
+    .add_image {
+        color       : #FFC107;
+        display     : block;
+        margin      : 1rem 0 0 0;
+        padding-left: 1rem;
+    }
+
+    .add_image button {
+        margin-top: 10px;
+        height    : 30px;
+    }
+
+    .carousel-control-next {
+        right: 220px;
+    }
+
+    .carousel-control-prev {
+        left: 220px;
+    }
+
+    .carousel-control-prev span {
+        background-color: black;
+    }
+
+    .carousel-control-next span {
+        background-color: black;
+    }
+
+    .accordion-item,
+    .accordion-button,
+    .accordion-body {
+        background-color: transparent;
+    }
+
+    #link-ajouter,
+    #link-supp {
+        cursor: pointer;
+    }
+
+    /* FIN PAGE DETAILS */
+
+
+    /* PARTIE PANIER */
+    table.table tr,
+    table.table th,
+    table.table td {
+        color           : #FFC107;
+        background-color: transparent;
+    }
+
+    table.table td a {
+        text-decoration : none;
+        color           : #FFC107;
+        border          : 2px solid black;
+        background-color: rgba(0, 0, 0, 0.671);
+    }
 
     .delete_article img {
-        width: 50px;
-        height: 50px;
+        width: 200px;
     }
 
-    .table_panier>tbody>tr>.quantite-input>input {
-        width: 25px;
+    #commander {
+        cursor: pointer;
     }
 
-    .none {
-        display: none;
+    /* Panier vide */
+
+    .panier-vide-div {
+        display         : flex;
+        flex-direction  : column;
+        height          : 93vh;
+        align-items     : center;
+        justify-content : center;
+        background-color: rgba(0, 0, 0, 0.377);
     }
 
-}
+    .panier-vide-div a {
+        font-size: 33px;
+        color    : red;
+    }
+
+
+    /* FIN PARTIE PANIER */
+
+
+    /* PARTIE COMMANDE */
+
+    .recap {
+        width           : 700px;
+        margin          : 30px auto 0 auto;
+        border          : 3px solid black;
+        background-color: #00000080;
+    }
+
+    .recap h1 {
+        text-align: center;
+        color     : #FFC107;
+    }
+
+    .recap h2 {
+        text-align: center;
+        color     : #FFC107;
+        padding   : 30px 0;
+    }
+
+    .ttG {
+        width     : 25%;
+        text-align: right;
+    }
+
+    .td-quantite,
+    .td-prix {
+        text-align: right;
+    }
+
+    /* Paiement */
+    .paiements {
+        margin          : auto;
+        width           : 500px;
+        height          : 500px;
+        background-color: rgba(0, 0, 0, 0.651);
+        color           : #FFC107;
+    }
+
+    .paiements {
+        padding: 20px;
+        border : 3px solid white;
+    }
+
+    /* adresse livraison */
+    .livraison_factureh3 {
+        color     : #FFC107;
+        text-align: center;
+    }
+
+    .livraison_facture {
+        color: #FFC107;
+    }
+
+    .livraison_facture p {
+        margin: 2px 0;
+    }
+
+    .adresse_link {
+        margin: 30px 0;
+    }
+
+    .modif-adresse {
+        color: #FFC107;
+    }
+
+    .paiement_div {
+        margin         : 50px 0;
+        display        : flex;
+        justify-content: center;
+    }
+
+    .paiement_links {
+        color  : #FFC107;
+        padding: 5px 20px;
+    }
+
+    .paiement_links img {
+        width: 150px;
+    }
+
+    /* Page adresse Livraison */
+
+    .adresse_livraison,
+    .adresse_facture {
+        display         : flex;
+        flex-direction  : column;
+        width           : 600px;
+        margin          : 20px auto;
+        background-color: #2125299c;
+        color           : #FFC107;
+    }
+
+    .adresse_livraison h1,
+    .adresse_facture h1 {
+        font-size    : 26px;
+        text-align   : center;
+        margin-bottom: 40px;
+    }
+
+    #adresse_livraison>div,
+    #adresse_facture>div {
+        display        : flex;
+        justify-content: space-between;
+        align-items    : center;
+        width          : 450px;
+        margin         : auto;
+    }
+
+    #adresse_livraison>div>button,
+    #adresse_facture>div>button {
+        margin: auto;
+    }
+
+    #adresse_livraison>div>select,
+    #adresse_livraison>div>input,
+    #adresse_facture>div>select,
+    #adresse_facture>div>input {
+        width: 150px;
+    }
+
+    #adresse_livraison>div>textarea {
+        margin-left: 10px;
+    }
+
+    .adresse_livraison_facture {
+        display        : flex;
+        justify-content: space-between;
+        align-items: center;
+        text-align     : center;
+    }
+
+    .adresse_livraison_facture>div {
+    height: 300px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width : 50%;
+        margin: auto;
+    }
+
+    /* Page historique commandes  */
+
+    .historiqueH1 {
+        color           : #FFC107;
+        text-align      : center;
+        margin          : 30px 0 0 0;
+        padding         : 30px 0;
+        background-color: #000000;
+        border-bottom   : 2px solid white;
+    }
+
+
+    /* Page Infos utilisateur */
+
+    .container>div>h1 {
+        text-align: center;
+        color     : #FFC107;
+    }
+
+    .container>div>div {
+        color           : #FFC107;
+        background-color: #00000048;
+        display         : flex;
+        margin          : 10px;
+        justify-content : space-between;
+        width           : 400px;
+        margin          : auto;
+    }
+
+    .container>div>div>a {
+        color: white;
+    }
+
+
+    /* Page legalite */
+
+    .legalite-div {
+        color     : #FFC107;
+        text-align: justify;
+        width     : 1000px;
+        margin    : 20px auto;
+    }
+
+    .legalite-div h1 {
+        text-align: center;
+        margin    : 20px 0;
+    }
+
+    .legalite-div h2 {
+        margin: 10px 0;
+    }
+
+
+    /* Page Footer */
+
+    footer {
+        background-color: #FFC107;
+        margin-top      : 50px;
+    }
+
+    .footer-logos {
+        width: 100px;
+    }
+
+    .footer-logos>img {
+        width: 100%;
+    }
+
+    .middle-footer p {
+        margin-left: 20px;
+    }
+
+    .nav-footer>nav>ul {
+        display        : flex;
+        justify-content: space-around;
+        margin-bottom  : 0;
+    }
+
+    .nav-footer>nav>ul>li {
+        list-style-type: none;
+    }
+
+    .nav-footer>nav>ul>li>a {
+        color: inherit;
+    }
+
+    /* MEDIAS QUERIES */
+    /* entre tablette et desktop */
+
+    @media (max-width: 1600px) {
+        .absolutePrix {
+            position     : absolute;
+            top          : 20px;
+            left         : 480px;
+            padding      : 15px;
+            border-radius: 50%;
+        }
+
+        .absoluteNext {
+            right: 150px;
+        }
+
+        .absolutePrev {
+            left: 150px;
+        }
+
+        #next {
+            bottom: 10px;
+            right : 30px;
+        }
+
+        #previous {
+            bottom: 10px;
+            left  : 30px;
+        }
+    }
+
+    @media (max-width: 1168px) {
+
+        /* NAVBAR ET ACHATS */
+
+        .block-mobile {
+            display: block !important;
+        }
+
+        .block-mobile>div {
+            width : 100% !important;
+            margin: auto;
+        }
+
+        #relative-div {
+            display   : block !important;
+            text-align: center;
+            width     : 100%;
+        }
+
+        .none-mobile {
+            display: none;
+        }
+
+        .navbar-brand {
+            display: none;
+        }
+
+        .navbar h2 {
+            font-size: 35px;
+        }
+
+        .titre-plante h2 {
+            font-size: 16px;
+        }
+
+        #relative-div {
+            width: 25%;
+        }
+
+        .btn-hamburger {
+            background-color: #FFC107;
+        }
+
+        /* Panier */
+
+        .panier-vide-div h1 {
+            font-size: 30px;
+        }
+    }
+
+    /* Tablettes */
+    @media (max-width: 768px) {
+        .titre-plante {
+            width: 700px;
+        }
+
+        #relative-div {
+            width          : 375px;
+            justify-content: center;
+        }
+
+        #relative-div #plante_search {
+            margin: auto;
+        }
+
+        .achat-accueil>div>div>h2 {
+            font-size : 26px;
+            text-align: right;
+        }
+
+        .absolute-prix {
+            justify-content: center;
+        }
+
+        .absolutePrix {
+            left: 90%;
+        }
+
+
+
+
+
+
+        /* Page Details */
+
+        .absolutePrix {
+            top      : 0;
+            left     : 360px;
+            font-size: 13px;
+            padding  : 15px;
+        }
+
+        /* Panier plein */
+        .delete_article img {
+            width: 100px;
+        }
+
+
+    }
+
+    @media (max-width: 576px) {
+        .adresse_livraison {
+            width: 100%;
+        }
+
+        #adresse_livraison>div {
+            flex-direction: column;
+            width         : 100%;
+        }
+
+        .details_mobile {
+            width     : 100% !important;
+            margin-top: 0 !important;
+        }
+
+        .detail-img {
+            width: 100%;
+        }
+
+        .details_mobile img {
+            width: 200px;
+        }
+
+        .details_mobile h5 {
+            color     : #FFC107;
+            text-align: center;
+        }
+
+        .absolutePrix {
+            left     : 82%;
+            top      : 5%;
+            font-size: 13px;
+        }
+
+        .carousel-control-next {
+            right: 0;
+        }
+
+        .carousel-control-prev {
+            left: 0;
+        }
+
+        .table_historic,
+        .table_historic tbody>tr,
+        .table_historic thead,
+        .table_historic tfoot {
+            display       : flex;
+            flex-direction: column;
+            font-size     : 11px;
+            width         : 100%;
+        }
+
+        .table_panier_div {
+            max-width: 768px;
+        }
+
+        .table_panier {
+            display  : flex;
+            flex-wrap: wrap;
+            width    : 100%;
+            font-size: 7px;
+        }
+
+        .table_panier>thead,
+        .table_panier>tbody,
+        .table_panier>tfoot,
+        .table_panier tr {
+            display  : flex;
+            flex-wrap: wrap;
+            width    : 100%;
+        }
+
+        .table_panier tbody tr td:nth-child(2) {
+            width: 50px;
+        }
+
+        .table_panier tr td,
+        .table_panier tr th {
+            margin: auto;
+        }
+
+
+        .delete_article img {
+            width : 50px;
+            height: 50px;
+        }
+
+        .table_panier>tbody>tr>.quantite-input>input {
+            width: 25px;
+        }
+
+        .none {
+            display: none;
+        }
+
+    }

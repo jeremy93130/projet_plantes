@@ -23,4 +23,11 @@ class LegaliteController extends AbstractController
             'controller_name' => 'MentionsController'
         ]);
     }
+    #[Route('/qui_sommes_nous?', name: 'app_info_entreprise')]
+    public function infoEntreprise(): Response
+    {
+        return $this->render('legalite/info_entreprise.html.twig', [
+            'controller_name' => 'MentionsController'
+        ]);
+    }
 }

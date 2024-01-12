@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\User;
 use Faker\Core\Number;
 use App\Entity\Adresse;
+use App\Entity\AdresseFacture;
+use App\Form\AdresseFactureType;
 use App\Form\AdresseLivraisonType;
 use App\Repository\AdresseRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -104,6 +106,7 @@ class CommandesController extends AbstractController
             $ville = $form->get('ville')->getData();
             $pays = $form->get('pays')->getData();
             $instructions = $form->get('instructionLivraison')->getData();
+            $telephone = $form->get('telephone')->getData();
 
             $adresse->setNomComplet($nomLivraison);
             $adresse->setAdresse($adresseLivraison);
@@ -111,6 +114,7 @@ class CommandesController extends AbstractController
             $adresse->setVille($ville);
             $adresse->setPays($pays);
             $adresse->setClient($user);
+            $adresse->setTelephone($telephone);
             if ($instructions == null) {
                 $adresse->setInstructionLivraison("aucune instruction");
             } else {
@@ -125,6 +129,7 @@ class CommandesController extends AbstractController
                 'ville' => $ville,
                 'pays' => $pays,
                 'instructions' => $instructions,
+                'telephone' => $telephone
             ]);
 
             // Set la session à true adresse pour afficher l'adresse
@@ -135,6 +140,54 @@ class CommandesController extends AbstractController
 
 
         return $this->render('adresse/adresse.html.twig', [
+            'formAdresse' => $form->createView(),
+        ]);
+    }
+    #[Route('/adresse_facture', name: 'app_adresse_facture')]
+    public function adresseFacture(Request $request, SessionInterface $session): Response
+    {
+
+        $adresse = new AdresseFacture();
+        $user = $this->getUser();
+
+        $form = $this->createForm(AdresseFactureType::class, $adresse);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $nomLivraison = $form->get('Nom_complet')->getData();
+            $adresseLivraison = $form->get('adresse')->getData();
+            $codePostal = $form->get('code_postal')->getData();
+            $ville = $form->get('ville')->getData();
+            $pays = $form->get('pays')->getData();
+            $telephone = $form->get('telephone')->getData();
+
+            $adresse->setNomComplet($nomLivraison);
+            $adresse->setAdresse($adresseLivraison);
+            $adresse->setCodePostal($codePostal);
+            $adresse->setVille($ville);
+            $adresse->setPays($pays);
+            $adresse->setClient($user);
+            $adresse->setTelephone($telephone);
+
+            //Stocker les données dans la session : 
+            $session->set('adresseData', [
+                'nomComplet' => $nomLivraison,
+                'adresseLivraison' => $adresseLivraison,
+                'codePostal' => $codePostal,
+                'ville' => $ville,
+                'pays' => $pays,
+                'telephone' => $telephone   
+            ]);
+
+            // Set la session à true adresse pour afficher l'adresse
+            $session->set('adresseValide', true);
+
+            return $this->redirectToRoute('recapp_commande');
+        }
+
+
+        return $this->render('adresse/adresse_facture.html.twig', [
             'formAdresse' => $form->createView(),
         ]);
     }
