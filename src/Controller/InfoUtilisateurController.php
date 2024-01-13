@@ -38,7 +38,7 @@ class InfoUtilisateurController extends AbstractController
         $nom = $nom !== null ? $nom : '';
         $prenom = $prenom !== null ? $prenom : '';
         $email = $email !== null ? $email : '';
-        $telephone = $telephone !== null ? intval($telephone) : 0;
+        $telephone = $telephone !== null ? ($telephone) : 0;
         $ancienMdp = $ancienMdp !== null ? trim($ancienMdp) : '';
         $nouveauMdp = $nouveauMdp !== null ? trim($nouveauMdp) : '';
 
@@ -47,6 +47,7 @@ class InfoUtilisateurController extends AbstractController
         $user->setNom($nom);
         $user->setPrenom($prenom);
         $user->setEmail($email);
+        $user->setTelephone($telephone);
 
         $erreur_mdp = null;
         //Hasher le mdp :
@@ -56,17 +57,17 @@ class InfoUtilisateurController extends AbstractController
                 // Le mot de passe actuel est correct, procédez à la mise à jour
                 $hashedPassword = $passwordHasher->hashPassword($user, $nouveauMdp);
                 $user->setMotDePasse($hashedPassword);
-                $success_message = "Mot de passe changé avec succès";
             } else {
-                $erreur_mdp = "Mot de passe ancien ou nouveau incorrect";
+                return new JsonResponse(["erreur_mdp" => "Mot de passe ancien incorrect"]);
             }
-
-            $user->setTelephone($telephone);
-
-            $entityManagerInterface->persist($user);
-            $entityManagerInterface->flush();
-
-            return new JsonResponse(["erreur_mdp" => $erreur_mdp ?? null, "success_message" => $success_message ?? null]);
         }
+
+
+        $entityManagerInterface->persist($user);
+        $entityManagerInterface->flush();
+
+        $success_message = "Vos informations ont bien été enregistrées";
+
+        return new JsonResponse(["erreur_mdp" => $erreur_mdp ?? null, "success_message" => $success_message ?? null]);
     }
 }

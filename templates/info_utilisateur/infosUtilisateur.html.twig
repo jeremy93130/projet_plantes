@@ -7,7 +7,7 @@
 {% block body %}
 	{% include 'navbar/navbar.html.twig' %}
 	<div class="container">
-		<div>
+		<div id="div-infos-perso">
 			<h1>Vos Informations personnelles</h1>
 			<hr/>
 			<div>
@@ -54,7 +54,7 @@
 				</p>
 				<a class="modifInfos" href="#" data-field="telephone">Modifier</a>
 			</div>
-			<button onclick="updateDataBase()">Enregistrer les modifications</button>
 		</div>
+		<button onclick="updateDataBase()">Enregistrer les modifications</button>
 	</div>
 {% endblock %}

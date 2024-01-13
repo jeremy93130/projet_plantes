@@ -58,9 +58,11 @@ class RegisterFormType extends AbstractType
                 'constraints' => [
                     new Assert\NotBlank(['message' => 'Numéro de téléphone requit !']),
                 ],
+                'attr' => [
+                    'pattern' => '[0-9]{10}', // Ajoutez un motif si nécessaire
+                ],
             ])
-            ->add('Inscription', SubmitType::class)
-        ;
+            ->add('Inscription', SubmitType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

@@ -330,8 +330,6 @@ function updateDataBase() {
   var oldPassword = $("#ancien-mdp");
   var newPassword = $("#nouveau-mdp");
 
-  console.log(ancienMdp);
-  console.log(nouveauMdp);
   $.ajax({
     url: "/update",
     method: "post",
@@ -346,16 +344,19 @@ function updateDataBase() {
     success: function (response) {
       var div = $("#div-mdp");
       var mdpActuel = $("#motDePasse");
+      var divInfos = $("#div-infos-perso");
+
       oldPassword.hide();
       newPassword.hide();
       mdpActuel.html("*******");
       div.empty();
+
       if (response.erreur_mdp) {
-        div.append(
+        divInfos.append(
           '<p class="alert alert-danger">' + response.erreur_mdp + "</p>"
         );
       } else {
-        div.append(
+        divInfos.append(
           '<p class="alert alert-success">' + response.success_message + "</p>"
         );
       }

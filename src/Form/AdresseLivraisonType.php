@@ -50,7 +50,11 @@ class AdresseLivraisonType extends AbstractType
                 'label' => 'Pays de Livraison',
                 'constraints' => []
             ])
-            ->add('telephone', TelType::class, [])
+            ->add('telephone', TelType::class, [
+                'attr' => [
+                    'pattern' => '[0-9]{10}', // Ajoutez un motif si nécessaire
+                ],
+            ])
             ->add('instructionLivraison', TextareaType::class, [
                 'label' => 'Ajouter des instructions de livraison (facultatif)',
                 'required' => false,
