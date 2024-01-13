@@ -39,8 +39,8 @@ class InfoUtilisateurController extends AbstractController
         $prenom = $prenom !== null ? $prenom : '';
         $email = $email !== null ? $email : '';
         $telephone = $telephone !== null ? intval($telephone) : 0;
-        $ancienMdp = $ancienMdp !== null ? trim($ancienMdp) : $user->getMotDePasse();
-        $nouveauMdp = $nouveauMdp !== null ? trim($nouveauMdp) : $user->getMotDePasse();
+        $ancienMdp = $ancienMdp !== null ? trim($ancienMdp) : '';
+        $nouveauMdp = $nouveauMdp !== null ? trim($nouveauMdp) : '';
 
 
 
@@ -56,6 +56,7 @@ class InfoUtilisateurController extends AbstractController
                 // Le mot de passe actuel est correct, procédez à la mise à jour
                 $hashedPassword = $passwordHasher->hashPassword($user, $nouveauMdp);
                 $user->setMotDePasse($hashedPassword);
+                $success_message = "Mot de passe changé avec succès";
             } else {
                 $erreur_mdp = "Mot de passe ancien ou nouveau incorrect";
             }
@@ -65,7 +66,7 @@ class InfoUtilisateurController extends AbstractController
             $entityManagerInterface->persist($user);
             $entityManagerInterface->flush();
 
-            return new JsonResponse(["erreur_mdp" => $erreur_mdp ?? null]);
+            return new JsonResponse(["erreur_mdp" => $erreur_mdp ?? null, "success_message" => $success_message ?? null]);
         }
     }
 }

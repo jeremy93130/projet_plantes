@@ -316,8 +316,6 @@ function modifInfosPerso(event) {
       .on("click", modifInfosPerso);
   });
 
-  console.log(ancienMdp);
-
   // Désactivez le lien "Modifier" pour éviter la création de champs d'entrée multiples
   $(event.target).off("click");
 }
@@ -329,6 +327,8 @@ function updateDataBase() {
   var telephone = $("#telephone").text();
   var ancienMdp = $("#input-ancienMdp").val();
   var nouveauMdp = $("#input-newMdp").val();
+  var oldPassword = $("#ancien-mdp");
+  var newPassword = $("#nouveau-mdp");
 
   console.log(ancienMdp);
   console.log(nouveauMdp);
@@ -344,11 +344,19 @@ function updateDataBase() {
       nouveauMdp,
     },
     success: function (response) {
+      var div = $("#div-mdp");
+      var mdpActuel = $("#motDePasse");
+      oldPassword.hide();
+      newPassword.hide();
+      mdpActuel.html("*******");
+      div.empty();
       if (response.erreur_mdp) {
-        var div = $("#div-mdp");
-
         div.append(
           '<p class="alert alert-danger">' + response.erreur_mdp + "</p>"
+        );
+      } else {
+        div.append(
+          '<p class="alert alert-success">' + response.success_message + "</p>"
         );
       }
     },
