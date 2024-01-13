@@ -42,15 +42,15 @@ class PanierController extends AbstractController
     {
         // Récupérer les données du panier depuis la requête JSON
         $data = json_decode($request->getContent(), true);
-        // Vérifier si l'ID de la plante est présent dans les données
+        // Vérifier si l'ID du produit est présent dans les données
         if (!isset($data['id'])) {
             return new JsonResponse(['message' => 'ID de plante manquant'], 400);
         }
-        // Récupérer la plante depuis la base de données
-        $plante = $entityManagerInterface->getRepository(Produits::class)->find($id);
+        // Récupérer le produit depuis la base de données
+        $produit = $entityManagerInterface->getRepository(Produits::class)->find($id);
 
-        // Vérifier si la plante existe
-        if (!$plante) {
+        // Vérifier si le produit existe
+        if (!$produit) {
             return new JsonResponse(['message' => 'La plante n\'existe pas'], 404);
         }
 
@@ -59,21 +59,21 @@ class PanierController extends AbstractController
 
         // Vérifier si la plante est déjà dans le panier
         if (array_key_exists($id, $panier)) {
-            // La plante est déjà dans le panier, vous pouvez ajuster votre réponse en conséquence
+            // Le produit est déjà dans le panier
             return $this->render('details/details.html.twig', [
-                'errorPlante' => 'La plante est déjà dans le panier'
             ]);
         }
 
-        // Ajouter la plante au panier
+        // Ajouter le produit au panier
         // Vous devez adapter cela en fonction de la structure réelle de vos données
         $panier[$id] = [
-            'id' => $plante->getId(),
-            'nom' => $plante->getNomproduit(),
-            'prix' => $plante->getPrixproduit(),
-            'image' => $plante->getImage(),
+            'id' => $produit->getId(),
+            'nom' => $produit->getNomproduit(),
+            'prix' => $produit->getPrixproduit(),
+            'image' => $produit->getImage(),
             'quantite' => 1, // Vous pouvez ajuster cela selon vos besoins
             'nbArticles' => $data["nbArticles"],
+            'categorie' => $produit->getCategorie()
         ];
 
         // Mettre à jour le panier dans la session
@@ -81,7 +81,7 @@ class PanierController extends AbstractController
 
 
         // Retourner une réponse JSON
-        // return new JsonResponse(['message' => 'Plante ajoutée au panier avec succès', 'success' => true, 'data' => $dataToView]);
+        // return new JsonResponse(['message' => 'produit ajouté au panier avec succès', 'success' => true, 'data' => $dataToView]);
         return $this->redirectToRoute('app_home');
     }
 
@@ -95,8 +95,7 @@ class PanierController extends AbstractController
         foreach ($articles as $key => $article) {
             if ($article['id'] == $id) {
                 unset($articles[$key]);
-            }
-            ;
+            };
         }
         $session->set('panier', $articles);
         // $session->remove('panier');

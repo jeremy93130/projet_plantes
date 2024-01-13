@@ -19,13 +19,14 @@ class HomeController extends AbstractController
     #[Route('/home', name: 'app_home')]
     public function index(): Response
     {
+        
         // return $this->redirectToRoute('app_achats');
         return $this->render('home/index.html.twig');
     }
 
 
-    #[Route('/details/{id}', name: 'details')]
-    public function show(ProduitsRepository $produitRepository, $id, SessionInterface $session, Request $request, EntityManagerInterface $entityManagerInterface, ImagesRepository $images): Response
+    #[Route('/details/{id}/{categorie}', name: 'details')]
+    public function show(ProduitsRepository $produitRepository, $id, SessionInterface $session, Request $request, EntityManagerInterface $entityManagerInterface, ImagesRepository $images, $categorie): Response
     {
         $produit = $produitRepository->find($id);
 
@@ -53,6 +54,25 @@ class HomeController extends AbstractController
             }
         }
 
+        $cssClass = 'achat-accueil';
+
+        switch ($categorie) {
+            case 1:
+                $cssClass .= '-plantes';
+                break;
+            case 2:
+                $cssClass .= '-graines';
+                break;
+            case 3:
+                $cssClass .= '-legumes';
+                break;
+            case 4:
+                $cssClass .= '-fruits';
+                break;
+            default:
+                $cssClass .= '-defaut';
+        }
+
 
         $imageCarousel = $images->getImagesById($id);
         // dd($imageCarousel);
@@ -61,6 +81,7 @@ class HomeController extends AbstractController
             "produit" => $produit,
             'errorPlante' => null,
             'carousel' => $imageCarousel,
+            'css'=>$cssClass
         ]);
     }
 }

@@ -34,25 +34,30 @@ class CommandesController extends AbstractController
     {
         $sessionCommande = $session->get('commande');
         // dd($sessionCommande);
-        foreach ($sessionCommande['commandeData'] as $key => $value) {
-            $sessionCommande['commandeData'][$key]['tva'] = floatval(round($value['tva'], 3));
+
+        $commandeData = $sessionCommande;
+        $totalGeneral = 0;
+        foreach ($commandeData['commandeData'] as $key => $value) {
+
+            if (!isset($value['prixTTC'])) {
+                $value['prixTTC'] = $value['prix'];
+                $prixTTC = ($value['categorie'] == 1) ? 0.1 : 0.055;
+                $value['prixTTC'] += $value['prix'] * $prixTTC;
+            }
             $sessionCommande['commandeData'][$key]['prixTTC'] = floatval($value['prixTTC']);
 
-            $prixTTC = $value['prix'] + $value['tva'];
+            $prixTTC = $value['prixTTC'];
 
             $sessionCommande['commandeData'][$key]['prixTTC'] = round($prixTTC, 2);
+
+            $totalGeneral += $prixTTC * $value['quantite'];
         }
 
-        $totalTVA = 0;
+        $session->set('commande', $commandeData);
+        // dd($sessionCommande);
 
-        foreach ($sessionCommande['commandeData'] as $tva) {
-            $totalTVA += $tva['prixTTC'] * $tva['quantite'];
-        }
-        if ($sessionCommande['totalGeneral'] < 50) {
-            $totalTVA += 3.99;
-        }
 
-        $sessionCommande['totalGeneral'] = round($totalTVA, 2);
+        $sessionCommande['totalGeneral'] = round($totalGeneral, 2);
 
         // dd($sessionCommande['commandeData']);
         $linksParameters = [];
@@ -177,7 +182,7 @@ class CommandesController extends AbstractController
                 'codePostal' => $codePostal,
                 'ville' => $ville,
                 'pays' => $pays,
-                'telephone' => $telephone   
+                'telephone' => $telephone
             ]);
 
             // Set la session à true adresse pour afficher l'adresse

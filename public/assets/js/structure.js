@@ -214,6 +214,11 @@ function commander(url) {
       .querySelector("img")
       .getAttribute("alt");
 
+    var categorie = quantityElement
+      .closest(".delete_article")
+      .querySelector("img")
+      .getAttribute("data-categorie");
+
     // Define prix before using it in calculations
     var prix = parseFloat(
       quantityElement.parentNode.previousElementSibling.textContent
@@ -221,16 +226,12 @@ function commander(url) {
         .trim()
     );
 
-    // Calculate tva and prixTTC based on prix
-    var tva = parseFloat(prix * 0.1);
-    var prixTTC = parseFloat(prix + tva);
     return {
       id: quantityElement.getAttribute("data-article"),
       quantite: parseInt(quantityElement.value),
       alt: altText,
+      categorie: categorie,
       prix: prix,
-      tva: tva,
-      prixTTC: prixTTC,
     };
   });
 
@@ -271,7 +272,26 @@ function commander(url) {
 
 function modifInfosPerso(event) {
   var fieldName = $(event.target).data("field");
-  var changeElement = $("#" + fieldName);
+  if (fieldName !== "motDePasse") {
+    var changeElement = $("#" + fieldName);
+  }
+
+  if (fieldName === "motDePasse") {
+    var mdpActuel = $("#motDePasse");
+    var oldPassword = $("#ancien-mdp");
+    var newPassword = $("#nouveau-mdp");
+    mdpActuel.text("");
+    oldPassword
+      .show()
+      .html(
+        '<input type="password" id="input-ancienMdp" placeholder="Entrez votre ancien mot de passe"/>'
+      );
+    newPassword
+      .show()
+      .html(
+        '<input type="password" id="input-newMdp" placeholder="Entrez votre nouveau mot de passe"/>'
+      );
+  }
 
   // Créez un champ d'entrée avec la valeur actuelle du paragraphe
   var inputElement = $("<input type='text'>").val(changeElement.text());
@@ -296,6 +316,8 @@ function modifInfosPerso(event) {
       .on("click", modifInfosPerso);
   });
 
+  console.log(ancienMdp);
+
   // Désactivez le lien "Modifier" pour éviter la création de champs d'entrée multiples
   $(event.target).off("click");
 }
@@ -305,8 +327,11 @@ function updateDataBase() {
   var prenom = $("#prenom").text();
   var email = $("#email").text();
   var telephone = $("#telephone").text();
-  var mdp = $("#motDePasse").val();
+  var ancienMdp = $("#input-ancienMdp").val();
+  var nouveauMdp = $("#input-newMdp").val();
 
+  console.log(ancienMdp);
+  console.log(nouveauMdp);
   $.ajax({
     url: "/update",
     method: "post",
@@ -315,10 +340,17 @@ function updateDataBase() {
       prenom,
       email,
       telephone,
-      mdp,
+      ancienMdp,
+      nouveauMdp,
     },
     success: function (response) {
-      window.location.href = response.redirect;
+      if (response.erreur_mdp) {
+        var div = $("#div-mdp");
+
+        div.append(
+          '<p class="alert alert-danger">' + response.erreur_mdp + "</p>"
+        );
+      }
     },
     error: function (error) {
       console.error(error);

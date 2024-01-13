@@ -25,6 +25,8 @@ class AchatsController extends AbstractController
 
         $cssClass = 'achat-accueil';
 
+        // On met une classe spécifique aux catégories d'article, celà changera le background en fonction de la catégorie
+        // De plus on ajoutera un text spécifique aux catégories également
         switch ($categorie) {
             case 1:
                 $cssClass .= '-plantes';

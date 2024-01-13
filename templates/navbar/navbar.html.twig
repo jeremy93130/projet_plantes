@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-	<nav class="navbar navbar-expand-lg {{css is defined ? css : "" }}">
+	<nav class="navbar navbar-expand-lg {{css is defined ? css : " " }}">
 		<div class="container-fluid">
 			<h2 class="me-3 text-warning">
 				<a class="nav-link active titre-site" aria-current="page" href="{{ path('app_home') }}">Le Naturel Au Vert</a>
@@ -8,7 +8,7 @@
 			<button class="navbar-toggler btn-hamburger" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
-			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<div class="collapse navbar-collapse align-items-center" id="navbarSupportedContent">
 				<div class="categories">
 					{% if app.request.attributes.get('_route') != "handle_successful_payment" %}
 
@@ -34,7 +34,7 @@
 						{% endif %}
 					{% endif %}
 				</div>
-				<ul class="navbar-nav me-auto mb-2">
+				<ul class="navbar-nav me-auto">
 					{% if app.user is empty %}
 						<li class="nav-item">
 							<a class="nav-link text-warning" href="{{ path('app_login') }}">Connexion</a>
@@ -71,7 +71,7 @@
 					<li class="list-unstyled me-5">
 						<a href="{{ path('app_panier') }}">
 							{% if app.request.attributes.get('_route') != 'recapp_commande' %}
-								<i class="fa-solid fa-cart-shopping nav-link" id="nav_panier">
+								<i class="fa-solid fa-cart-shopping nav-link text-warning" id="nav_panier">
 									<span id="nb_articles"></span>
 								</i>
 							{% endif %}

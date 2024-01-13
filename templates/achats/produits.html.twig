@@ -10,7 +10,7 @@
 	{% include 'navbar/navbar.html.twig' %}
 	{% if app.request.attributes.get('_route') == 'recapp_commande' %}{% endif %}
 	<div class="achat-accueil {{ css }}">
-		<div class="d-flex justify-content-around align-items-center block-mobile">
+		<div class="d-flex justify-content-around align-items-center block-mobile	">
 			<div class="w-25 none-mobile"></div>
 			<div class="w-25 titre-plante">
 				<h2 class="text-center m-3 titre-site">Produits disponibles à l'achat</h2>
@@ -27,7 +27,7 @@
 						</div>
 						<div class="card-body text-center">
 							<h5 class="card-title">{{item.nom_produit }}</h5>
-							<a href="{{ url('details', { id: item.id }) }}" class="btn btn-warning change-btn">Voir la plante en détail</a>
+							<a href="{{ url('details', { id: item.id, categorie: item.categorie }) }}" class="btn btn-warning change-btn">Voir l'article en détail</a>
 						</div>
 						<span class="absolute-prix" style="text-align:center">{{item.prix_produit }}€</span>
 					</div>

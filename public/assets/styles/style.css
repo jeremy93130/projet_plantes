@@ -13,7 +13,60 @@
         display              : flex;
         flex-direction       : column;
         min-height           : 100vh;
+        box-shadow           : inset 0 0 0 1000px rgba(0, 0, 0, 0.5);
         /* Assure que le body occupe au moins la hauteur de l'écran */
+    }
+
+
+    /* CSS sous conditions */
+
+    /* background de page accueil et différentes catégories + pages details */
+
+    .achat-accueil::before {
+        content              : "";
+        /* Remplacez par le chemin de votre image */
+        background-repeat    : no-repeat;
+        background-size      : cover;
+        background-attachment: fixed;
+        position             : fixed;
+        top                  : 0;
+        left                 : 0;
+        width                : 100%;
+        height               : 100%;
+        z-index              : -1;
+        /* Assure que l'image est en arrière-plan du contenu */
+    }
+
+    .achat-accueil {
+        background-repeat    : no-repeat;
+        background-size      : cover;
+        background-attachment: fixed;
+        height               : 100%;
+        padding-bottom       : 50px;
+    }
+
+    .achat-accueil-plantes {
+        background-image: url('https://img.freepik.com/photos-premium/feuilles-vertes-fond-ecran-naturel-texture-feuille-fabrique-par-aiintelligence-artificielle_41969-12049.jpg');
+        /* height       : fit-content; */
+        box-shadow      : inset 0 0 0 1000px rgba(0, 0, 0, 0.5);
+    }
+
+    .achat-accueil-graines {
+        background-image: url('../../images/produits/presentation-graines.webp');
+        box-shadow      : inset 0 0 0 1000px rgba(0, 0, 0, 0.5);
+    }
+
+    /* legumes */
+
+    .achat-accueil-legumes {
+        background-image: url('../../images/produits/presentation-legumes.webp');
+        box-shadow      : inset 0 0 0 1000px rgba(0, 0, 0, 0.5);
+
+    }
+
+    .achat-accueil-fruits {
+        background-image: url('../../images/produits/presentation-fruits.jpg');
+        box-shadow      : inset 0 0 0 1000px rgba(0, 0, 0, 0.5);
     }
 
 
@@ -112,7 +165,7 @@
     }
 
     .mainmenubtn {
-        background-color: #000000;
+        background-color: transparent;
         color           : #FFC107;
         border          : none;
         cursor          : pointer;
@@ -162,45 +215,6 @@
     }
 
     /* Partie card achats.html.twig */
-    .achat-accueil::before {
-        content              : "";
-        /* Remplacez par le chemin de votre image */
-        background-repeat    : no-repeat;
-        background-size      : cover;
-        background-attachment: fixed;
-        position             : fixed;
-        top                  : 0;
-        left                 : 0;
-        width                : 100%;
-        height               : 100%;
-        z-index              : -1;
-        /* Assure que l'image est en arrière-plan du contenu */
-    }
-
-    .achat-accueil {
-        background-repeat    : no-repeat;
-        background-size      : cover;
-        background-attachment: fixed;
-        height               : 100%;
-    }
-
-    .achat-accueil-plantes::before {
-        background-image: url('https://img.freepik.com/photos-premium/feuilles-vertes-fond-ecran-naturel-texture-feuille-fabrique-par-aiintelligence-artificielle_41969-12049.jpg');
-        /* height       : fit-content; */
-    }
-
-    .achat-accueil-graines {
-        background-image: url('../../images/produits/presentation-graines.webp');
-    }
-
-    .achat-accueil-legumes {
-        background-image: url('../../images/produits/presentation-legumes.webp');
-    }
-
-    .achat-accueil-fruits {
-        background-image: url('../../images/produits/presentation-fruits.jpg');
-    }
-
     .produits-categories {
         display        : flex;
         justify-content: center;
@@ -347,10 +361,8 @@
 
     /* PAGE INSCRIPTION */
     .formInscription {
-        border    : 2px solid #FFC107;
         width     : 500px;
         height    : 600px;
-        box-shadow: 3px 3px 3px #FFC107;
         margin    : 30px auto;
         text-align: center;
         color     : #FFC107;
@@ -424,9 +436,13 @@
     }
 
     .detail-img {
-        height: 100%;
+        height: 400px;
         width : 400px;
         margin: auto;
+    }
+
+    .detail-img img {
+        height: 100%;
     }
 
     .add_image {
@@ -497,12 +513,11 @@
     /* Panier vide */
 
     .panier-vide-div {
-        display         : flex;
-        flex-direction  : column;
-        height          : 93vh;
-        align-items     : center;
-        justify-content : center;
-        background-color: rgba(0, 0, 0, 0.377);
+        display        : flex;
+        flex-direction : column;
+        height         : 93vh;
+        align-items    : center;
+        justify-content: center;
     }
 
     .panier-vide-div a {
@@ -642,17 +657,17 @@
     .adresse_livraison_facture {
         display        : flex;
         justify-content: space-between;
-        align-items: center;
+        align-items    : center;
         text-align     : center;
     }
 
     .adresse_livraison_facture>div {
-    height: 300px;
-        display: flex;
-        flex-direction: column;
+        height         : 300px;
+        display        : flex;
+        flex-direction : column;
         justify-content: space-between;
-        width : 50%;
-        margin: auto;
+        width          : 50%;
+        margin         : auto;
     }
 
     /* Page historique commandes  */
@@ -668,6 +683,13 @@
 
 
     /* Page Infos utilisateur */
+
+    /* changement mdp */
+
+    #ancien-mdp,
+    #nouveau-mdp {
+        display: none;
+    }
 
     .container>div>h1 {
         text-align: center;
@@ -712,7 +734,6 @@
 
     footer {
         background-color: #FFC107;
-        margin-top      : 50px;
     }
 
     .footer-logos {
