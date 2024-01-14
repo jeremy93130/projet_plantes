@@ -389,9 +389,8 @@
     }
 
     .formInscription label {
-        margin          : 10px 0;
-        background-color: rgba(0, 0, 0, 0.623);
-        width           : 100%;
+        margin: 10px 0;
+        width : 100%;
     }
 
     #next,
@@ -713,7 +712,7 @@
         margin          : auto;
     }
 
-    .container>div>div#div-mdp{
+    .container>div>div#div-mdp {
         justify-content: center;
     }
 
@@ -722,7 +721,7 @@
     }
 
     #confirm-infos {
-        width: 350px;
+        width : 350px;
         margin: auto;
     }
 

@@ -56,7 +56,7 @@
 								<li>
 									<a class="nav-link text-warning dropdown-item p-2" href="{{ path('app_historique_commandes') }}">Historique des commandes</a>
 								</li>
-								{% if 'ROLE_ADMIN' in app.user.roles %}
+								{% if is_granted('ROLE_ADMIN') %}
 									<li>
 										<a class="nav-link text-danger dropdown-item p-2" href="{{ path('admin') }}">Admin</a>
 									</li>
@@ -68,16 +68,16 @@
 						</div>
 					</div>
 					<div></div>
-					<li class="list-unstyled me-5">
-						<a href="{{ path('app_panier') }}">
-							{% if app.request.attributes.get('_route') != 'recapp_commande' %}
-								<i class="fa-solid fa-cart-shopping nav-link text-warning" id="nav_panier">
-									<span id="nb_articles"></span>
-								</i>
-							{% endif %}
-						</a>
-					</li>
 				{% endif %}
+				<li class="list-unstyled me-5">
+					<a href="{{ path('app_panier') }}">
+						{% if app.request.attributes.get('_route') != 'recapp_commande' %}
+							<i class="fa-solid fa-cart-shopping nav-link text-warning" id="nav_panier">
+								<span id="nb_articles"></span>
+							</i>
+						{% endif %}
+					</a>
+				</li>
 			</div>
 		</div>
 	</nav>

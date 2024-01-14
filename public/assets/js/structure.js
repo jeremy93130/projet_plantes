@@ -267,6 +267,3 @@ function commander(url) {
     },
   });
 }
-
-
-
