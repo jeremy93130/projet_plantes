@@ -33,12 +33,30 @@ class InfoUtilisateurController extends AbstractController
         $telephone = $request->request->get('telephone');
         $ancienMdp = $request->request->get('ancienMdp');
         $nouveauMdp = $request->request->get('nouveauMdp');
+        $champModifie = $request->request->get('champModifie');
+
+        switch ($champModifie) {
+            case 'nom':
+                $message = "Votre nom a bien été modifié";
+                break;
+            case 'prenom':
+                $message = "Votre prenom a bien été modifié";
+                break;
+            case 'email':
+                $message = "Votre email a bien été modifié";
+                break;
+            case 'telephone':
+                $message = "Votre numéro de téléphone a bien été modifié";
+                break;
+            default:
+                "Rien n'a été modifié";
+        }
 
         // Vérifiez si les valeurs ne sont pas nulles avant de les utiliser
-        $nom = $nom !== null ? $nom : '';
-        $prenom = $prenom !== null ? $prenom : '';
-        $email = $email !== null ? $email : '';
-        $telephone = $telephone !== null ? ($telephone) : 0;
+        $nom = $nom !== null ? $nom : $user->getNom();
+        $prenom = $prenom !== null ? $prenom : $user->getPrenom();
+        $email = $email !== null ? $email : $user->getEmail();
+        $telephone = $telephone !== null ? ($telephone) : $user->getTelephone();
         $ancienMdp = $ancienMdp !== null ? trim($ancienMdp) : '';
         $nouveauMdp = $nouveauMdp !== null ? trim($nouveauMdp) : '';
 
@@ -68,6 +86,6 @@ class InfoUtilisateurController extends AbstractController
 
         $success_message = "Vos informations ont bien été enregistrées";
 
-        return new JsonResponse(["erreur_mdp" => $erreur_mdp ?? null, "success_message" => $success_message ?? null]);
+        return new JsonResponse(["erreur_mdp" => $erreur_mdp ?? null, "success_message" => $success_message ?? null, "message" => $message ?? null]);
     }
 }

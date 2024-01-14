@@ -684,10 +684,17 @@
 
     /* Page Infos utilisateur */
 
+    #div-infos-perso h1 {
+        margin: 30px 0;
+    }
+
+    #div-infos-perso>div {
+        padding: 10px;
+    }
+
     /* changement mdp */
 
-    #ancien-mdp,
-    #nouveau-mdp {
+    #div-mdp {
         display: none;
     }
 
@@ -714,6 +721,10 @@
         color: white;
     }
 
+    #confirm-infos {
+        width: 350px;
+        margin: auto;
+    }
 
     /* Page legalite */
 
