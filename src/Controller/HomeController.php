@@ -17,11 +17,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class HomeController extends AbstractController
 {
     #[Route('/home', name: 'app_home')]
-    public function index(): Response
+    public function index(SessionInterface $session): Response
     {
-        
+        $totalArticles = $session->get('totalQuantite', 0);
         // return $this->redirectToRoute('app_achats');
-        return $this->render('home/index.html.twig');
+        return $this->render('home/index.html.twig', ['totalArticles' => $totalArticles]);
     }
 
 
@@ -76,12 +76,15 @@ class HomeController extends AbstractController
 
         $imageCarousel = $images->getImagesById($id);
         // dd($imageCarousel);
+        $totalArticles = $session->get('totalQuantite', 0);
+
 
         return $this->render('details/details.html.twig', [
             "produit" => $produit,
             'errorPlante' => null,
             'carousel' => $imageCarousel,
-            'css'=>$cssClass
+            'css' => $cssClass,
+            'totalArticles' => $totalArticles
         ]);
     }
 }

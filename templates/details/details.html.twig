@@ -61,7 +61,7 @@
 							</div>
 						</div>
 						<div class="mt-3 ps-3 d-flex w-100 justify-content-between">
-							<a class="link-warning link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" onclick="ajouterAuPanier('{{ path('add_to_cart', { id: produit.id }) }}', '{{ produit.nomProduit }}', '{{ produit.prixProduit }}', '{{ asset('images/' ~ produit.image) }}', { 'quantite': 1 })" id="link-ajouter">Ajouter au panier</a>
+							<a class="link-warning link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" onclick="ajouterAuPanier('{{ path('add_to_cart', {id:produit.id}) }}', '{{ produit.id }}', '{{ produit.nomProduit }}', '{{ produit.prixProduit }}', '{{ asset('images/' ~ produit.image) }}')" id="link-ajouter">Ajouter au panier</a>
 
 							<div>
 								<span>Stock :</span>

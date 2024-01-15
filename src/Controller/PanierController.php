@@ -28,12 +28,14 @@ class PanierController extends AbstractController
             $nbArticles = count($panier);
         }
 
+        $totalArticles = $session->get('totalQuantite',0);
         // dd($panier);
 
         return $this->render('panier/panier.html.twig', [
             'controller_name' => 'PanierController',
             'infos' => $panier,
             'nbArticle' => $nbArticles,
+            'totalArticles'=>$totalArticles,
         ]);
     }
 
@@ -57,11 +59,12 @@ class PanierController extends AbstractController
         // Récupérer le panier actuel depuis la session
         $panier = $session->get('panier', []);
 
+        // Calculer la somme des quantités dans le panier
+
         // Vérifier si la plante est déjà dans le panier
         if (array_key_exists($id, $panier)) {
             // Le produit est déjà dans le panier
-            return $this->render('details/details.html.twig', [
-            ]);
+            return $this->render('details/details.html.twig', []);
         }
 
         // Ajouter le produit au panier
@@ -71,18 +74,22 @@ class PanierController extends AbstractController
             'nom' => $produit->getNomproduit(),
             'prix' => $produit->getPrixproduit(),
             'image' => $produit->getImage(),
-            'quantite' => 1, // Vous pouvez ajuster cela selon vos besoins
             'nbArticles' => $data["nbArticles"],
             'categorie' => $produit->getCategorie()
         ];
 
+
+        $totalQuantite = array_sum(array_column($panier, 'nbArticles'));
+
+        // On ajoute la clé quantité à la session 'panier' avec la valeur de totalQuantité actuelle + nbArticles
+        $session->set('totalQuantite', $totalQuantite);
+
         // Mettre à jour le panier dans la session
         $session->set('panier', $panier);
 
-
         // Retourner une réponse JSON
-        // return new JsonResponse(['message' => 'produit ajouté au panier avec succès', 'success' => true, 'data' => $dataToView]);
-        return $this->redirectToRoute('app_home');
+        return new JsonResponse(['message' => 'produit ajouté au panier avec succès', 'success' => true, 'totalQuantite' => $totalQuantite]);
+        // return $this->redirectToRoute('app_home');
     }
 
     #[Route('/supprimer/{id}', name: 'app_supp')]
@@ -98,6 +105,8 @@ class PanierController extends AbstractController
             };
         }
         $session->set('panier', $articles);
+        $totalQuantite = array_sum(array_column($articles, 'nbArticles'));
+        $session->set('totalQuantite', $totalQuantite);
         // $session->remove('panier');
 
         // dd($articles);

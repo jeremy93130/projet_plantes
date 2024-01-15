@@ -111,20 +111,20 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 });
+
+// Utilisez cette fonction en appelant supprimerArticleDuPanier(url, id)
+// Assurez-vous d'avoir les variables url et id correctes
+
 // Fonction ajout panier
-var nb_counts = parseInt(localStorage.getItem("nb_counts")) || 0;
-function ajouterAuPanier(url, nom, prix, image) {
+function ajouterAuPanier(url, id, nom, prix, image) {
   var nb_articles = document.getElementById("nb_articles");
   var produitData = {
-    id: "{{ produit.id }}",
+    id: id,
     nom: nom,
-    prix: prix,
     image: image,
-    nbArticles: nb_counts + 1,
-    // Ajoutez d'autres informations si nécessaire
+    prix: prix,
+    nbArticles: 1,
   };
-  console.log(produitData);
-  // Utilisez AJAX pour appeler l'action du contrôleur
   $.ajax({
     url: url,
     type: "POST",
@@ -132,24 +132,21 @@ function ajouterAuPanier(url, nom, prix, image) {
     data: JSON.stringify(produitData),
     success: function (response) {
       if (response) {
-        nb_counts++;
-        nb_articles.textContent = nb_counts;
-        // Stockez la nouvelle valeur de nb_counts dans localStorage
-        localStorage.setItem("nb_counts", nb_counts);
-        // localStorage.clear('nb_counts');
-        // window.history.back;
+        var quantite = response.totalQuantite;
+        nb_articles.textContent = quantite;
       } else {
         alert("ok");
       }
     },
-    error: function () {
-      // alert("Une erreur s'est produite lors de l'ajout au panier");
+    error: function (error) {
+      console.log(produitData);
+      console.log(error);
     },
   });
 }
 
 function supprimerArticleDuPanier(url, id) {
-  // Faites une requête AJAX pour supprimer l'article du panier
+  var nb_articles = document.getElementById("nb_articles");
   $.ajax({
     url: url,
     type: "POST",
@@ -158,21 +155,15 @@ function supprimerArticleDuPanier(url, id) {
     success: function (response) {
       if (response && response.success) {
         // Si la suppression a réussi du côté serveur
+        var quantite = response.totalQuantite;
+        nb_articles.textContent = quantite;
 
-        // Mise à jour du nombre d'articles
-        nb_counts--;
-
-        if (nb_counts == 0) {
+        if (quantite == 0) {
           nb_articles.textContent = "";
         } else {
           // Mettez à jour l'affichage dans votre interface utilisateur
-          nb_articles.textContent = nb_counts;
+          nb_articles.textContent = quantite;
         }
-
-        // Mettez à jour le localStorage avec la nouvelle valeur de nb_counts
-        localStorage.setItem("nb_counts", nb_counts);
-
-        // Rechargez la page pour refléter les changements (vous pouvez ajuster ceci selon vos besoins)
         location.reload();
       } else {
         console.log("Erreur lors de la suppression de l'article du panier");
@@ -185,23 +176,9 @@ function supprimerArticleDuPanier(url, id) {
   });
 }
 
-// Utilisez cette fonction en appelant supprimerArticleDuPanier(url, id)
-// Assurez-vous d'avoir les variables url et id correctes
-
-window.onload = function () {
-  nb_counts = parseInt(localStorage.getItem("nb_counts")) || 0;
-  if (nb_counts > 0) {
-    // localStorage.clear('nb_counts');
-    document.getElementById("nb_articles").textContent = nb_counts;
-  } else if (nb_counts == 0) {
-    document.getElementById("nb_articles").textContent = "";
-  } else {
-    document.getElementById("nb_articles").textContent = "";
-  }
-  var stripe = Stripe(
-    "pk_test_51OICEgC3GA5BR02AuVfYushtuoMQHtv99wK9FATC9PnIHCwDhOR2jlvTOAcZIoGmnxNOSeU9JDvP7OHMAeg0AX0B00E7MKlVNK"
-  );
-};
+var stripe = Stripe(
+  "pk_test_51OICEgC3GA5BR02AuVfYushtuoMQHtv99wK9FATC9PnIHCwDhOR2jlvTOAcZIoGmnxNOSeU9JDvP7OHMAeg0AX0B00E7MKlVNK"
+);
 
 function commander(url) {
   // Récupérer tous les éléments de quantité

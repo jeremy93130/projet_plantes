@@ -4,7 +4,7 @@
     "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
     "This file is @generated automatically"
   ],
-  "content-hash": "b36c80b446b7b8375d90ca9451142cf5",
+  "content-hash": "072498b3aa499acd5d78866c9dd42e4f",
   "packages": [
     {
       "name": "doctrine/cache",
@@ -1331,16 +1331,16 @@
     },
     {
       "name": "easycorp/easyadmin-bundle",
-      "version": "v4.8.9",
+      "version": "v4.8.10",
       "source": {
         "type": "git",
         "url": "https://github.com/EasyCorp/EasyAdminBundle.git",
-        "reference": "89991bb68127f7a862d79758eb4fffc8e10a8e73"
+        "reference": "31a9938b8ec84a1fe0f30cb9d3df7d006b7deed7"
       },
       "dist": {
         "type": "zip",
-        "url": "https://api.github.com/repos/EasyCorp/EasyAdminBundle/zipball/89991bb68127f7a862d79758eb4fffc8e10a8e73",
-        "reference": "89991bb68127f7a862d79758eb4fffc8e10a8e73",
+        "url": "https://api.github.com/repos/EasyCorp/EasyAdminBundle/zipball/31a9938b8ec84a1fe0f30cb9d3df7d006b7deed7",
+        "reference": "31a9938b8ec84a1fe0f30cb9d3df7d006b7deed7",
         "shasum": ""
       },
       "require": {
@@ -1413,7 +1413,7 @@
       ],
       "support": {
         "issues": "https://github.com/EasyCorp/EasyAdminBundle/issues",
-        "source": "https://github.com/EasyCorp/EasyAdminBundle/tree/v4.8.9"
+        "source": "https://github.com/EasyCorp/EasyAdminBundle/tree/v4.8.10"
       },
       "funding": [
         {
@@ -1421,7 +1421,7 @@
           "type": "github"
         }
       ],
-      "time": "2024-01-09T18:54:55+00:00"
+      "time": "2024-01-13T15:03:20+00:00"
     },
     {
       "name": "egulias/email-validator",
@@ -3104,16 +3104,16 @@
     },
     {
       "name": "stripe/stripe-php",
-      "version": "v13.8.0",
+      "version": "v13.9.0",
       "source": {
         "type": "git",
         "url": "https://github.com/stripe/stripe-php.git",
-        "reference": "577d64a3fdc92ba2915263299a69136a2813f4a3"
+        "reference": "3d9250964c9d0bc9de8c706b16a90a82d9c8ed9d"
       },
       "dist": {
         "type": "zip",
-        "url": "https://api.github.com/repos/stripe/stripe-php/zipball/577d64a3fdc92ba2915263299a69136a2813f4a3",
-        "reference": "577d64a3fdc92ba2915263299a69136a2813f4a3",
+        "url": "https://api.github.com/repos/stripe/stripe-php/zipball/3d9250964c9d0bc9de8c706b16a90a82d9c8ed9d",
+        "reference": "3d9250964c9d0bc9de8c706b16a90a82d9c8ed9d",
         "shasum": ""
       },
       "require": {
@@ -3157,9 +3157,9 @@
       ],
       "support": {
         "issues": "https://github.com/stripe/stripe-php/issues",
-        "source": "https://github.com/stripe/stripe-php/tree/v13.8.0"
+        "source": "https://github.com/stripe/stripe-php/tree/v13.9.0"
       },
-      "time": "2024-01-04T19:52:48+00:00"
+      "time": "2024-01-12T18:12:31+00:00"
     },
     {
       "name": "symfony/asset",
@@ -7848,6 +7848,51 @@
         }
       ],
       "time": "2023-10-31T08:07:48+00:00"
+    },
+    {
+      "name": "symfony/twig-pack",
+      "version": "v1.0.1",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/symfony/twig-pack.git",
+        "reference": "08a73e833e07921c464336deb7630f93e85ef930"
+      },
+      "dist": {
+        "type": "zip",
+        "url": "https://api.github.com/repos/symfony/twig-pack/zipball/08a73e833e07921c464336deb7630f93e85ef930",
+        "reference": "08a73e833e07921c464336deb7630f93e85ef930",
+        "shasum": ""
+      },
+      "require": {
+        "symfony/twig-bundle": "*",
+        "twig/extra-bundle": "^2.12|^3.0",
+        "twig/twig": "^2.12|^3.0"
+      },
+      "type": "symfony-pack",
+      "notification-url": "https://packagist.org/downloads/",
+      "license": [
+        "MIT"
+      ],
+      "description": "A Twig pack for Symfony projects",
+      "support": {
+        "issues": "https://github.com/symfony/twig-pack/issues",
+        "source": "https://github.com/symfony/twig-pack/tree/v1.0.1"
+      },
+      "funding": [
+        {
+          "url": "https://symfony.com/sponsor",
+          "type": "custom"
+        },
+        {
+          "url": "https://github.com/fabpot",
+          "type": "github"
+        },
+        {
+          "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+          "type": "tidelift"
+        }
+      ],
+      "time": "2020-10-19T08:46:41+00:00"
     },
     {
       "name": "symfony/uid",

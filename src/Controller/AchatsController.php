@@ -16,7 +16,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class AchatsController extends AbstractController
 {
     #[Route('/achats/{categorie}', name: 'app_achats')]
-    public function index(ProduitsRepository $produitRepository, Request $request, $categorie): Response
+    public function index(ProduitsRepository $produitRepository, Request $request, $categorie, SessionInterface $session): Response
     {
         $form = $this->createForm(ProduitSearchType::class);
         $form->handleRequest($request);
@@ -60,18 +60,20 @@ class AchatsController extends AbstractController
 
         // récuperer le numéro de page à partir de la requete 
 
-        $currentPage = $request->query->getInt('page',1);
+        $currentPage = $request->query->getInt('page', 1);
 
         // Définir la page actuelle
 
         $pagerFanta->setCurrentPage($currentPage);
+        $totalArticles = $session->get('totalQuantite', 0);
 
 
         return $this->render('achats/produits.html.twig', [
             'controller_name' => 'AchatsController',
             'form' => $form->createView(),
             'css' => $cssClass,
-            'pagination' => $pagerFanta
+            'pagination' => $pagerFanta,
+            'totalArticles' => $totalArticles
         ]);
     }
 }

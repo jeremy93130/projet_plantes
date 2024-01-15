@@ -33,11 +33,13 @@ class PaiementController extends AbstractController
 
         // Récupérer les informations nécessaires de la session ou ailleurs
         $successMessage = $session->has('success_url') ? $session->get('success_url') : null;
+        $totalArticles = $session->get('totalQuantite', 0);
 
         return $this->render('commandes/commandes.html.twig', [
             'dataCommande' => $sessionCommande,
             'userInfo' => $user,
-            'successMessage' => null
+            'successMessage' => $successMessage,
+            'totalArticles' => $totalArticles
         ]);
     }
 

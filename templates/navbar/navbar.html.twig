@@ -71,9 +71,9 @@
 				{% endif %}
 				<li class="list-unstyled me-5">
 					<a href="{{ path('app_panier') }}">
-						{% if app.request.attributes.get('_route') != 'recapp_commande' %}
+						{% if app.request.attributes.get('_route') != 'recapp_commande'and  app.request.attributes.get('_route') != 'app_login' and  app.request.attributes.get('_route') != 'app_register' %}
 							<i class="fa-solid fa-cart-shopping nav-link text-warning" id="nav_panier">
-								<span id="nb_articles"></span>
+								<span id="nb_articles">{{totalArticles}}</span>
 							</i>
 						{% endif %}
 					</a>

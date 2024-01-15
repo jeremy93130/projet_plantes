@@ -9,15 +9,18 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class InfoUtilisateurController extends AbstractController
 {
     #[Route('/info/utilisateur', name: 'app_info_utilisateur')]
-    public function index(): Response
+    public function index(SessionInterface $session): Response
     {
-        return $this->render('info_utilisateur/infosUtilisateur.html.twig', []);
+        $totalArticles = $session->get('totalQuantite', 0);
+
+        return $this->render('info_utilisateur/infosUtilisateur.html.twig', ['totalArticles' => $totalArticles]);
     }
 
     #[Route('/update', name: 'update_user_infos')]
