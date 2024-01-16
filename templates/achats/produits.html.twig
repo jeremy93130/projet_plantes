@@ -10,14 +10,30 @@
 	{% include 'navbar/navbar.html.twig' %}
 	{% if app.request.attributes.get('_route') == 'recapp_commande' %}{% endif %}
 	<div class="achat-accueil {{ css }}">
-		<div class="d-flex justify-content-around align-items-center block-mobile	">
-			<div class="w-25 none-mobile"></div>
-			<div class="w-25 titre-plante">
+		<div class="d-flex justify-content-center align-items-center block-mobile	">
+			<div class="titre-plante">
 				<h2 class="text-center m-3 titre-site">Produits disponibles à l'achat</h2>
 				<input type="search" name="plante_search" id="plante_search" placeholder="Recherche"/>
+				{% if app.request.attributes.get('_route') != 'handle_successful_payment' %}
+					<h3>Autres catégories</h3>
+					<div class="categories">
+						{% if app.request.get('categorie') != 1 %}
+							<a class="nav-link text-warning dropdown-item" href="{{ path('app_achats', { categorie: 1 }) }}">Plantes</a>
+						{% endif %}
+						{% if app.request.get('categorie') != 2 %}
+							<a class="nav-link text-warning dropdown-item" href="{{ path('app_achats', { categorie: 2 }) }}">Graines</a>
+						{% endif %}
+						{% if app.request.get('categorie') != 3 %}
+							<a class="nav-link text-warning dropdown-item" href="{{ path('app_achats', { categorie: 3 }) }}">Légumes</a>
+						{% endif %}
+						{% if app.request.get('categorie') != 4 %}
+							<a class="nav-link text-warning dropdown-item" href="{{ path('app_achats', { categorie: 4 }) }}">Fruits</a>
+						{% endif %}
+					</div>
+				{% endif %}
 			</div>
-			<div class="d-flex justify-content-end w-25" id="relative-div"></div>
 		</div>
+		<div class="d-flex justify-content-end w-25" id="relative-div"></div>
 		<div class="produits-categories">
 			<div class="d-flex flex-wrap justify-content-center relative">
 				{% for item in pagination.getCurrentPageResults() %}
@@ -41,5 +57,5 @@
 			</div>
 		</div>
 	</div>
-		{% include 'footer/footer.html.twig' %}
+	{% include 'footer/footer.html.twig' %}
 {% endblock %}

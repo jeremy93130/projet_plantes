@@ -6,48 +6,7 @@
 				<span class="navbar-toggler-icon"></span>
 			</button>
 			<div class="collapse navbar-collapse align-items-center" id="navbarSupportedContent">
-				<div class="categories">
-					{% if app.request.attributes.get('_route') != 'handle_successful_payment' %}
-						<div class="dropdown">
-							<button class="mainmenubtn m-auto">Categorie
-								<i class="fa-solid fa-arrow-down"></i>
-							</button>
-							<div class="dropdown-child">
-								<ul class="dropdown-menu drop-nav bg-dark">
-									<li>
-										{% if app.request.get('categorie') != 1 %}
-											<p>
-												<a class="nav-link text-warning dropdown-item p-2" href="{{ path('app_achats', { categorie: 1 }) }}">Plantes</a>
-											</p>
-										{% endif %}
-									</li>
-									<li>
-										{% if app.request.get('categorie') != 2 %}
-											<p>
-												<a class="nav-link text-warning dropdown-item p-2" href="{{ path('app_achats', { categorie: 2 }) }}">Graines</a>
-											</p>
-										{% endif %}
-									</li>
-									<li>
-										{% if app.request.get('categorie') != 3 %}
-											<p>
-												<a class="nav-link text-warning dropdown-item p-2" href="{{ path('app_achats', { categorie: 3 }) }}">Légumes</a>
-											</p>
-										{% endif %}
-									</li>
-									<li>
-										{% if app.request.get('categorie') != 4 %}
-											<p>
-												<a class="nav-link text-warning dropdown-item p-2" href="{{ path('app_achats', { categorie: 4 }) }}">Fruits</a>
-											</p>
-										{% endif %}
-									</li>
-								</ul>
-							</div>
-						</div>
-					{% endif %}
-				</div>
-				<h2 class="me-3 text-warning">
+				<h2 class="text-warning">
 					<a class="nav-link active titre-site" aria-current="page" href="{{ path('app_home') }}">Le Naturel Au Vert</a>
 				</h2>
 				<ul class="navbar-nav m-auto">
@@ -87,10 +46,10 @@
 					</div>
 				{% endif %}
 				<li class="list-unstyled me-5">
-					<a href="{{ path('app_panier') }}">
+					<a class="w-100" href="{{ path('app_panier') }}">
 						{% if app.request.attributes.get('_route') != 'recapp_commande' and app.request.attributes.get('_route') != 'app_login' and app.request.attributes.get('_route') != 'app_register' %}
 							<i class="fa-solid fa-cart-shopping nav-link text-warning" id="nav_panier">
-								<span id="nb_articles">{{ app.session.get('totalQuantite', '')  == 0 ? ""}}</span>
+								<span id="nb_articles">{{ app.session.get('totalQuantite', '')  == 0 ? "" : app.session.get('totalQuantite', '')}}</span>
 							</i>
 						{% endif %}
 					</a>

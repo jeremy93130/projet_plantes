@@ -18,8 +18,8 @@ function ajouterAuPanier(url, id, nom, prix, image) {
       var ajoutPanier = $('<div class="alert" id="ajout-panier"></div>');
       if (response.message) {
         ajoutPanier.addClass("alert-success");
-          ajoutPanier.append("<p>" + response.message + "</p>");
-          nbArticles.text(response.totalQuantite);
+        ajoutPanier.append("<p>" + response.message + "</p>");
+        nbArticles.text(response.totalQuantite);
       } else if (response.doublon) {
         ajoutPanier.addClass("alert-warning");
         ajoutPanier.append("<p>" + response.doublon + "</p>");
@@ -46,8 +46,8 @@ function supprimerArticleDuPanier(url, id) {
     contentType: "application/json",
     data: JSON.stringify({ id: id }),
     success: function (response) {
-        if (response && response.success) {
-            nbArticles = response.totalQuantite;
+      if (response && response.success) {
+        location.reload();
       } else {
         console.log("Erreur lors de la suppression de l'article du panier");
         console.log(response);
