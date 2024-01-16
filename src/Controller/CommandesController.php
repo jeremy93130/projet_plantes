@@ -143,11 +143,8 @@ class CommandesController extends AbstractController
             return $this->redirectToRoute('recapp_commande');
         }
 
-        $totalArticles = $session->get('totalQuantite', 0);
-
         return $this->render('adresse/adresse.html.twig', [
             'formAdresse' => $form->createView(),
-            'totalArticles' => $totalArticles
         ]);
     }
     #[Route('/adresse_facture', name: 'app_adresse_facture')]

@@ -18,9 +18,8 @@ class InfoUtilisateurController extends AbstractController
     #[Route('/info/utilisateur', name: 'app_info_utilisateur')]
     public function index(SessionInterface $session): Response
     {
-        $totalArticles = $session->get('totalQuantite', 0);
 
-        return $this->render('info_utilisateur/infosUtilisateur.html.twig', ['totalArticles' => $totalArticles]);
+        return $this->render('info_utilisateur/infosUtilisateur.html.twig', []);
     }
 
     #[Route('/update', name: 'update_user_infos')]
