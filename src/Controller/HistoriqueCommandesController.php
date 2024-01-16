@@ -58,13 +58,10 @@ class HistoriqueCommandesController extends AbstractController
         }
 
         // dd($formattedResults);
-        $totalArticles = $session->get('totalQuantite', 0);
-
 
         return $this->render('historique_commandes/historique.html.twig', [
             'commandes' => $formattedResults,
             'user' => $user,
-            'totalArticles' => $totalArticles
         ]);
     }
 }

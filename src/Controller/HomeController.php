@@ -19,9 +19,8 @@ class HomeController extends AbstractController
     #[Route('/home', name: 'app_home')]
     public function index(SessionInterface $session): Response
     {
-        $totalArticles = $session->get('totalQuantite', 0);
         // return $this->redirectToRoute('app_achats');
-        return $this->render('home/index.html.twig', ['totalArticles' => $totalArticles]);
+        return $this->render('home/index.html.twig', []);
     }
 
 
@@ -76,7 +75,6 @@ class HomeController extends AbstractController
 
         $imageCarousel = $images->getImagesById($id);
         // dd($imageCarousel);
-        $totalArticles = $session->get('totalQuantite', 0);
 
 
         return $this->render('details/details.html.twig', [
@@ -84,7 +82,6 @@ class HomeController extends AbstractController
             'errorPlante' => null,
             'carousel' => $imageCarousel,
             'css' => $cssClass,
-            'totalArticles' => $totalArticles
         ]);
     }
 }

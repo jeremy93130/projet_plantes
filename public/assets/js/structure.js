@@ -1,4 +1,9 @@
 document.addEventListener("DOMContentLoaded", function () {
+  // Initialiser tous les dropdowns
+  $(document).ready(function () {
+    $(".dropdown-toggle").dropdown();
+  });
+
   // Sélectionnez tous les éléments avec la classe 'quantity'
   let quantityInputs = document.querySelectorAll(".quantity");
 
@@ -111,70 +116,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 });
-
-// Utilisez cette fonction en appelant supprimerArticleDuPanier(url, id)
-// Assurez-vous d'avoir les variables url et id correctes
-
-// Fonction ajout panier
-function ajouterAuPanier(url, id, nom, prix, image) {
-  var nb_articles = document.getElementById("nb_articles");
-  var produitData = {
-    id: id,
-    nom: nom,
-    image: image,
-    prix: prix,
-    nbArticles: 1,
-  };
-  $.ajax({
-    url: url,
-    type: "POST",
-    contentType: "application/json",
-    data: JSON.stringify(produitData),
-    success: function (response) {
-      if (response) {
-        var quantite = response.totalQuantite;
-        nb_articles.textContent = quantite;
-      } else {
-        alert("ok");
-      }
-    },
-    error: function (error) {
-      console.log(produitData);
-      console.log(error);
-    },
-  });
-}
-
-function supprimerArticleDuPanier(url, id) {
-  var nb_articles = document.getElementById("nb_articles");
-  $.ajax({
-    url: url,
-    type: "POST",
-    contentType: "application/json",
-    data: JSON.stringify({ id: id }),
-    success: function (response) {
-      if (response && response.success) {
-        // Si la suppression a réussi du côté serveur
-        var quantite = response.totalQuantite;
-        nb_articles.textContent = quantite;
-
-        if (quantite == 0) {
-          nb_articles.textContent = "";
-        } else {
-          // Mettez à jour l'affichage dans votre interface utilisateur
-          nb_articles.textContent = quantite;
-        }
-        location.reload();
-      } else {
-        console.log("Erreur lors de la suppression de l'article du panier");
-        console.log(response);
-      }
-    },
-    error: function () {
-      console.log("Une erreur s'est produite lors de la requête AJAX");
-    },
-  });
-}
 
 var stripe = Stripe(
   "pk_test_51OICEgC3GA5BR02AuVfYushtuoMQHtv99wK9FATC9PnIHCwDhOR2jlvTOAcZIoGmnxNOSeU9JDvP7OHMAeg0AX0B00E7MKlVNK"

@@ -41,7 +41,7 @@
         background-repeat    : no-repeat;
         background-size      : cover;
         background-attachment: fixed;
-        height               : 100%;
+        min-height               : 100vh;
         padding-bottom       : 50px;
     }
 
@@ -162,6 +162,13 @@
         text-shadow: 15px 12px 4px rgba(0, 0, 0, 0.603);
         font-family: 'Kolker Brush', cursive;
         font-size  : 55px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    nav h2 a {
+        margin-left: 55px;
     }
 
     .mainmenubtn {
@@ -194,8 +201,9 @@
     .categories {
         display        : flex;
         align-items    : center;
-        width          : 75%;
+        width          : 150px;
         justify-content: space-around;
+        color: #FFC107;
     }
 
     .categories>p {
@@ -203,7 +211,7 @@
     }
 
     .categories p>a {
-        /* position: absolute; */
+        text-align: center;
         color      : #FFC107;
         font-weight: bold;
         font-size  : 15px;
@@ -483,6 +491,11 @@
         cursor: pointer;
     }
 
+    #ajout-panier {
+        width: 400px;
+        margin: auto;
+    }
+
     /* FIN PAGE DETAILS */
 
 
@@ -747,6 +760,8 @@
     /* Page Footer */
 
     footer {
+        position:static;
+        bottom: 0;
         background-color: #FFC107;
     }
 

@@ -65,7 +65,6 @@ class AchatsController extends AbstractController
         // Définir la page actuelle
 
         $pagerFanta->setCurrentPage($currentPage);
-        $totalArticles = $session->get('totalQuantite', 0);
 
 
         return $this->render('achats/produits.html.twig', [
@@ -73,7 +72,6 @@ class AchatsController extends AbstractController
             'form' => $form->createView(),
             'css' => $cssClass,
             'pagination' => $pagerFanta,
-            'totalArticles' => $totalArticles
         ]);
     }
 }
