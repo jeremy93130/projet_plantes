@@ -22,17 +22,12 @@ class PanierController extends AbstractController
 
         $panier = $session->get('panier', []);
 
-        $nbArticles = 0;
-
-        if ($panier !== null && is_array($panier)) {
-            $nbArticles = count($panier);
-        }
+        $session->get('totalQuantite');
         // dd($panier);
 
         return $this->render('panier/panier.html.twig', [
             'controller_name' => 'PanierController',
             'infos' => $panier,
-            'nbArticle' => $nbArticles,
         ]);
     }
 
@@ -104,8 +99,7 @@ class PanierController extends AbstractController
         foreach ($articles as $key => $article) {
             if ($article['id'] == $id) {
                 unset($articles[$key]);
-            }
-            ;
+            };
         }
         $session->set('panier', $articles);
         $totalQuantite = array_sum(array_column($articles, 'nbArticles'));

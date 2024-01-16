@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Adresse;
+use App\Entity\AdresseFacture;
 use App\Entity\User;
 use App\Entity\Commande;
 use App\Entity\DetailsCommande;
@@ -24,7 +25,6 @@ class PaiementController extends AbstractController
     {
 
         $sessionCommande = $session->get('commande');
-        dd($sessionCommande);
         $user = $this->getUser();
 
         // if ($commande == null || $sessionCommande == null || $user == null) {
@@ -45,11 +45,11 @@ class PaiementController extends AbstractController
     public function stripeCheckout(SessionInterface $sessionInterface, $ids, $total, UrlGeneratorInterface $urlGenerator): RedirectResponse
     {
         \Stripe\Stripe::setApiKey('sk_test_51OICEgC3GA5BR02Af7eTScs2GgI29d4FpjzMiWRo625SCPzvudJNRQPg0A3ICZ9wTnCiXJadx9TrO7MRr9lVaXV800sjafT7mP'); // Remplacez par votre clé secrète Stripe
-
         if (!isset($sessionInterface->get('commande')['totalGeneral']) || $sessionInterface->get('commande')['totalGeneral'] == null) {
             return $this->redirectToRoute('app_home');
         } else {
             $commandeData = $sessionInterface->get('commande')['commandeData'];
+            // dd($commandeData);
             $totalData = $sessionInterface->get('commande')['totalGeneral'];
             $lineItems = [];
 
@@ -96,8 +96,10 @@ class PaiementController extends AbstractController
     {
 
         $session->set('adresseValide', false);
+        $session->set('adresseFactureValide', false);
         // Récupérer les informations de la session
         $adresseInfo = $session->get('adresseData');
+        $adresseFactureInfo = $session->get('adresseDataFacture');
 
         // dd($adresseInfo);
         // Récupérer l'identifiant de l'utilisateur depuis votre tableau de données
@@ -121,8 +123,8 @@ class PaiementController extends AbstractController
         $total = 0;
         $quantiteTotale = 0;
         foreach ($panier['commandeData'] as $item) {
-            $plante = $produitRepository->findOneById((int) $item['id']);
-            if ($plante) {
+            $produit = $produitRepository->findOneById((int) $item['id']);
+            if ($produit) {
                 $quantite = $item['quantite'];
                 $prix = $item['prixTTC'];
                 $total += $quantite * $prix;
@@ -130,20 +132,22 @@ class PaiementController extends AbstractController
                 $quantiteTotale += $quantite;
 
                 // Vérifiez si le stock est suffisant
-                if ($plante->getStock() >= $quantite) {
+                if ($produit->getStock() >= $quantite) {
                     // Soustrayez la quantité du stock
-                    $plante->setStock($plante->getStock() - $quantite);
+                    $produit->setStock($produit->getStock() - $quantite);
                     // Créez une nouvelle entité Quantites
                     $detailsCommande = new DetailsCommande();
                     $detailsCommande->setQuantite($quantite);
 
                     // Associez la quantité à la plante et à la commande
-                    $detailsCommande->setProduit($plante);
+                    $detailsCommande->setProduit($produit);
                     $detailsCommande->setCommande($commande);
                     $entityManager->persist($detailsCommande);
                 }
             }
         }
+
+        // On enregistre l'adresse de livraison et de facturation
         $adresse = new Adresse();
         $adresse->setNomComplet($adresseInfo['nomComplet']);
         $adresse->setAdresse($adresseInfo['adresseLivraison']);
@@ -152,21 +156,40 @@ class PaiementController extends AbstractController
         $adresse->setInstructionLivraison($adresseInfo['instructions']);
         $adresse->setPays($adresseInfo['pays']);
         $adresse->setVille($adresseInfo['ville']);
+        $adresse->setTelephone($adresseInfo['telephone']);
         $adresse->setCommande($commande);
 
         $entityManager->persist($adresse);
-        $commande->setTotal((float) number_format($total, 2));
-        // dd($total);
 
+
+        $adresseFacture = new AdresseFacture();
+        $adresseFacture->setNomComplet($adresseFactureInfo['nomComplet']);
+        $adresseFacture->setAdresse($adresseFactureInfo['adresseLivraison']);
+        $adresseFacture->setClient($user);
+        $adresseFacture->setCodePostal($adresseFactureInfo['codePostal']);
+        $adresseFacture->setPays($adresseFactureInfo['pays']);
+        $adresseFacture->setVille($adresseFactureInfo['ville']);
+        $adresseFacture->setTelephone($adresseFactureInfo['telephone']);
+        $adresseFacture->setCommande($commande);
+
+        $entityManager->persist($adresseFacture);
+
+
+        $commande->setTotal((float) number_format($total, 2));
         $entityManager->persist($commande);
+
+
         $entityManager->flush();
 
-        // Supprimer les éléments du panier
-        // $session->remove('commande');
+        // Supprimer les éléments de la session panier
         $session->remove('panier');
 
         // Marquer la variable de session pour indiquer que la redirection a eu lieu
         $session->set('redirected', true);
+
+        // On remet le compteur des articles à 0
+        $session->set('totalQuantite', 0);
+
 
         $response = new RedirectResponse($this->generateUrl('app_confirmation'));
 

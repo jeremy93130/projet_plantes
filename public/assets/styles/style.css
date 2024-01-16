@@ -17,6 +17,10 @@
         /* Assure que le body occupe au moins la hauteur de l'écran */
     }
 
+    .padding-bot {
+        padding-bottom: 150px;
+    }
+
 
     /* CSS sous conditions */
 
@@ -90,6 +94,7 @@
         display        : flex;
         justify-content: space-around;
         flex-wrap      : wrap;
+        margin-bottom  : 150px;
     }
 
     .produits {
@@ -195,7 +200,7 @@
     }
 
     .categories {
-        display: flex;
+        display   : flex;
         text-align: center;
     }
 
@@ -212,8 +217,8 @@
 
     .titre-plante h3 {
         text-align: center;
-        color: #FFC107;
-        margin: 20px 0;
+        color     : #FFC107;
+        margin    : 20px 0;
     }
 
     .titre-site {
@@ -405,7 +410,9 @@
     }
 
     .relative {
+        flex    : 1;
         position: relative;
+
     }
 
     /* FIN PAGE INSCRIPTION */
@@ -475,7 +482,7 @@
     }
 
     #ajout-panier {
-        width: 400px;
+        width : 400px;
         margin: auto;
     }
 
@@ -528,7 +535,7 @@
 
     .recap {
         width           : 700px;
-        margin          : 30px auto 0 auto;
+        margin          : 30px auto;
         border          : 3px solid black;
         background-color: #00000080;
     }
@@ -656,13 +663,21 @@
         text-align     : center;
     }
 
-    .adresse_livraison_facture>div {
+    .adresse_livraison_facture>div:not(.adresse_vierge) {
         height         : 300px;
         display        : flex;
         flex-direction : column;
         justify-content: space-between;
         width          : 50%;
         margin         : auto;
+    }
+
+    /* Dans le cas où aucune adresse n'a été renseignée */
+    .adresse_vierge {
+        display        : flex;
+        align-items    : center;
+        justify-content: space-around;
+        width          : 100%;
     }
 
     /* Page historique commandes  */
@@ -743,9 +758,11 @@
     /* Page Footer */
 
     footer {
-        position:static;
-        bottom: 0;
+        position        : absolute;
+        bottom          : 0;
+        width           : 100%;
         background-color: #FFC107;
+        padding         : 10px;
     }
 
     .footer-logos {

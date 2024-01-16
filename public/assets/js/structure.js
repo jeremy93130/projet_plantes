@@ -75,10 +75,6 @@ document.addEventListener("DOMContentLoaded", function () {
       var articleQuantity = quantity.val();
       quantity[articleId] = articleQuantity;
     });
-    console.log(totalGeneral);
-    console.log(quantity);
-    // Effectuer la requête AJAX
-    console.log(JSON.stringify(quantity));
     $.ajax({
       type: "POST",
       url: "/commandes",
@@ -100,13 +96,13 @@ document.addEventListener("DOMContentLoaded", function () {
       },
     });
   });
-  const searchInput = document.getElementById("plante_search");
-  const plantes = document.querySelectorAll(".plantesResults");
+  var searchInput = document.getElementById("plante_search");
+  var plantes = document.querySelectorAll(".plantesResults");
   if (searchInput) {
     searchInput.addEventListener("input", function () {
-      const searchTerm = searchInput.value.toLowerCase();
+      var searchTerm = searchInput.value.toLowerCase();
       plantes.forEach(function (plante) {
-        const planteName = plante.getAttribute("data-nom").toLowerCase();
+        var planteName = plante.getAttribute("data-nom").toLowerCase();
         if (planteName.startsWith(searchTerm)) {
           plante.style.display = "block";
         } else {

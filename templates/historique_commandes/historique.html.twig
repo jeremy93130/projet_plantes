@@ -6,63 +6,66 @@
 
 {% block body %}
 	{% include 'navbar/navbar.html.twig' %}
-	{% if commandes is empty %}
-		<h1>Vous n'avez pas encore passé de commande</h1>
-	{% else %}
-		<h1 class="historiqueH1">Historique des commandes</h1>
-		<table class="table table_historic">
-			<tr class="text-warning">
-				<th>Date de la commande</th>
-				<th>Adresse de livraison</th>
-				<th>Produit(s)</th>
-				<th>prix</th>
-				<th>Quantité</th>
-				<th>Total</th>
-			</tr>
-			{% for commande in commandes %}
+		{% if commandes is empty %}
+			<h1>Vous n'avez pas encore passé de commande</h1>
+		{% else %}
+			<h1 class="historiqueH1">Historique des commandes</h1>
+			<table class="table table_historic">
 				<tr class="text-warning">
-					<td>{{ commande.commande.dateCommande|date('d-m-Y') }}</td>
-					<td>
-						{{ commande.commande.adresse.nomComplet }}
-						<br/>
-						{{ commande.commande.adresse.adresse }},
-						<br/>{{ commande.commande.adresse.codePostal }}
-						,
-						{{ commande.commande.adresse.ville }}
-						,
-						{{ commande.commande.adresse.pays }},
-						<br>{{commande.commande.adresse.instructionLivraison}}
-					</td>
-					<td>
-						{% for plante in commande.produits %}
-							{{ plante.produit }}
-							{% if not loop.last %}
-								,<div style="padding: 8px 0 ;"></div>
-							{% endif %}
-						{% endfor %}
-					</td>
-					<td>
-						{% for prix in commande.produits %}
-							{% set tva = prix.prix + prix.prix * 0.1 %}
-							{{ tva|number_format(2, ',', 'fr') }}
-							€
-							{% if not loop.last %}
-								<div style="padding: 8px 0 ;"></div>
-							{% endif %}
-						{% endfor %}
-					</td>
-					<td>
-						{% for quantite in commande.produits %}
-							{{ quantite.quantite }}
-							{% if not loop.last %}
-								<div style="padding: 8px 0 ;"></div>
-							{% endif %}
-						{% endfor %}
-					</td>
-					<td>{{ commande.total|number_format(2, ',', 'fr') }}
-						€</td>
+					<th>Date de la commande</th>
+					<th>Adresse de livraison</th>
+					<th>Produit(s)</th>
+					<th>prix</th>
+					<th>Quantité</th>
+					<th>Total</th>
 				</tr>
-			{% endfor %}
-		</table>
-	{% endif %}
+				{% for commande in commandes %}
+					<tr class="text-warning">
+						<td>{{ commande.commande.dateCommande|date('d-m-Y') }}</td>
+						<td>
+							{{ commande.commande.adresse.nomComplet }}
+							<br/>
+							{{ commande.commande.adresse.adresse }},
+							<br/>{{ commande.commande.adresse.codePostal }}
+							,
+							{{ commande.commande.adresse.ville }}
+							,
+							{{ commande.commande.adresse.pays }},
+							<br>{{commande.commande.adresse.instructionLivraison}}
+						</td>
+						<td>
+							{% for plante in commande.produits %}
+								{{ plante.produit }}
+								{% if not loop.last %}
+									,<div style="padding: 8px 0 ;"></div>
+								{% endif %}
+							{% endfor %}
+						</td>
+						<td>
+							{% for prix in commande.produits %}
+								{% set tva = prix.prix + prix.prix * 0.1 %}
+								{{ tva|number_format(2, ',', 'fr') }}
+								€
+								{% if not loop.last %}
+									<div style="padding: 8px 0 ;"></div>
+								{% endif %}
+							{% endfor %}
+						</td>
+						<td>
+							{% for quantite in commande.produits %}
+								{{ quantite.quantite }}
+								{% if not loop.last %}
+									<div style="padding: 8px 0 ;"></div>
+								{% endif %}
+							{% endfor %}
+						</td>
+						<td>{{ commande.total|number_format(2, ',', 'fr') }}
+							€</td>
+					</tr>
+				{% endfor %}
+			</table>
+		{% endif %}
+		{% block footer %}
+			{% include 'footer/footer.html.twig' %}
+		{% endblock %}
 {% endblock %}

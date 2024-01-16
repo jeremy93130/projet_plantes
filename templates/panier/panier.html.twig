@@ -5,9 +5,8 @@
 
 {% block body %}
 	{% include 'navbar/navbar.html.twig' %}
-
 	{% if app.session.get('panier') is empty %}
-		<div class="panier-vide-div">
+		<div class="panier-vide-div relative">
 			<h1 class="text-warning">Ohhh ... votre panier est vide ... Pourquoi ne pas aller le remplir ?</h1>
 			<a href="{{ path('app_home') }}">
 				Suivez nous !
@@ -63,4 +62,7 @@
 			</table>
 		</div>
 	{% endif %}
+	{% block footer %}
+		{% include 'footer/footer.html.twig' %}
+	{% endblock %}
 {% endblock %}

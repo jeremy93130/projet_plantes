@@ -37,7 +37,7 @@ class CommandesController extends AbstractController
 
         $commandeData = $sessionCommande;
         $totalGeneral = 0;
-        foreach ($commandeData['commandeData'] as $key => $value) {
+        foreach ($commandeData['commandeData'] as $key => &$value) {
 
             if (!isset($value['prixTTC'])) {
                 $value['prixTTC'] = $value['prix'];
@@ -78,6 +78,11 @@ class CommandesController extends AbstractController
         $userId = $user->getId();
 
         $commande = $session->get('adresseData');
+        $commandeFacture = $session->get('adresseDataFacture');
+
+        if (empty($commandeFacture)) {
+            $session->set('adresseDataFacture', $commande);
+        }
 
 
 
@@ -86,6 +91,7 @@ class CommandesController extends AbstractController
         // dd($sessionCommande);
         return $this->render('commandes/commandes.html.twig', [
             'adresseInfos' => $commande,
+            'adresseFactureInfos' => $commandeFacture,
             'userLastAdresse' => $usedAdresse,
             'dataCommande' => $sessionCommande,
             'user' => $user,
@@ -175,7 +181,7 @@ class CommandesController extends AbstractController
             $adresse->setTelephone($telephone);
 
             //Stocker les données dans la session : 
-            $session->set('adresseData', [
+            $session->set('adresseDataFacture', [
                 'nomComplet' => $nomLivraison,
                 'adresseLivraison' => $adresseLivraison,
                 'codePostal' => $codePostal,
@@ -185,7 +191,7 @@ class CommandesController extends AbstractController
             ]);
 
             // Set la session à true adresse pour afficher l'adresse
-            $session->set('adresseValide', true);
+            $session->set('adresseFactureValide', true);
 
             return $this->redirectToRoute('recapp_commande');
         }
