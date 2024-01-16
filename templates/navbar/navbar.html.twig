@@ -73,7 +73,7 @@
 					<a href="{{ path('app_panier') }}">
 						{% if app.request.attributes.get('_route') != 'recapp_commande'and  app.request.attributes.get('_route') != 'app_login' and  app.request.attributes.get('_route') != 'app_register' %}
 							<i class="fa-solid fa-cart-shopping nav-link text-warning" id="nav_panier">
-								<span id="nb_articles">{{totalArticles}}</span>
+								<span id="nb_articles">{{totalArticles == 0 ? ""}}</span>
 							</i>
 						{% endif %}
 					</a>

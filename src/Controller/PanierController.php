@@ -27,15 +27,12 @@ class PanierController extends AbstractController
         if ($panier !== null && is_array($panier)) {
             $nbArticles = count($panier);
         }
-
-        $totalArticles = $session->get('totalQuantite',0);
         // dd($panier);
 
         return $this->render('panier/panier.html.twig', [
             'controller_name' => 'PanierController',
             'infos' => $panier,
             'nbArticle' => $nbArticles,
-            'totalArticles'=>$totalArticles,
         ]);
     }
 
