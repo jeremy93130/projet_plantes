@@ -1,6 +1,10 @@
     @import url('https://fonts.googleapis.com/css2?family=Kolker+Brush&display=swap');
 
     /* Body */
+    html {
+        position  : relative;
+        min-height: 100%;
+    }
 
     body {
         background-image     : url('../../images/fond/nature.jpg');
@@ -412,7 +416,6 @@
     .relative {
         flex    : 1;
         position: relative;
-
     }
 
     /* FIN PAGE INSCRIPTION */
@@ -490,6 +493,11 @@
 
 
     /* PARTIE PANIER */
+
+    .table {
+        margin-bottom: 200px;
+    }
+
     table.table tr,
     table.table th,
     table.table td {
@@ -758,15 +766,22 @@
     /* Page Footer */
 
     footer {
-        position        : absolute;
-        bottom          : 0;
-        width           : 100%;
-        background-color: #FFC107;
-        padding         : 10px;
+        display              : flex;
+        justify-content      : end;
+        align-items: center;
+        flex-direction       : column;
+        background-color     : transparent;
+        padding              : 10px;
+        height               : 250px;
+        background-repeat    : no-repeat;
+        background-size      : cover;
+        background-attachment: fixed;
+        color                : #FFC107;
     }
 
     .footer-logos {
-        width: 100px;
+        width: 50px;
+        background-color: #FFC107;
     }
 
     .footer-logos>img {
@@ -775,6 +790,10 @@
 
     .middle-footer p {
         margin-left: 20px;
+    }
+
+    .nav-footer {
+        width: 100%;
     }
 
     .nav-footer>nav>ul {

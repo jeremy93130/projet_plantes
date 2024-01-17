@@ -6,7 +6,6 @@
 
 {% block body %}
 	{% include 'navbar/navbar.html.twig' %}
-	<div class="relative">
 		{% if successMessage is same as(true) %}
 			<div>
 				{% for message in app.flashes('success') %}
@@ -155,5 +154,4 @@
 				{% endblock %}
 			{% endif %}
 		</div>
-	{% endif %}
-</div>{% endblock %}
+	{% endif %}{% endblock %}

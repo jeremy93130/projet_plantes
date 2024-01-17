@@ -4,9 +4,9 @@
 {% endblock %}
 {% block body %}
 	{% include 'navbar/navbar.html.twig' %}
-	<div class="achat-accueil {{css}} bg-details relative">
-		<div class="w-50 m-auto mt-5 details_mobile h-100">
-			<div class="card bg-transparent border border-0 relative-details padding-bot">
+	<div class="achat-accueil {{css}} bg-details">
+		<div class="w-50 m-auto mt-5 details_mobile" style="height: 900px;">
+			<div class="card bg-transparent border border-0 relative-details">
 				<div id="carouselExample" class="carousel slide">
 					<div class="carousel-inner details-img">
 						<div class="carousel-item active detail-img">
@@ -80,9 +80,10 @@
 					{% endif %}
 				</div>
 			</div>
+			<div id="ajout-panier"></div>
 		</div>
+	</div>
 		{% block footer %}
 			{% include 'footer/footer.html.twig' %}
 		{% endblock %}
-	</div>
 {% endblock %}

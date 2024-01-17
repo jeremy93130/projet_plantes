@@ -1,7 +1,7 @@
 // Fonction ajout panier
 var nbArticles = $("#nb_articles");
 function ajouterAuPanier(url, id, nom, prix, image) {
-  var confirm_success_error = $(".achat-accueil");
+  var ajoutPanier = $("#ajout-panier");
   var produitData = {
     id: id,
     nom: nom,
@@ -15,23 +15,20 @@ function ajouterAuPanier(url, id, nom, prix, image) {
     contentType: "application/json",
     data: JSON.stringify(produitData),
     success: function (response) {
-      var ajoutPanier = $('<div class="alert" id="ajout-panier"></div>');
+      $("#ajout-panier").empty();
       if (response.message) {
-        ajoutPanier.addClass("alert-success");
+        ajoutPanier.addClass("alert alert-success");
         ajoutPanier.append("<p>" + response.message + "</p>");
         nbArticles.text(response.totalQuantite);
       } else if (response.doublon) {
-        ajoutPanier.addClass("alert-warning");
+        ajoutPanier.addClass("alert alert-warning");
         ajoutPanier.append("<p>" + response.doublon + "</p>");
       } else {
-        ajoutPanier.addClass("alert-danger");
+        ajoutPanier.addClass("alert alert-danger");
         ajoutPanier.append(
           "<p> Il y a eu un problème lors de l' ajout de votre produit dans le panier</p>"
         );
       }
-
-      ajoutPanier.remove();
-      confirm_success_error.append(ajoutPanier);
     },
     error: function (error) {
       console.log("Erreur lors de la requête AJAX :", error.responseText);

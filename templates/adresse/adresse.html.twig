@@ -2,7 +2,6 @@
 
 {% block body %}
 	{% include 'navbar/navbar.html.twig' %}
-	<div class="relative">
 		<div class="adresse_livraison">
 			<h1>Veuillez inscrire vos informations de livraison</h1>
 			{{ form(formAdresse) }}
@@ -10,5 +9,4 @@
 			{% block footer %}
 				{% include 'footer/footer.html.twig' %}
 			{% endblock %}
-		</div>
 	{% endblock %}
