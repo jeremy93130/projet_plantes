@@ -1,28 +1,25 @@
     @import url('https://fonts.googleapis.com/css2?family=Kolker+Brush&display=swap');
 
     /* Body */
-    html {
-        position  : relative;
-        min-height: 100%;
-    }
 
     body {
-        background-image     : url('../../images/fond/nature.jpg');
-        background-position  : top;
-        background-size      : cover;
-        background-repeat    : no-repeat;
+        background-image: url('../../images/fond/nature.jpg');
+        background-position: top;
+        background-size: cover;
+        background-repeat: no-repeat;
         background-attachment: fixed;
-        margin               : 0;
-        padding              : 0;
+        margin: 0;
+        padding: 0;
         display              : flex;
-        flex-direction       : column;
-        min-height           : 100vh;
-        box-shadow           : inset 0 0 0 1000px rgba(0, 0, 0, 0.5);
+        flex-direction: column;
+        min-height: 100vh;
+        box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.5);
         /* Assure que le body occupe au moins la hauteur de l'écran */
     }
 
-    .padding-bot {
-        padding-bottom: 150px;
+    /* Css global */
+    .container-height {
+        min-height: 100vh;
     }
 
 
@@ -31,137 +28,137 @@
     /* background de page accueil et différentes catégories + pages details */
 
     .achat-accueil::before {
-        content              : "";
+        content: "";
         /* Remplacez par le chemin de votre image */
-        background-repeat    : no-repeat;
-        background-size      : cover;
+        background-repeat: no-repeat;
+        background-size: cover;
         background-attachment: fixed;
-        position             : fixed;
-        top                  : 0;
-        left                 : 0;
-        width                : 100%;
-        height               : 100%;
-        z-index              : -1;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
         /* Assure que l'image est en arrière-plan du contenu */
     }
 
     .achat-accueil {
-        background-repeat    : no-repeat;
-        background-size      : cover;
+        background-repeat: no-repeat;
+        background-size: cover;
         background-attachment: fixed;
-        padding-bottom       : 50px;
+        padding-bottom: 50px;
     }
 
     .achat-accueil-plantes {
         background-image: url('https://img.freepik.com/photos-premium/feuilles-vertes-fond-ecran-naturel-texture-feuille-fabrique-par-aiintelligence-artificielle_41969-12049.jpg');
         /* height       : fit-content; */
-        box-shadow      : inset 0 0 0 1000px rgba(0, 0, 0, 0.5);
+        box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.5);
     }
 
     .achat-accueil-graines {
         background-image: url('../../images/produits/presentation-graines.webp');
-        box-shadow      : inset 0 0 0 1000px rgba(0, 0, 0, 0.5);
+        box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.5);
     }
 
     /* legumes */
 
     .achat-accueil-legumes {
         background-image: url('../../images/produits/presentation-legumes.webp');
-        box-shadow      : inset 0 0 0 1000px rgba(0, 0, 0, 0.5);
+        box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.5);
 
     }
 
     .achat-accueil-fruits {
         background-image: url('../../images/produits/presentation-fruits.jpg');
-        box-shadow      : inset 0 0 0 1000px rgba(0, 0, 0, 0.5);
+        box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.5);
     }
 
 
     /* Home */
 
     .banner {
-        height         : 250px;
-        display        : flex;
+        height: 250px;
+        display: flex;
         justify-content: center;
-        align-items    : center;
-        flex-direction : column;
+        align-items: center;
+        flex-direction: column;
     }
 
     .banner h1 {
         text-shadow: 15px 12px 4px rgba(0, 0, 0, 0.603);
         font-family: 'Kolker Brush', cursive;
-        font-size  : 70px;
-        color      : #FFC107;
+        font-size: 70px;
+        color: #FFC107;
     }
 
     .main-produits {
-        display        : flex;
+        display: flex;
         justify-content: space-around;
-        flex-wrap      : wrap;
-        margin-bottom  : 150px;
+        flex-wrap: wrap;
+        margin-bottom: 150px;
     }
 
     .produits {
         background-color: black;
-        height          : 250px;
-        width           : 600px;
-        margin          : 10px;
-        display         : flex;
-        justify-content : center;
-        align-items     : center;
+        height: 250px;
+        width: 600px;
+        margin: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     .produits:hover {
-        transform : scale(1.1);
+        transform: scale(1.1);
         transition: 1.5s;
-        z-index   : 1;
+        z-index: 1;
     }
 
     .produits:not(hover) {
-        transform : scale(1);
+        transform: scale(1);
         transition: 1.5s;
     }
 
     .produits:nth-child(1) {
-        background-image   : url('../../images/produits/presentation-plantes.jpg');
-        background-repeat  : no-repeat;
-        background-size    : cover;
+        background-image: url('../../images/produits/presentation-plantes.jpg');
+        background-repeat: no-repeat;
+        background-size: cover;
         background-position: center;
     }
 
     .produits:nth-child(2) {
-        background-image   : url('../../images/produits/presentation-graines.webp');
-        background-repeat  : no-repeat;
-        background-size    : cover;
+        background-image: url('../../images/produits/presentation-graines.webp');
+        background-repeat: no-repeat;
+        background-size: cover;
         background-position: center;
     }
 
     .produits:nth-child(3) {
-        background-image   : url('../../images/produits/presentation-legumes.webp');
-        background-repeat  : no-repeat;
-        background-size    : cover;
+        background-image: url('../../images/produits/presentation-legumes.webp');
+        background-repeat: no-repeat;
+        background-size: cover;
         background-position: center;
     }
 
     .produits:nth-child(4) {
-        background-image   : url('../../images/produits/presentation-fruits.jpg');
-        background-repeat  : no-repeat;
-        background-size    : cover;
+        background-image: url('../../images/produits/presentation-fruits.jpg');
+        background-repeat: no-repeat;
+        background-size: cover;
         background-position: center;
     }
 
     .produits a {
         text-decoration: none;
-        color          : black;
-        font-size      : 66px;
-        text-shadow    : 8px 5px 3px #FFC107;
+        color: black;
+        font-size: 66px;
+        text-shadow: 8px 5px 3px #FFC107;
     }
 
     /* NavBar */
 
     nav {
-        background-repeat    : no-repeat;
-        background-size      : cover;
+        background-repeat: no-repeat;
+        background-size: cover;
         background-attachment: fixed;
     }
 
@@ -169,7 +166,7 @@
     nav h2 {
         text-shadow: 15px 12px 4px rgba(0, 0, 0, 0.603);
         font-family: 'Kolker Brush', cursive;
-        font-size  : 55px;
+        font-size: 55px;
     }
 
     nav h2 a {
@@ -178,15 +175,15 @@
 
     .mainmenubtn {
         background-color: transparent;
-        color           : #FFC107;
-        border          : none;
-        cursor          : pointer;
-        margin-right    : 25px;
+        color: #FFC107;
+        border: none;
+        cursor: pointer;
+        margin-right: 25px;
     }
 
     .dropdown {
         position: relative;
-        display : inline-block;
+        display: inline-block;
     }
 
     .dropdown-child {
@@ -194,9 +191,9 @@
     }
 
     .dropdown-child ul {
-        color          : #FFC107;
+        color: #FFC107;
         text-decoration: none;
-        display        : block;
+        display: block;
     }
 
     .dropdown:hover .dropdown-child {
@@ -204,68 +201,68 @@
     }
 
     .categories {
-        display   : flex;
+        display: flex;
         text-align: center;
     }
 
     /* Partie card achats.html.twig */
     .produits-categories {
-        display        : flex;
+        display: flex;
         justify-content: center;
     }
 
     .titre-plante {
-        display       : flex;
+        display: flex;
         flex-direction: column;
     }
 
     .titre-plante h3 {
         text-align: center;
-        color     : #FFC107;
-        margin    : 20px 0;
+        color: #FFC107;
+        margin: 20px 0;
     }
 
     .titre-site {
-        color      : #FFC107;
+        color: #FFC107;
         text-shadow: 4px 3px rgba(0, 0, 0, 0.603);
     }
 
     #relative-div {
         position: relative;
-        display : flex;
-        width   : 550px;
+        display: flex;
+        width: 550px;
     }
 
     #relative-div form {
-        width          : 420px;
-        display        : flex;
-        align-items    : center;
+        width: 420px;
+        display: flex;
+        align-items: center;
         justify-content: space-between;
     }
 
     #relative-div form a {
-        font-size       : 1rem;
+        font-size: 1rem;
         background-color: #FFC107;
-        border          : 1px solid black;
-        padding         : 8px 7px;
-        border-radius   : 10%;
-        vertical-align  : middle;
-        text-decoration : none;
-        color           : black;
+        border: 1px solid black;
+        padding: 8px 7px;
+        border-radius: 10%;
+        vertical-align: middle;
+        text-decoration: none;
+        color: black;
     }
 
     .rechercher {
         background-color: #FFC107;
-        border-color    : #FFC107;
+        border-color: #FFC107;
     }
 
     #plante_search {
         background-color: #000000;
-        border-radius   : 20px;
-        border          : none;
-        color           : #FFC107;
-        padding         : 0 0 0 5px;
-        text-align      : center;
+        border-radius: 20px;
+        border: none;
+        color: #FFC107;
+        padding: 0 0 0 5px;
+        text-align: center;
     }
 
     #plante_search::placeholder {
@@ -281,9 +278,9 @@
     #relative-div form a:hover,
     #relative-div form button:hover {
         background-color: #212529;
-        color           : white;
-        transition      : 1.5s;
-        border-color    : black;
+        color: white;
+        transition: 1.5s;
+        border-color: black;
     }
 
     .plantesResults {
@@ -295,27 +292,27 @@
     }
 
     .relative-div-achats {
-        position        : relative;
+        position: relative;
         background-color: #212529;
-        color           : white;
+        color: white;
     }
 
     .absolute-prix {
-        position        : absolute;
+        position: absolute;
         background-color: #212529;
-        color           : #FFC107;
-        border-radius   : 50%;
-        padding         : 5px;
-        width           : 50px;
-        height          : 50px;
-        display         : flex;
-        align-items     : center;
-        text-align      : center;
-        font-size       : 13px;
-        font-weight     : bold;
-        right           : 0;
-        top             : 0;
-        justify-content : center;
+        color: #FFC107;
+        border-radius: 50%;
+        padding: 5px;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        text-align: center;
+        font-size: 13px;
+        font-weight: bold;
+        right: 0;
+        top: 0;
+        justify-content: center;
     }
 
     /* #btn-btn {
@@ -335,11 +332,11 @@
 
     #btn-btn:hover {
         background-color: #FFC107;
-        border-color    : transparent;
+        border-color: transparent;
     }
 
     #btn-btn img {
-        width         : 25px;
+        width: 25px;
         vertical-align: middle;
     }
 
@@ -349,23 +346,23 @@
     }
 
     .img-card img {
-        width : 100%;
+        width: 100%;
         height: 300px;
     }
 
     .change-btn:hover {
         background: #212529;
         transition: 2s;
-        color     : white;
+        color: white;
     }
 
     /* PAGE INSCRIPTION */
     .formInscription {
-        width     : 500px;
-        height    : 600px;
-        margin    : 30px auto;
+        width: 500px;
+        height: 600px;
+        margin: 30px auto;
         text-align: center;
-        color     : #FFC107;
+        color: #FFC107;
     }
 
     .formInscription h1 {
@@ -373,8 +370,8 @@
     }
 
     .formInscription form {
-        display        : flex;
-        flex-direction : column;
+        display: flex;
+        flex-direction: column;
         justify-content: space-between;
     }
 
@@ -384,37 +381,37 @@
 
     .formInscription form #register_form div {
         align-items: center;
-        width      : 200px;
-        margin     : 10px auto;
+        width: 200px;
+        margin: 10px auto;
     }
 
     .formInscription label {
         margin: 10px 0;
-        width : 100%;
+        width: 100%;
     }
 
     #next,
     #previous {
-        position           : absolute;
-        color              : #FFC107;
+        position: absolute;
+        color: #FFC107;
         /* background-color: #212529; */
-        font-size          : 25px;
+        font-size: 25px;
     }
 
     #next {
         bottom: 50px;
-        right : 500px;
+        right: 500px;
     }
 
     #previous {
         bottom: 50px;
-        right : 250px;
-        width : 100%;
+        right: 250px;
+        width: 100%;
 
     }
 
     .relative {
-        flex    : 1;
+        flex: 1;
         position: relative;
     }
 
@@ -423,21 +420,21 @@
 
     /* Page Details */
     .absolutePrix {
-        position     : absolute;
-        top          : 20px;
-        left         : 570px;
-        padding      : 20px;
+        position: absolute;
+        top: 20px;
+        left: 570px;
+        padding: 20px;
         border-radius: 50%;
     }
 
     .details-img {
-        display        : flex;
+        display: flex;
         justify-content: center;
     }
 
     .detail-img {
         height: 400px;
-        width : 400px;
+        width: 400px;
         margin: auto;
     }
 
@@ -446,15 +443,15 @@
     }
 
     .add_image {
-        color       : #FFC107;
-        display     : block;
-        margin      : 1rem 0 0 0;
+        color: #FFC107;
+        display: block;
+        margin: 1rem 0 0 0;
         padding-left: 1rem;
     }
 
     .add_image button {
         margin-top: 10px;
-        height    : 30px;
+        height: 30px;
     }
 
     .carousel-control-next {
@@ -485,8 +482,9 @@
     }
 
     #ajout-panier {
-        width : 400px;
+        width: 400px;
         margin: auto;
+        text-align: center;
     }
 
     /* FIN PAGE DETAILS */
@@ -494,21 +492,17 @@
 
     /* PARTIE PANIER */
 
-    .table {
-        margin-bottom: 200px;
-    }
-
     table.table tr,
     table.table th,
     table.table td {
-        color           : #FFC107;
+        color: #FFC107;
         background-color: transparent;
     }
 
     table.table td a {
-        text-decoration : none;
-        color           : #FFC107;
-        border          : 2px solid black;
+        text-decoration: none;
+        color: #FFC107;
+        border: 2px solid black;
         background-color: rgba(0, 0, 0, 0.671);
     }
 
@@ -523,16 +517,16 @@
     /* Panier vide */
 
     .panier-vide-div {
-        display        : flex;
-        flex-direction : column;
-        height         : 93vh;
-        align-items    : center;
+        display: flex;
+        flex-direction: column;
+        height: 93vh;
+        align-items: center;
         justify-content: center;
     }
 
     .panier-vide-div a {
         font-size: 33px;
-        color    : red;
+        color: red;
     }
 
 
@@ -542,25 +536,25 @@
     /* PARTIE COMMANDE */
 
     .recap {
-        width           : 700px;
-        margin          : 30px auto;
-        border          : 3px solid black;
+        width: 700px;
+        margin: 30px auto;
+        border: 3px solid black;
         background-color: #00000080;
     }
 
     .recap h1 {
         text-align: center;
-        color     : #FFC107;
+        color: #FFC107;
     }
 
     .recap h2 {
         text-align: center;
-        color     : #FFC107;
-        padding   : 30px 0;
+        color: #FFC107;
+        padding: 30px 0;
     }
 
     .ttG {
-        width     : 25%;
+        width: 25%;
         text-align: right;
     }
 
@@ -571,21 +565,21 @@
 
     /* Paiement */
     .paiements {
-        margin          : auto;
-        width           : 500px;
-        height          : 500px;
+        margin: auto;
+        width: 500px;
+        height: 500px;
         background-color: rgba(0, 0, 0, 0.651);
-        color           : #FFC107;
+        color: #FFC107;
     }
 
     .paiements {
         padding: 20px;
-        border : 3px solid white;
+        border: 3px solid white;
     }
 
     /* adresse livraison */
     .livraison_factureh3 {
-        color     : #FFC107;
+        color: #FFC107;
         text-align: center;
     }
 
@@ -606,13 +600,13 @@
     }
 
     .paiement_div {
-        margin         : 50px 0;
-        display        : flex;
+        margin: 50px 0;
+        display: flex;
         justify-content: center;
     }
 
     .paiement_links {
-        color  : #FFC107;
+        color: #FFC107;
         padding: 5px 20px;
     }
 
@@ -624,28 +618,28 @@
 
     .adresse_livraison,
     .adresse_facture {
-        display         : flex;
-        flex-direction  : column;
-        width           : 600px;
-        margin          : 20px auto;
+        display: flex;
+        flex-direction: column;
+        width: 600px;
+        margin: 20px auto;
         background-color: #2125299c;
-        color           : #FFC107;
+        color: #FFC107;
     }
 
     .adresse_livraison h1,
     .adresse_facture h1 {
-        font-size    : 26px;
-        text-align   : center;
+        font-size: 26px;
+        text-align: center;
         margin-bottom: 40px;
     }
 
     #adresse_livraison>div,
     #adresse_facture>div {
-        display        : flex;
+        display: flex;
         justify-content: space-between;
-        align-items    : center;
-        width          : 450px;
-        margin         : auto;
+        align-items: center;
+        width: 450px;
+        margin: auto;
     }
 
     #adresse_livraison>div>button,
@@ -665,38 +659,38 @@
     }
 
     .adresse_livraison_facture {
-        display        : flex;
+        display: flex;
         justify-content: space-between;
-        align-items    : center;
-        text-align     : center;
+        align-items: center;
+        text-align: center;
     }
 
     .adresse_livraison_facture>div:not(.adresse_vierge) {
-        height         : 300px;
-        display        : flex;
-        flex-direction : column;
+        height: 300px;
+        display: flex;
+        flex-direction: column;
         justify-content: space-between;
-        width          : 50%;
-        margin         : auto;
+        width: 50%;
+        margin: auto;
     }
 
     /* Dans le cas où aucune adresse n'a été renseignée */
     .adresse_vierge {
-        display        : flex;
-        align-items    : center;
+        display: flex;
+        align-items: center;
         justify-content: space-around;
-        width          : 100%;
+        width: 100%;
     }
 
     /* Page historique commandes  */
 
     .historiqueH1 {
-        color           : #FFC107;
-        text-align      : center;
-        margin          : 30px 0 0 0;
-        padding         : 30px 0;
+        color: #FFC107;
+        text-align: center;
+        margin: 30px 0 0 0;
+        padding: 30px 0;
         background-color: #000000;
-        border-bottom   : 2px solid white;
+        border-bottom: 2px solid white;
     }
 
 
@@ -718,17 +712,17 @@
 
     .container>div>h1 {
         text-align: center;
-        color     : #FFC107;
+        color: #FFC107;
     }
 
-    .container>div>div {
-        color           : #FFC107;
+    .container>div>div:not(#confirm-infos) {
+        color: #FFC107;
         background-color: #00000048;
-        display         : flex;
-        margin          : 10px;
-        justify-content : space-between;
-        width           : 400px;
-        margin          : auto;
+        display: flex;
+        margin: 10px;
+        justify-content: space-between;
+        width: 400px;
+        margin: auto;
     }
 
     .container>div>div#div-mdp {
@@ -740,22 +734,22 @@
     }
 
     #confirm-infos {
-        width : 350px;
+        width: 350px;
         margin: auto;
     }
 
     /* Page legalite */
 
     .legalite-div {
-        color     : #FFC107;
+        color: #FFC107;
         text-align: justify;
-        width     : 1000px;
-        margin    : 20px auto;
+        width: 1000px;
+        margin: 20px auto;
     }
 
     .legalite-div h1 {
         text-align: center;
-        margin    : 20px 0;
+        margin: 20px 0;
     }
 
     .legalite-div h2 {
@@ -766,17 +760,17 @@
     /* Page Footer */
 
     footer {
-        display              : flex;
-        justify-content      : end;
-        align-items: center;
-        flex-direction       : column;
-        background-color     : transparent;
-        padding              : 10px;
-        height               : 250px;
-        background-repeat    : no-repeat;
-        background-size      : cover;
+        /* background-color: transparent; */
+        padding: 10px;
+        background-repeat: no-repeat;
+        background-size: cover;
         background-attachment: fixed;
-        color                : #FFC107;
+        color: #FFC107;
+    }
+
+    footer>div {
+        width: 100%;
+        margin: 10px 0;
     }
 
     .footer-logos {
@@ -797,9 +791,9 @@
     }
 
     .nav-footer>nav>ul {
-        display        : flex;
+        display: flex;
         justify-content: space-around;
-        margin-bottom  : 0;
+        margin-bottom: 0;
     }
 
     .nav-footer>nav>ul>li {
@@ -815,10 +809,10 @@
 
     @media (max-width: 1600px) {
         .absolutePrix {
-            position     : absolute;
-            top          : 20px;
-            left         : 480px;
-            padding      : 15px;
+            position: absolute;
+            top: 20px;
+            left: 480px;
+            padding: 15px;
             border-radius: 50%;
         }
 
@@ -832,12 +826,12 @@
 
         #next {
             bottom: 10px;
-            right : 30px;
+            right: 30px;
         }
 
         #previous {
             bottom: 10px;
-            left  : 30px;
+            left: 30px;
         }
     }
 
@@ -846,9 +840,9 @@
         /* NAVBAR ET ACHATS */
 
         #relative-div {
-            display   : block !important;
+            display: block !important;
             text-align: center;
-            width     : 100%;
+            width: 100%;
         }
 
         .navbar-brand {
@@ -885,7 +879,7 @@
         }
 
         #relative-div {
-            width          : 375px;
+            width: 375px;
             justify-content: center;
         }
 
@@ -894,7 +888,7 @@
         }
 
         .achat-accueil>div>div>h2 {
-            font-size : 26px;
+            font-size: 26px;
             text-align: right;
         }
 
@@ -914,10 +908,10 @@
         /* Page Details */
 
         .absolutePrix {
-            top      : 0;
-            left     : 360px;
+            top: 0;
+            left: 360px;
             font-size: 13px;
-            padding  : 15px;
+            padding: 15px;
         }
 
         /* Panier plein */
@@ -935,11 +929,11 @@
 
         #adresse_livraison>div {
             flex-direction: column;
-            width         : 100%;
+            width: 100%;
         }
 
         .details_mobile {
-            width     : 100% !important;
+            width: 100% !important;
             margin-top: 0 !important;
         }
 
@@ -952,13 +946,13 @@
         }
 
         .details_mobile h5 {
-            color     : #FFC107;
+            color: #FFC107;
             text-align: center;
         }
 
         .absolutePrix {
-            left     : 82%;
-            top      : 5%;
+            left: 82%;
+            top: 5%;
             font-size: 13px;
         }
 
@@ -974,10 +968,10 @@
         .table_historic tbody>tr,
         .table_historic thead,
         .table_historic tfoot {
-            display       : flex;
+            display: flex;
             flex-direction: column;
-            font-size     : 11px;
-            width         : 100%;
+            font-size: 11px;
+            width: 100%;
         }
 
         .table_panier_div {
@@ -985,9 +979,9 @@
         }
 
         .table_panier {
-            display  : flex;
+            display: flex;
             flex-wrap: wrap;
-            width    : 100%;
+            width: 100%;
             font-size: 7px;
         }
 
@@ -995,9 +989,9 @@
         .table_panier>tbody,
         .table_panier>tfoot,
         .table_panier tr {
-            display  : flex;
+            display: flex;
             flex-wrap: wrap;
-            width    : 100%;
+            width: 100%;
         }
 
         .table_panier tbody tr td:nth-child(2) {
@@ -1011,7 +1005,7 @@
 
 
         .delete_article img {
-            width : 50px;
+            width: 50px;
             height: 50px;
         }
 

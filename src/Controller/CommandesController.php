@@ -23,7 +23,6 @@ class CommandesController extends AbstractController
     {
         $data = json_decode($request->getContent(), true);
         $session->set('commande', $data);
-        // Faites quelque chose avec $data (prix total, prix et quantités des plantes)
 
         // Vous pouvez renvoyer une réponse JSON en fonction de vos besoins
         return new JsonResponse(['message' => 'Commande reçue avec succès!', 'redirect' => $this->generateUrl('recapp_commande'), 'data' => $data]);
@@ -50,9 +49,12 @@ class CommandesController extends AbstractController
 
             $sessionCommande['commandeData'][$key]['prixTTC'] = round($prixTTC, 2);
 
-            $totalGeneral += $prixTTC * $value['quantite'];
+            if ($totalGeneral < 50) {
+                $totalGeneral += $prixTTC * $value['quantite'] + 3.99;
+            } else {
+                $totalGeneral += $prixTTC * $value['quantite'];
+            }
         }
-
         $session->set('commande', $commandeData);
         // dd($sessionCommande);
 
@@ -84,11 +86,8 @@ class CommandesController extends AbstractController
             $session->set('adresseDataFacture', $commande);
         }
 
-
-
         $usedAdresse = $adresseRepository->findByLast($userId);
 
-        // dd($sessionCommande);
         return $this->render('commandes/commandes.html.twig', [
             'adresseInfos' => $commande,
             'adresseFactureInfos' => $commandeFacture,
@@ -192,6 +191,8 @@ class CommandesController extends AbstractController
 
             // Set la session à true adresse pour afficher l'adresse
             $session->set('adresseFactureValide', true);
+
+
 
             return $this->redirectToRoute('recapp_commande');
         }
