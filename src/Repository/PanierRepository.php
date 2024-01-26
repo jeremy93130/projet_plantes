@@ -3,12 +3,12 @@
 namespace App\Repository;
 
 use App\Entity\Panier;
-use App\Entity\Plantes;
+use App\Entity\Produits;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Plantes>
+ * @extends ServiceEntityRepository<Produits>
  *
  * @method Panier|null find($id, $lockMode = null, $lockVersion = null)
  * @method Panier|null findOneBy(array $criteria, array $orderBy = null)
@@ -19,7 +19,7 @@ class PanierRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Plantes::class);
+        parent::__construct($registry, Produits::class);
     }
 
 //    /**

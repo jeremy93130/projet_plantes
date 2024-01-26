@@ -17,13 +17,12 @@ class PanierController extends AbstractController
 {
 
     #[Route('/panier', name: 'app_panier')]
-    public function index(SessionInterface $session, ProduitsRepository $produitsRepository): Response
+    public function index(SessionInterface $session): Response
     {
 
         $panier = $session->get('panier', []);
 
         $session->get('totalQuantite');
-        // dd($panier);
 
         return $this->render('panier/panier.html.twig', [
             'controller_name' => 'PanierController',
@@ -68,7 +67,8 @@ class PanierController extends AbstractController
             'prix' => $produit->getPrixproduit(),
             'image' => $produit->getImage(),
             'nbArticles' => $data["nbArticles"],
-            'categorie' => $produit->getCategorie()
+            'categorie' => $produit->getCategorie(),
+            'lot' => $produit->getLot()
         ];
 
         // Mettre à jour le panier dans la session
@@ -99,7 +99,8 @@ class PanierController extends AbstractController
         foreach ($articles as $key => $article) {
             if ($article['id'] == $id) {
                 unset($articles[$key]);
-            };
+            }
+            ;
         }
         $session->set('panier', $articles);
         $totalQuantite = array_sum(array_column($articles, 'nbArticles'));

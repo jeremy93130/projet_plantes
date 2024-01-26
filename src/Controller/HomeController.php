@@ -3,12 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Images;
-use App\Service\ApiService;
 use App\Repository\ImagesRepository;
-use App\Repository\PlantesRepository;
 use App\Repository\ProduitsRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;

@@ -16,7 +16,7 @@
           À très vite chez
           <span class="titre-site">Le Naturel Au Vert</span>
         </p>
-        <a href="{{ path('app_home') }}" class="text-dark">Retour à l'accueil</a>
+        <a href="{{ path('app_home') }}" class="text-warning">Retour à l'accueil</a>
       </div>
     {% else %}
       {% if app.session.get('commande') %}
@@ -27,6 +27,7 @@
               <tr>
                 <th>Produit</th>
                 <th class="td-quantite">Quantité</th>
+                <th class="td-quantite">Lot de :</th>
                 <th class="td-prix">Total HT</th>
                 <th class="td-prix">Total TTC</th>
               </tr>
@@ -36,19 +37,20 @@
                 <tr>
                   <td class="td-nom">{{ data.alt }}</td>
                   <td class="td-quantite">{{ data.quantite }}</td>
+                  <td class="td-quantite">{{ data.lot * data.quantite }}</td>
                   <td class="td-prix">{{ data.prix * data.quantite }}€</td>
                   <td class="td-prix">{{ data.prixTTC * data.quantite }}€</td>
                 </tr>
               {% endfor %}
               {% if app.session.get('commande')['totalGeneral'] < 50 %}
                 <tr>
-                  <td class="td-nom" colspan="2">Frais de Livraison</td>
+                  <td class="td-nom" colspan="3">Frais de Livraison</td>
                   <td class="td-prix">3.33€</td>
                   <td class="td-prix">3.99€</td>
                 </tr>
               {% else %}
                 <tr>
-                  <td class="td-nom" colspan="2">Frais de Livraison</td>
+                  <td class="td-nom" colspan="3">Frais de Livraison</td>
                   <td class="td-prix" colspan="2">Offerts</td>
                 </tr>
               {% endif %}
@@ -63,7 +65,7 @@
             </tfoot>
           </table>
 
-          {% if app.session.get('adresseValide') or app.session.get('adresseFactureValide') %}
+          {% if app.session.get('adresseValide') %}
             <div class="adresse_livraison_facture">
               <div>
                 <h3 class="livraison_factureh3">Adresse de Facturation :</h3>
@@ -97,20 +99,20 @@
                 </div>
               </div>
             </div>
-          {% elseif userLastAdresse is not null %}
+          {% elseif userLastAdresse is not null and userLastFactureAdresse is not null %}
             <div class="adresse_livraison_facture">
               <div>
                 <h3 class="livraison_factureh3">Adresse de facturation :</h3>
                 <div class="livraison_facture">
                   <div>
                     <p>Mme/Mr</p>
-                    <p>{{ userLastAdresse.nomComplet }}</p>
+                    <p>{{ userLastFactureAdresse.nomComplet }}</p>
                     <p></p>
-                    <p>{{ userLastAdresse.adresse }}</p>
-                    <p>{{ userLastAdresse.codePostal }}
-                      {{ userLastAdresse.ville }}</p>
-                    <p>{{ userLastAdresse.pays }}</p>
-                    <p>{{ userLastAdresse.telephone }}</p>
+                    <p>{{ userLastFactureAdresse.adresse }}</p>
+                    <p>{{ userLastFactureAdresse.codePostal }}
+                      {{ userLastFactureAdresse.ville }}</p>
+                    <p>{{ userLastFactureAdresse.pays }}</p>
+                    <p>{{ userLastFactureAdresse.telephone }}</p>
                   </div>
                   <a href="{{ path('app_adresse_facture') }}" class="modif-adresse">Modifier</a>
                 </div>

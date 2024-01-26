@@ -8,7 +8,10 @@
   {% include 'navbar/navbar.html.twig' %}
   <div class="container-height">
     {% if commandes is empty %}
-      <h1>Vous n'avez pas encore passé de commande</h1>
+      <div class="historiqueVide">
+        <h1>Vous n'avez aucune commande passée actuellement</h1>
+        <a href="{{ path('app_home') }}">Retour à l'accueil</a>
+      </div>
     {% else %}
       <h1 class="historiqueH1">Historique des commandes</h1>
       <table class="table table_historic">

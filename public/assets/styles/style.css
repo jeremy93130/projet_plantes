@@ -3,14 +3,14 @@
     /* Body */
 
     body {
-        background-image: url('../../images/fond/nature.jpg');
+        background-image: url('https://images.pexels.com/photos/214050/pexels-photo-214050.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
         background-position: top;
         background-size: cover;
         background-repeat: no-repeat;
         background-attachment: fixed;
         margin: 0;
         padding: 0;
-        display              : flex;
+        display: flex;
         flex-direction: column;
         min-height: 100vh;
         box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.5);
@@ -203,6 +203,10 @@
     .categories {
         display: flex;
         text-align: center;
+    }
+
+    .categories a {
+        background-color: black;
     }
 
     /* Partie card achats.html.twig */
@@ -405,9 +409,8 @@
 
     #previous {
         bottom: 50px;
-        right: 250px;
-        width: 100%;
-
+        left: 500px;
+        width: calc(100% - 500px);
     }
 
     .relative {
@@ -621,6 +624,7 @@
         display: flex;
         flex-direction: column;
         width: 600px;
+        height: 400px;
         margin: 20px auto;
         background-color: #2125299c;
         color: #FFC107;
@@ -631,6 +635,15 @@
         font-size: 26px;
         text-align: center;
         margin-bottom: 40px;
+    }
+
+    .adresse_facture,
+    .adresse_livraison form,
+    #adresse_livraison,
+    #adresse_facture {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
     }
 
     #adresse_livraison>div,
@@ -691,6 +704,26 @@
         padding: 30px 0;
         background-color: #000000;
         border-bottom: 2px solid white;
+    }
+
+    /* Historique vide */
+
+    .historiqueVide {
+        display: flex;
+        flex-direction: column;
+        height: 700px;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .historiqueVide h1 {
+        color: #FFC107;
+    }
+
+    .historiqueVide a {
+        font-size: 23px;
+        color: red;
+        margin-top: 20px;
     }
 
 
@@ -773,17 +806,9 @@
         margin: 10px 0;
     }
 
-    .footer-logos {
-        width: 50px;
-        background-color: #FFC107;
-    }
-
-    .footer-logos>img {
-        width: 100%;
-    }
-
     .middle-footer p {
         margin-left: 20px;
+        margin-bottom: 0;
     }
 
     .nav-footer {

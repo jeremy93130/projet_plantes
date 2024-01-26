@@ -21,6 +21,17 @@ class AdresseFactureRepository extends ServiceEntityRepository
         parent::__construct($registry, AdresseFacture::class);
     }
 
+    public function findByLast($id): ?AdresseFacture
+    {
+        return $this->createQueryBuilder('af')
+            ->andWhere('af.client = :val')
+            ->setParameter('val', $id)
+            ->orderBy('af.id', 'DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
 //    /**
 //     * @return AdresseFacture[] Returns an array of AdresseFacture objects
 //     */

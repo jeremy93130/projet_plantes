@@ -190,6 +190,9 @@ class PaiementController extends AbstractController
         // On remet le compteur des articles à 0
         $session->set('totalQuantite', 0);
 
+        $session->remove('adresseData');
+        $session->remove('adresseDataFacture');
+
 
         $response = new RedirectResponse($this->generateUrl('app_confirmation'));
 

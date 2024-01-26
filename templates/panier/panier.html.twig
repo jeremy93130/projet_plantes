@@ -33,13 +33,13 @@
           {% for produit in app.session.get('panier', []) %}
             <tr class="delete_article">
               <td>
-                <img src="{{ asset('images/produits/' ~ produit.image) }}" alt="{{ produit.nom }}" data-categorie="{{ produit.categorie }}" />
+                <a href="{{ path('details', { id: produit.id, categorie: produit.categorie }) }}"><img src="{{ asset('images/produits/' ~ produit.image) }}" alt="{{ produit.nom }}" data-categorie="{{ produit.categorie }}" /></a>
               </td>
               <td>{{ produit.nom }}</td>
               <td>{{ produit.prix }}€</td>
               <td class="quantite-input">
                 <button type="button" data-article="{{ produit.id }}" class="quantity-change moins none" data-delta="-1">-</button>
-                <input type="text" value="{{ produit.nbArticles }}" data-article="{{ produit.id }}" class="quantity" name="quantity_produit" id="quantity-{{ produit.id }}" />
+                <input type="text" value="{{ produit.nbArticles }}" data-article="{{ produit.id }}" class="quantity" name="quantity_produit" id="quantity-{{ produit.id }}" data-lot="{{ produit.lot }}" />
                 <button type="button" data-article="{{ produit.id }}" class="quantity-change plus none" data-delta="1">+</button>
               </td>
               <td class="total-column">{{ produit.prix }}
@@ -57,7 +57,7 @@
             <td class="total-column" id="total-general">{{ totalGeneral }}
               €</td>
             <td>
-              <a onclick="commander()" id="commander">Passer la commande</a>
+              <a id="commander">Passer la commande</a>
             </td>
           </tr>
         </tfoot>
