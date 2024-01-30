@@ -37,16 +37,29 @@
     <div class="produits-categories padding-bot">
       <div class="d-flex flex-wrap justify-content-center">
         {% for item in pagination.getCurrentPageResults() %}
-          <div class="card m-5 plantesResults relative-div-achats" style="width: 18rem;" data-nom="{{ item.nom_produit }}">
-            <div class="img-card">
-              <img src="{{ asset('images/produits/' ~ item.image) }}" class="card-img-top" alt="{{ item.nom_produit }}" />
+          {% if item.stock > 0 %}
+            <div class="card m-5 plantesResults relative-div-achats" style="width: 18rem;" data-nom="{{ item.nom_produit }}">
+              <div class="img-card">
+                <img src="{{ asset('images/produits/' ~ item.image) }}" class="card-img-top" alt="{{ item.nom_produit }}" />
+              </div>
+              <div class="card-body text-center">
+                <h5 class="card-title">{{ item.nom_produit }}</h5>
+                <a href="{{ url('details', { id: item.id, categorie: item.categorie }) }}" class="btn btn-warning change-btn">Voir l'article en détail</a>
+              </div>
+              <span class="absolute-prix">{{ item.prix_produit }}€</span>
             </div>
-            <div class="card-body text-center">
-              <h5 class="card-title">{{ item.nom_produit }}</h5>
-              <a href="{{ url('details', { id: item.id, categorie: item.categorie }) }}" class="btn btn-warning change-btn">Voir l'article en détail</a>
+          {% else %}
+            <div class="card m-5 plantesResults relative-div-achats" style="width: 18rem;" data-nom="{{ item.nom_produit }}">
+              <div class="img-card">
+                <img src="{{ asset('images/produits/' ~ item.image) }}" class="card-img-top img-hors-stock" alt="{{ item.nom_produit }}" />
+                <h6 id="hors-stock">Hors Stock, bientot disponible</h6>
+              </div>
+              <div class="card-body text-center">
+                <h5 class="card-title">{{ item.nom_produit }}</h5>
+                <a href="{{ url('details', { id: item.id, categorie: item.categorie }) }}" class="btn btn-warning change-btn">Voir l'article en détail</a>
+              </div>
             </div>
-            <span class="absolute-prix" style="text-align:center">{{ item.prix_produit }}€</span>
-          </div>
+          {% endif %}
         {% endfor %}
       </div>
     </div>

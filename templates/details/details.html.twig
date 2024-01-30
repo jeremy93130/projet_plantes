@@ -5,7 +5,7 @@
 {% block body %}
   {% include 'navbar/navbar.html.twig' %}
   <div class="achat-accueil {{ css }} bg-details">
-    <div class="w-50 m-auto mt-5 details_mobile" style="height: 900px;">
+    <div class="w-50 m-auto mt-5 details_mobile">
       <div class="card bg-transparent border border-0 relative-details">
         <div id="carouselExample" class="carousel slide">
           <div class="carousel-inner details-img">
@@ -54,16 +54,22 @@
                 </div>
               </div>
             </div>
-            <div class="mt-3 ps-3 d-flex w-100 justify-content-between">
-              <a class="link-warning link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" onclick="ajouterAuPanier('{{ path('add_to_cart', { id: produit.id }) }}', '{{ produit.id }}', '{{ produit.nomProduit }}', '{{ produit.prixProduit }}', '{{ asset('images/' ~ produit.image) }}')" id="link-ajouter">Ajouter au panier</a>
+            {% if produit.stock > 0 %}
+              <div class="mt-3 ps-3 d-flex w-100 justify-content-between">
+                <a class="link-warning link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" onclick="ajouterAuPanier('{{ path('add_to_cart', { id: produit.id }) }}', '{{ produit.id }}', '{{ produit.nomProduit }}', '{{ produit.prixProduit }}', '{{ asset('images/' ~ produit.image) }}')" id="link-ajouter">Ajouter au panier</a>
 
-              <div>
-                <span>Lot :</span>
-                <span style="text-align: right;width: 50%; color:#FFC107">{{ produit.lot }}</span>
-                <span>Stock :</span>
-                <span style="text-align: right;width: 50%; color:#FFC107">{{ produit.stock }}</span>
+                <div>
+                  <span>Lot :</span>
+                  <span style="text-align: right;width: 50%; color:#FFC107">{{ produit.lot }}</span>
+                  <span>Stock :</span>
+                  <span style="text-align: right;width: 50%; color:#FFC107">{{ produit.stock }}</span>
+                </div>
               </div>
-            </div>
+            {% else %}
+              <div>
+                <p class="text-center mt-2 text-danger fw-bold">Ce produit est actuellement indisponible</p>
+              </div>
+            {% endif %}
           </div>
           <span class="bg-warning absolutePrix" style="text-align:center">{{ produit.prixProduit }}€</span>
           {% if is_granted('ROLE_ADMIN') %}

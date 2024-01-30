@@ -360,6 +360,21 @@
         color: white;
     }
 
+/* Hors stock */
+    #hors-stock {
+        position: absolute;
+        top: 30%;
+        color: red;
+        left: 10%;
+        font-size: 40px;
+        width: 100%;
+        transform: rotate(45deg);
+    }
+
+    .img-hors-stock {
+        filter: brightness(40%);
+    }
+
     /* PAGE INSCRIPTION */
     .formInscription {
         width: 500px;
