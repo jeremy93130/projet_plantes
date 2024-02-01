@@ -319,21 +319,6 @@
         justify-content: center;
     }
 
-    /* #btn-btn {
-        position: absolute;
-        left: 25px;
-        top: -20px;
-        border: 2px solid transparent;
-        border-color: yellow;
-        outline: none;
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        background: yellow;
-        transition: 0.5s ease-in-out;
-    } */
-
-
     #btn-btn:hover {
         background-color: #FFC107;
         border-color: transparent;
