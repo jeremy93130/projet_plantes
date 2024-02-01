@@ -98,6 +98,13 @@
         margin-bottom: 150px;
     }
 
+    .main-produits a {
+        text-decoration: none;
+        color: black;
+        font-size: 66px;
+        text-shadow: 8px 5px 3px #FFC107;
+    }
+
     .produits {
         background-color: black;
         height: 250px;
@@ -119,39 +126,32 @@
         transition: 1.5s;
     }
 
-    .produits:nth-child(1) {
+    .main-produits>a:nth-child(1)>.produits {
         background-image: url('../../images/produits/presentation-plantes.jpg');
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center;
     }
 
-    .produits:nth-child(2) {
+    .main-produits>a:nth-child(2)>.produits {
         background-image: url('../../images/produits/presentation-graines.webp');
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center;
     }
 
-    .produits:nth-child(3) {
+    .main-produits>a:nth-child(3)>.produits {
         background-image: url('../../images/produits/presentation-legumes.webp');
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center;
     }
 
-    .produits:nth-child(4) {
+    .main-produits>a:nth-child(4)>.produits {
         background-image: url('../../images/produits/presentation-fruits.jpg');
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center;
-    }
-
-    .produits a {
-        text-decoration: none;
-        color: black;
-        font-size: 66px;
-        text-shadow: 8px 5px 3px #FFC107;
     }
 
     /* NavBar */
@@ -360,7 +360,7 @@
         color: white;
     }
 
-/* Hors stock */
+    /* Hors stock */
     #hors-stock {
         position: absolute;
         top: 30%;
