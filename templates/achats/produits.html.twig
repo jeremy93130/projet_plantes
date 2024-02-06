@@ -46,6 +46,7 @@
                 <h5 class="card-title">{{ item.nom_produit }}</h5>
                 <a href="{{ url('details', { id: item.id, categorie: item.categorie }) }}" class="btn btn-warning change-btn">Voir l'article en détail</a>
               </div>
+              <span id="add_to_cart_principale" onclick="ajouterAuPanier('{{ path('add_to_cart', { id: item.id }) }}', '{{ item.id }}', '{{ item.nom_produit }}', '{{ item.prix_produit }}', '{{ asset('images/' ~ item.image) }}')"><i class="fa-solid fa-cart-plus"></i></span>
               <span class="absolute-prix">{{ item.prix_produit }}€</span>
             </div>
           {% else %}

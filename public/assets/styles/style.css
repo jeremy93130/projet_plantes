@@ -301,6 +301,16 @@
         color: white;
     }
 
+    #add_to_cart_principale {
+        cursor: pointer;
+        position: absolute;
+        bottom: 100px;
+        left: 0;
+        padding: 3px 7px;
+        color: #000000;
+        font-size: 30px;
+    }
+
     .absolute-prix {
         position: absolute;
         background-color: #212529;
