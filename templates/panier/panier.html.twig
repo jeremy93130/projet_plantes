@@ -39,7 +39,7 @@
 							<td>{{ produit.prix }}€</td>
 							<td class="quantite-input">
 								<button type="button" data-article="{{ produit.id }}" class="quantity-change moins none" data-delta="-1">-</button>
-								<input type="text" value="{{ produit.nbArticles }}" data-article="{{ produit.id }}" class="quantity" name="quantity_produit" id="quantity-{{ produit.id }}"/>
+								<input type="text" value="{{ produit.nbArticles }}" data-article="{{ produit.id }}" class="quantity" name="quantity_produit" id="quantity-{{ produit.id }}" data-lot="{{ produit.lot }}"/>
 								<button type="button" data-article="{{ produit.id }}" class="quantity-change plus none" data-delta="1">+</button>
 							</td>
 							<td class="total-column">{{ produit.prix }}
