@@ -30,7 +30,7 @@
         </thead>
         <tbody>
           {% set totalGeneral = 0 %}
-          {% for produit in app.session.get('panier', []) %}
+          {% for key, produit in app.session.get('panier', []) %}
             <tr class="delete_article">
               <td>
                 <a href="{{ path('details', { id: produit.id, categorie: produit.categorie }) }}"><img src="{{ asset('images/produits/' ~ produit.image) }}" alt="{{ produit.nom }}" data-categorie="{{ produit.categorie }}" /></a>

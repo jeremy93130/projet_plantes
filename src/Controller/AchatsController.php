@@ -56,7 +56,7 @@ class AchatsController extends AbstractController
 
         // Définir le nombre d'élément par pages :
 
-        $pagerFanta->setMaxPerPage(9);
+        $pagerFanta->setMaxPerPage(8);
 
         // récuperer le numéro de page à partir de la requete 
 
