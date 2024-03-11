@@ -2,24 +2,23 @@
 
 namespace App\Controller;
 
-use App\Repository\CommandeRepository;
+use App\Entity\User;
 use App\Repository\DetailsCommandeRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class HistoriqueCommandesController extends AbstractController
 {
     #[Route('/historique/commandes', name: 'app_historique_commandes')]
-    public function index(SessionInterface $session, DetailsCommandeRepository $detailsCommande): Response
+    public function index(DetailsCommandeRepository $detailsCommande): Response
     {
-        /**
-         * @var $user
-         */
         $user = $this->getUser();
+
+        /**
+         * @var User $user
+         */
         $userId = $user->getId();
-        $commande = $session->get('commande', []);
         if (!$user) {
             return $this->redirectToRoute('app_login');
         }
@@ -53,11 +52,8 @@ class HistoriqueCommandesController extends AbstractController
                 'quantite' => $detailsCommande->getQuantite(),
             ];
 
-            // Ajoute le prix du produit au total de la commande
-            // $formattedResults[$commandeId]['total'] += ($plante->getPrixPlante() * $detailsCommande->getQuantite());
         }
 
-        // dd($formattedResults);
 
         return $this->render('historique_commandes/historique.html.twig', [
             'commandes' => $formattedResults,

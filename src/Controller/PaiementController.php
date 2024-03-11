@@ -92,7 +92,7 @@ class PaiementController extends AbstractController
     }
 
     #[Route('/handle-successful-payment', name: 'handle_successful_payment')]
-    public function handleSuccessfulPayment(SessionInterface $session, EntityManagerInterface $entityManager, ProduitsRepository $produitRepository): Response
+    public function handleSuccessfulPayment(SessionInterface $session, EntityManagerInterface $entityManager, ProduitsRepository $produitRepository): RedirectResponse
     {
 
         $session->set('adresseValide', false);

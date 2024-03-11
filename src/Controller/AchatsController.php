@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Produits;
 use App\Form\ProduitSearchType;
 use App\Repository\ProduitsRepository;
 use Pagerfanta\Adapter\ArrayAdapter;

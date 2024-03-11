@@ -9,13 +9,9 @@ use App\Entity\Produits;
 use App\Entity\AdresseFacture;
 use App\Form\AdresseFactureType;
 use App\Form\AdresseLivraisonType;
-use App\Repository\AdresseRepository;
-use App\Repository\ProduitsRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
