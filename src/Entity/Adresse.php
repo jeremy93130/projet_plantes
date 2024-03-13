@@ -38,7 +38,7 @@ class Adresse
 
     #[ORM\OneToOne(inversedBy: 'adresse', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
-    private ?commande $commande = null;
+    private ?Commande $commande = null;
 
     #[ORM\Column]
     private ?string $telephone = null;

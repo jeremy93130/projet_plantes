@@ -1,0 +1,51 @@
+Cahier des charges pour un site de vente de plantes en ligne:
+
+1. Introduction 
+
+Le présent cahier des charges définiti les besoins et les exigences pour le développement d'un site
+de vente de produits en livraison
+
+2. Objectifs 
+
+Le site de vente de plantes doit permettre aux utilisateurs de réaliser les actions suivantes :
+
+2.A - Rechercher les produits disponibles en fonction du nom
+2-B - Afficher les détails du produit choisit
+2-C - Ajouter, Supprimer des articles du panier et y inclure la quantité souhaitée
+2-D - Voir le récapitulatif de sa commande 
+2-E - Ajouter les coordonnées du client ainsi que le nom/prenom si l'adresse est a un autre nom
+2-F - Effectuer le paiement en ligne de maniere sécurisé
+2-G - Voir l'historique de ses commandes
+
+!! L'utilisateur pourra ajouter des produits au panier et/ou supprimer s'il n'est
+ni connecté ni inscrit, cependant , il devra s'inscrire oubse connecter une fois le bouton 
+"passer la commande" cliqué
+
+3. Fonctionnalités 
+
+Le site offrira les fonctionnalités suivantes : 
+
+3.1 Recherche de produit
+Un moteur de recherche permettant de spécifier le nom du produit recherché et l'afficher sur la page
+
+3.2 Panier dynamique 
+Un panier mettant à jour le nombre d'articles à l'interieur de manière dynamique
+
+3.3 Sécurisation du site
+Une sécurité qui permet de ne pas acheter d'articles tant qu'il n'y a pas de connexion
+
+3.4 Paiement securisé 
+Intégration d'un système de paiement en ligne sécurisé, acceptant diverses méthodes de paiement telles
+que les cartes de crédit , Gestion des données sensibles conformément aux normes de sécurité en vigueur.
+
+4. Contraintes techniques 
+
+Le site doit respecter les contraintes techniques suivantes :
+
+Développement web responsive pour une utilisation sur les appareils mobiles et de bureau.
+utilisation de technologies web modernes et évolutives.
+
+5. Sécurité et confidentialité
+
+Le site doit garantir la sécurité des données personnelles des utilisateurs,
+en respectant les réglementations en vigueur en matière de proctection des données.

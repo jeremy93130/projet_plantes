@@ -63,7 +63,6 @@ class PanierController extends AbstractController
         }
 
         // Ajouter le produit au panier
-        // Vous devez adapter cela en fonction de la structure réelle de vos données
         $panier[$id] = [
             'id' => $produit->getId(),
             'nom' => $produit->getNomproduit(),
@@ -74,11 +73,8 @@ class PanierController extends AbstractController
             'lot' => $produit->getLot()
         ];
 
-        // Mettre à jour le panier dans la session
         $session->set('panier', $panier);
-
-        // Stocker les données du panier dans un cookie
-
+        
         // On ajoute la clé quantité à la session 'panier' avec la valeur de totalQuantité actuelle + nbArticles
         if (empty($panier)) {
             $totalQuantite = "";

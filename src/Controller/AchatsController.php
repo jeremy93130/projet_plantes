@@ -9,13 +9,13 @@ use Pagerfanta\Pagerfanta;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AchatsController extends AbstractController
 {
     #[Route('/achats/{categorie}', name: 'app_achats')]
-    public function index(ProduitsRepository $produitRepository, Request $request, $categorie, SessionInterface $session): Response
+    // Injections de dépendances de symfony
+    public function index(ProduitsRepository $produitRepository, Request $request, $categorie): Response
     {
         $form = $this->createForm(ProduitSearchType::class);
         $form->handleRequest($request);
@@ -45,22 +45,14 @@ class AchatsController extends AbstractController
 
         $data = $produit;
 
-        // Créer un adaptateur PagerFanta avec les données
-
         $adapter = new ArrayAdapter($data);
-
-        // Créer une instance de pagerFanta 
 
         $pagerFanta = new Pagerfanta($adapter);
 
-        // Définir le nombre d'élément par pages :
-
         $pagerFanta->setMaxPerPage(8);
 
-        // récuperer le numéro de page à partir de la requete 
-
         $currentPage = $request->query->getInt('page', 1);
-
+        
         // Définir la page actuelle
 
         $pagerFanta->setCurrentPage($currentPage);
