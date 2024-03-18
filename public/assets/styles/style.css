@@ -627,6 +627,16 @@
 
     /* Page adresse Livraison */
 
+    #adresse>div {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    #adresse_pays {
+        width: 190px;
+    }
+
+
     .adresse_livraison,
     .adresse_facture {
         display: flex;

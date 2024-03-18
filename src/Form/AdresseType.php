@@ -15,7 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Validator\Constraints\Length;
 
-class AdresseLivraisonType extends AbstractType
+class AdresseType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -63,15 +63,20 @@ class AdresseLivraisonType extends AbstractType
                         'max' => 200,
                         'maxMessage' => 'nombre maximum de caractère atteint !'
                     ])
-                ]
+                ],
             ])
             ->add('Ajouter', SubmitType::class);
+        
+            if ($options['type_page'] === 'adresse_facture') {
+            $builder->remove('instructionLivraison');
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => Adresse::class,
+            'type_page' => null,
         ]);
     }
 }

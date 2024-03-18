@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Repository\AdresseFactureRepository;
 use App\Repository\AdresseRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -31,7 +30,7 @@ class CommandesController extends AbstractController
     }
 
     #[Route('/recap', name: 'recapp_commande')]
-    public function recap(SessionInterface $session, AdresseRepository $adresseRepository, AdresseFactureRepository $adresseFactureRepository): Response
+    public function recap(SessionInterface $session, AdresseRepository $adresseRepository): Response
     {
         $sessionCommande = $session->get('commande', []);
 
@@ -40,7 +39,7 @@ class CommandesController extends AbstractController
 
         foreach ($commandeData['commandeData'] as $key => &$value) {
 
-            if (!isset($value['prixTTC'])) {
+            if (!isset ($value['prixTTC'])) {
                 $value['prixTTC'] = $value['prix'];
                 $prixTTC = ($value['categorie'] == 1) ? 0.1 : 0.055;
                 $value['prixTTC'] += $value['prix'] * $prixTTC;
@@ -77,21 +76,19 @@ class CommandesController extends AbstractController
         $user = $this->getUser();
         $userId = $user->getId();
 
-        $commande = $session->get('adresseData');
-        $commandeFacture = $session->get('adresseDataFacture') ?? $commande;
+        $commande = $session->get('adresseData') ?? $adresseRepository->findByLastLivraison($userId);
+        // dd($commande);
 
-        if (empty($commandeFacture)) {
+        $commandeFacture = $session->get('adresseDataFacture') ?? $adresseRepository->findByLastFacture($userId) ?? $commande;
+        if (empty ($commandeFacture)) {
             $session->set('adresseDataFacture', $commande);
         }
 
-        $usedAdresse = $adresseRepository->findByLast($userId);
-        $usedFactureAdresse = $adresseFactureRepository->findByLast($userId);
-
+        // dd($commande);
+        // dd($commandeFacture);
         return $this->render('commandes/commandes.html.twig', [
             'adresseInfos' => $commande,
             'adresseFactureInfos' => $commandeFacture,
-            'userLastAdresse' => $usedAdresse,
-            'userLastFactureAdresse' => $usedFactureAdresse,
             'dataCommande' => $sessionCommande,
             'user' => $user,
             'successMessage' => null

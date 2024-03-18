@@ -2,7 +2,7 @@ Cahier des charges pour un site de vente de plantes en ligne:
 
 1. Introduction 
 
-Le présent cahier des charges définiti les besoins et les exigences pour le développement d'un site
+Le présent cahier des charges définit les besoins et les exigences pour le développement d'un site
 de vente de produits en livraison
 
 2. Objectifs 
