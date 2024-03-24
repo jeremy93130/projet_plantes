@@ -2,22 +2,22 @@
 
 namespace App\Controller;
 
-use App\Repository\CommandeRepository;
+use App\Entity\User;
 use App\Repository\DetailsCommandeRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class HistoriqueCommandesController extends AbstractController
 {
     #[Route('/historique/commandes', name: 'app_historique_commandes')]
-    public function index(SessionInterface $session, DetailsCommandeRepository $detailsCommande): Response
+    public function index(DetailsCommandeRepository $detailsCommande): Response
     {
-        /**
-         * @var $user
-         */
         $user = $this->getUser();
+
+        /**
+         * @var User $user
+         */
         $userId = $user->getId();
         if (!$user) {
             return $this->redirectToRoute('app_login');

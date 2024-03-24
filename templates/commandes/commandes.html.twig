@@ -64,8 +64,7 @@
               </tr>
             </tfoot>
           </table>
-
-          {% if app.session.get('adresseValide') %}
+          {% if app.session.get('adresseValide') or adresseInfos is not null %}
             <div class="adresse_livraison_facture">
               <div>
                 <h3 class="livraison_factureh3">Adresse de Facturation :</h3>
@@ -73,7 +72,7 @@
                   <div>
                     <p>Mme/Mr</p>
                     <p>{{ adresseFactureInfos.nomComplet }}</p>
-                    <p>{{ adresseFactureInfos.adresseLivraison }}</p>
+                    <p>{{ adresseFactureInfos.adresse }}</p>
                     <p>{{ adresseFactureInfos.codePostal }}
                       {{ adresseFactureInfos.ville }}</p>
                     <p>{{ adresseFactureInfos.pays }}</p>
@@ -88,48 +87,12 @@
                   <div>
                     <p>Mme/Mr</p>
                     <p>{{ adresseInfos.nomComplet }}</p>
-                    <p>{{ adresseInfos.adresseLivraison }}</p>
+                    <p>{{ adresseInfos.adresse }}</p>
                     <p>{{ adresseInfos.codePostal }}
                       {{ adresseInfos.ville }}</p>
                     <p>{{ adresseInfos.pays }}</p>
                     <p>{{ adresseInfos.telephone }}</p>
-                    <p>{{ adresseInfos.instructions }}</p>
-                  </div>
-                  <a href="{{ path('app_adresse') }}" class="modif-adresse">Modifier</a>
-                </div>
-              </div>
-            </div>
-          {% elseif userLastAdresse is not null and userLastFactureAdresse is not null %}
-            <div class="adresse_livraison_facture">
-              <div>
-                <h3 class="livraison_factureh3">Adresse de facturation :</h3>
-                <div class="livraison_facture">
-                  <div>
-                    <p>Mme/Mr</p>
-                    <p>{{ userLastFactureAdresse.nomComplet }}</p>
-                    <p></p>
-                    <p>{{ userLastFactureAdresse.adresse }}</p>
-                    <p>{{ userLastFactureAdresse.codePostal }}
-                      {{ userLastFactureAdresse.ville }}</p>
-                    <p>{{ userLastFactureAdresse.pays }}</p>
-                    <p>{{ userLastFactureAdresse.telephone }}</p>
-                  </div>
-                  <a href="{{ path('app_adresse_facture') }}" class="modif-adresse">Modifier</a>
-                </div>
-              </div>
-              <div>
-                <h3 class="livraison_factureh3">Adresse de livraison :</h3>
-                <div class="livraison_facture">
-                  <div>
-                    <p>Mme/Mr</p>
-                    <p>{{ userLastAdresse.nomComplet }}</p>
-                    <p></p>
-                    <p>{{ userLastAdresse.adresse }}</p>
-                    <p>{{ userLastAdresse.codePostal }}
-                      {{ userLastAdresse.ville }}</p>
-                    <p>{{ userLastAdresse.pays }}</p>
-                    <p>{{ userLastAdresse.telephone }}</p>
-                    <p>{{ userLastAdresse.instructionLivraison }}</p>
+                    <p>{{ adresseInfos.instructionLivraison }}</p>
                   </div>
                   <a href="{{ path('app_adresse') }}" class="modif-adresse">Modifier</a>
                 </div>

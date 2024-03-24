@@ -28,6 +28,17 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
 
     public function authenticate(Request $request): Passport
     {
+
+        $cookiePanier = $request->cookies->get('panier');
+        $panier = json_decode($cookiePanier, true) ?? [];
+
+        $cookieTotal = $request->cookies->get('totalQuantite');
+        $totalQuantite = json_decode($cookieTotal, true) ?? "";
+
+        // Stocker les données du panier dans la session
+        $request->getSession()->set('panier', $panier);
+        $request->getSession()->set('totalQuantite', $totalQuantite);
+
         $email = $request->request->get('email', '');
 
         $request->getSession()->set(SecurityRequestAttributes::LAST_USERNAME, $email);

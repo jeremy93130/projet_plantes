@@ -43,14 +43,14 @@ class User implements
     #[ORM\OneToMany(mappedBy: 'client', targetEntity: Adresse::class)]
     private Collection $adresses;
 
-    #[ORM\OneToMany(mappedBy: 'client', targetEntity: AdresseFacture::class)]
-    private Collection $adresseFactures;
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: UserAdressCommande::class)]
+    private Collection $userAdressCommandes;
 
     public function __construct()
     {
         $this->commande = new ArrayCollection();
         $this->adresses = new ArrayCollection();
-        $this->adresseFactures = new ArrayCollection();
+        $this->userAdressCommandes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -214,29 +214,29 @@ class User implements
     }
 
     /**
-     * @return Collection<int, AdresseFacture>
+     * @return Collection<int, UserAdressCommande>
      */
-    public function getAdresseFactures(): Collection
+    public function getUserAdressCommandes(): Collection
     {
-        return $this->adresseFactures;
+        return $this->userAdressCommandes;
     }
 
-    public function addAdresseFacture(AdresseFacture $adresseFacture): static
+    public function addUserAdressCommande(UserAdressCommande $userAdressCommande): static
     {
-        if (!$this->adresseFactures->contains($adresseFacture)) {
-            $this->adresseFactures->add($adresseFacture);
-            $adresseFacture->setClient($this);
+        if (!$this->userAdressCommandes->contains($userAdressCommande)) {
+            $this->userAdressCommandes->add($userAdressCommande);
+            $userAdressCommande->setUser($this);
         }
 
         return $this;
     }
 
-    public function removeAdresseFacture(AdresseFacture $adresseFacture): static
+    public function removeUserAdressCommande(UserAdressCommande $userAdressCommande): static
     {
-        if ($this->adresseFactures->removeElement($adresseFacture)) {
+        if ($this->userAdressCommandes->removeElement($userAdressCommande)) {
             // set the owning side to null (unless already changed)
-            if ($adresseFacture->getClient() === $this) {
-                $adresseFacture->setClient(null);
+            if ($userAdressCommande->getUser() === $this) {
+                $userAdressCommande->setUser(null);
             }
         }
 

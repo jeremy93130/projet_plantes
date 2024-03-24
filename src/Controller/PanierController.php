@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Produits;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,13 +17,15 @@ class PanierController extends AbstractController
 {
 
     #[Route('/panier', name: 'app_panier')]
-    public function index(SessionInterface $session): Response
+    public function index(SessionInterface $session, Request $request): Response
     {
 
         $panier = $session->get('panier', []);
-
+        // $session->remove('panier');
+        $panierCookies = $request->cookies->get('panier');
+        $panierCookie = json_decode($panierCookies, true);
+        // dd($panierCookie);
         $session->get('totalQuantite');
-        
 
         return $this->render('panier/panier.html.twig', [
             'controller_name' => 'PanierController',
@@ -60,7 +63,6 @@ class PanierController extends AbstractController
         }
 
         // Ajouter le produit au panier
-        // Vous devez adapter cela en fonction de la structure réelle de vos données
         $panier[$id] = [
             'id' => $produit->getId(),
             'nom' => $produit->getNomproduit(),
@@ -71,9 +73,8 @@ class PanierController extends AbstractController
             'lot' => $produit->getLot()
         ];
 
-        // Mettre à jour le panier dans la session
         $session->set('panier', $panier);
-
+        
         // On ajoute la clé quantité à la session 'panier' avec la valeur de totalQuantité actuelle + nbArticles
         if (empty($panier)) {
             $totalQuantite = "";
@@ -82,7 +83,10 @@ class PanierController extends AbstractController
         }
         $session->set('totalQuantite', $totalQuantite);
 
-
+        $response = new Response();
+        $response->headers->setCookie(new Cookie('panier', json_encode($panier)));
+        $response->headers->setCookie(new Cookie('totalQuantite', json_encode($totalQuantite)));
+        $response->send();
 
         // Retourner une réponse JSON
         return new JsonResponse(['message' => 'produit ajouté au panier avec succès', 'totalQuantite' => $totalQuantite]);
@@ -106,6 +110,11 @@ class PanierController extends AbstractController
         $totalQuantite = array_sum(array_column($articles, 'nbArticles'));
         $session->set('totalQuantite', $totalQuantite);
         // $session->remove('panier');
+
+        $response = new Response();
+        $response->headers->setCookie(new Cookie('panier', json_encode($articles)));
+        $response->headers->setCookie(new Cookie('totalQuantite', json_encode($totalQuantite)));
+        $response->send();
 
         // dd($articles);
         return new JsonResponse(['success' => true, 'totalQuantite' => $totalQuantite]);

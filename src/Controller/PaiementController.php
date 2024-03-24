@@ -3,13 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\Adresse;
-use App\Entity\AdresseFacture;
 use App\Entity\User;
 use App\Entity\Commande;
 use App\Entity\DetailsCommande;
+use App\Repository\AdresseRepository;
 use App\Repository\ProduitsRepository;
+use App\Service\AdresseService;
+use App\Service\CommandeService;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -21,7 +22,7 @@ class PaiementController extends AbstractController
 {
 
     #[Route('/paiement', name: 'app_paiements')]
-    public function index(Request $request, EntityManagerInterface $entityManager, SessionInterface $session): Response
+    public function index(SessionInterface $session): Response
     {
 
         $sessionCommande = $session->get('commande');
@@ -45,7 +46,7 @@ class PaiementController extends AbstractController
     public function stripeCheckout(SessionInterface $sessionInterface, $ids, $total, UrlGeneratorInterface $urlGenerator): RedirectResponse
     {
         \Stripe\Stripe::setApiKey('sk_test_51OICEgC3GA5BR02Af7eTScs2GgI29d4FpjzMiWRo625SCPzvudJNRQPg0A3ICZ9wTnCiXJadx9TrO7MRr9lVaXV800sjafT7mP'); // Remplacez par votre clé secrète Stripe
-        if (!isset($sessionInterface->get('commande')['totalGeneral']) || $sessionInterface->get('commande')['totalGeneral'] == null) {
+        if (!isset ($sessionInterface->get('commande')['totalGeneral']) || $sessionInterface->get('commande')['totalGeneral'] == null) {
             return $this->redirectToRoute('app_home');
         } else {
             $commandeData = $sessionInterface->get('commande')['commandeData'];
@@ -92,33 +93,31 @@ class PaiementController extends AbstractController
     }
 
     #[Route('/handle-successful-payment', name: 'handle_successful_payment')]
-    public function handleSuccessfulPayment(SessionInterface $session, EntityManagerInterface $entityManager, ProduitsRepository $produitRepository): Response
+    public function handleSuccessfulPayment(SessionInterface $session, EntityManagerInterface $entityManager, ProduitsRepository $produitRepository, AdresseService $adresseService, CommandeService $commandeService, AdresseRepository $adresseRepository): RedirectResponse
     {
 
         $session->set('adresseValide', false);
         $session->set('adresseFactureValide', false);
-        // Récupérer les informations de la session
-        $adresseInfo = $session->get('adresseData');
-        $adresseFactureInfo = $session->get('adresseDataFacture');
 
-        // dd($adresseInfo);
         // Récupérer l'identifiant de l'utilisateur depuis votre tableau de données
-        /** @var $userId */
+        /** @var User */
         $user = $this->getUser();
-        $userId = $user->getId();
 
+        // Récupérer les informations de la session
+        $adresseInfo = $session->get('adresseData') ?? $adresseRepository->findByLastLivraison($user);
+
+        $adresseFactureInfo = $session->get('adresseDataFacture') ?? $adresseRepository->findByLastFacture($user) ?? $adresseInfo;
+
+        if (!empty ($adresseFactureInfo) && is_array($adresseFactureInfo)) {
+            $adresseFactureInfo['type'] = "facturation";
+            unset($adresseFactureInfo['instructions']);
+        }
+        ;
         //Récuperer les plantes dans la session panier 
         $panier = $session->get('commande', []);
 
-        // Récupérer l'objet User correspondant depuis la base de données
-        $userRepository = $entityManager->getRepository(User::class);
-        $user = $userRepository->find($userId);
-
         //Créer une nouvelle entité Commandes
-        $commande = new Commande();
-        $commande->setClient($user);
-        $commande->setDateCommande(new \DateTimeImmutable()); // ou utilisez une date appropriée
-        $commande->setEtatCommande('En Attente'); // ou utilisez l'état par défaut souhaité
+        $commande = $commandeService->createNewCommande($this->getUser());
 
         $total = 0;
         $quantiteTotale = 0;
@@ -146,40 +145,28 @@ class PaiementController extends AbstractController
                 }
             }
         }
-
-        // On enregistre l'adresse de livraison et de facturation
-        $adresse = new Adresse();
-        $adresse->setNomComplet($adresseInfo['nomComplet']);
-        $adresse->setAdresse($adresseInfo['adresseLivraison']);
-        $adresse->setClient($user);
-        $adresse->setCodePostal($adresseInfo['codePostal']);
-        $adresse->setInstructionLivraison($adresseInfo['instructions']);
-        $adresse->setPays($adresseInfo['pays']);
-        $adresse->setVille($adresseInfo['ville']);
-        $adresse->setTelephone($adresseInfo['telephone']);
-        $adresse->setCommande($commande);
-
-        $entityManager->persist($adresse);
-
-
-        $adresseFacture = new AdresseFacture();
-        $adresseFacture->setNomComplet($adresseFactureInfo['nomComplet']);
-        $adresseFacture->setAdresse($adresseFactureInfo['adresseLivraison']);
-        $adresseFacture->setClient($user);
-        $adresseFacture->setCodePostal($adresseFactureInfo['codePostal']);
-        $adresseFacture->setPays($adresseFactureInfo['pays']);
-        $adresseFacture->setVille($adresseFactureInfo['ville']);
-        $adresseFacture->setTelephone($adresseFactureInfo['telephone']);
-        $adresseFacture->setCommande($commande);
-
-        $entityManager->persist($adresseFacture);
-
-
         $commande->setTotal((float) number_format($total, 2));
         $entityManager->persist($commande);
 
+        if (is_array($adresseInfo)) {
+            // On enregistre l'adresse de livraison et de facturation
+            $adresseService->createAndPersistAdresse(
+                $adresseInfo,
+                $user,
+                $commande
+            );
+            $adresseService->createAndPersistAdresse(
+                $adresseFactureInfo,
+                $user,
+                $commande
+            );
+        } else if ($adresseInfo instanceof Adresse && $adresseFactureInfo instanceof Adresse) {
+            $adresseService->persistExistingAdresse($adresseInfo, $user, $commande);
 
-        $entityManager->flush();
+            $adresseService->persistExistingAdresse($adresseFactureInfo, $user, $commande);
+        }
+
+        $adresseService->sauvegarderAdresse();
 
         // Supprimer les éléments de la session panier
         $session->remove('panier');

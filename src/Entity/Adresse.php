@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\AdresseRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -36,12 +38,23 @@ class Adresse
     #[ORM\JoinColumn(nullable: false)]
     private ?User $client = null;
 
-    #[ORM\OneToOne(inversedBy: 'adresse', cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Commande $commande = null;
-
     #[ORM\Column]
     private ?string $telephone = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $type = null;
+
+    #[ORM\OneToMany(mappedBy: 'adresse', targetEntity: UserAdressCommande::class)]
+    private Collection $userAdressCommandes;
+
+    #[ORM\ManyToOne(inversedBy: 'adresses')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?commande $commande = null;
+
+    public function __construct()
+    {
+        $this->userAdressCommandes = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -152,6 +165,48 @@ class Adresse
     public function setTelephone(string $telephone): static
     {
         $this->telephone = $telephone;
+
+        return $this;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(string $type): static
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, UserAdressCommande>
+     */
+    public function getUserAdressCommandes(): Collection
+    {
+        return $this->userAdressCommandes;
+    }
+
+    public function addUserAdressCommande(UserAdressCommande $userAdressCommande): static
+    {
+        if (!$this->userAdressCommandes->contains($userAdressCommande)) {
+            $this->userAdressCommandes->add($userAdressCommande);
+            $userAdressCommande->setAdresse($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserAdressCommande(UserAdressCommande $userAdressCommande): static
+    {
+        if ($this->userAdressCommandes->removeElement($userAdressCommande)) {
+            // set the owning side to null (unless already changed)
+            if ($userAdressCommande->getAdresse() === $this) {
+                $userAdressCommande->setAdresse(null);
+            }
+        }
 
         return $this;
     }

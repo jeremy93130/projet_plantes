@@ -15,9 +15,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class HomeController extends AbstractController
 {
     #[Route('/home', name: 'app_home')]
-    public function index(): Response
+    public function index(SessionInterface $session): Response
     {
-
         return $this->render('home/index.html.twig', []);
     }
 
@@ -29,7 +28,6 @@ class HomeController extends AbstractController
 
         $uploadImage = $request->files->get('imagePlante');
         $imageName = null;
-
         if ($request->isMethod('POST')) {
             if ($uploadImage != null) {
                 $imageName = $uploadImage->getClientOriginalName();

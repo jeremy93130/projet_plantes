@@ -3,19 +3,12 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
 use App\Entity\Adresse;
-use App\Entity\Produits;
-use App\Entity\AdresseFacture;
-use App\Form\AdresseFactureType;
+use App\Form\AdresseType;
 use App\Form\AdresseLivraisonType;
-use App\Repository\AdresseRepository;
-use App\Repository\ProduitsRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -54,16 +47,18 @@ class AdresseController extends AbstractController
             } else {
                 $adresse->setInstructionLivraison($instructions);
             }
+            $adresse->setType('livraison');
 
             //Stocker les données dans la session : 
             $session->set('adresseData', [
                 'nomComplet' => $nomLivraison,
-                'adresseLivraison' => $adresseLivraison,
+                'adresse' => $adresseLivraison,
                 'codePostal' => $codePostal,
                 'ville' => $ville,
                 'pays' => $pays,
-                'instructions' => $instructions,
-                'telephone' => $telephone
+                'instructionLivraison' => $instructions,
+                'telephone' => $telephone,
+                'type' => 'livraison'
             ]);
 
             // Set la session à true adresse pour afficher l'adresse
@@ -80,10 +75,10 @@ class AdresseController extends AbstractController
     public function adresseFacture(Request $request, SessionInterface $session): Response
     {
 
-        $adresse = new AdresseFacture();
+        $adresse = new Adresse();
         $user = $this->getUser();
 
-        $form = $this->createForm(AdresseFactureType::class, $adresse);
+        $form = $this->createForm(AdresseType::class, $adresse, ['type_page' => 'adresse_facture']);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -102,15 +97,17 @@ class AdresseController extends AbstractController
             $adresse->setPays($pays);
             $adresse->setClient($user);
             $adresse->setTelephone($telephone);
+            $adresse->setType('facture');
 
             //Stocker les données dans la session : 
             $session->set('adresseDataFacture', [
                 'nomComplet' => $nomLivraison,
-                'adresseLivraison' => $adresseLivraison,
+                'adresse' => $adresseLivraison,
                 'codePostal' => $codePostal,
                 'ville' => $ville,
                 'pays' => $pays,
-                'telephone' => $telephone
+                'telephone' => $telephone,
+                'type' => 'facture'
             ]);
 
             // Set la session à true adresse pour afficher l'adresse
