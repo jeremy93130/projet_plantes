@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+  Hello RegisterController!
+{% endblock %}
+
+{% block body %}
+  {% include 'navbar/navbar.html.twig' %}
+
+  <div class="formInscription">
+    <h1>Formulaire D'inscription</h1>{{ form(form) }}
+  </div>
+
+{% block footer %}
+  {% include 'footer/footer.html.twig' %}
+{% endblock %}
+
+{% endblock %}

@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+	Hello PanierController!
+{% endblock %}
+
+{% block body %}
+	{% include 'navbar/navbar.html.twig' %}
+	{% if app.session.get('panier') is empty %}
+		<div class="container-height">
+			<div class="panier-vide-div">
+				<h1 class="text-warning">Ohhh ... votre panier est vide ... Pourquoi ne pas aller le remplir ?</h1>
+				<a href="{{ path('app_home') }}">
+					Suivez nous !
+					<i class="fa-solid fa-arrow-right" style="color: #d40c0c;"></i>
+				</a>
+			</div>
+		</div>
+	{% else %}
+		<div class="table_panier_div container-height">
+			<table class="table mt-4 table_panier">
+				<thead>
+					<tr>
+						<th scope="col">Image_produit</th>
+						<th scope="col">Produit</th>
+						<th scope="col">Prix Unitaire</th>
+						<th scope="col">Quantité</th>
+						<th scope="col">Total</th>
+						<th scope="col">Action</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% set totalGeneral = 0 %}
+					{% for produit in app.session.get('panier', []) %}
+						<tr class="delete_article">
+							<td>
+								<a href="{{ path('details', { id: produit.id, categorie: produit.categorie }) }}"><img src="{{ asset('images/produits/' ~ produit.image) }}" alt="{{ produit.nom }}" data-categorie="{{ produit.categorie }}"/></a>
+							</td>
+							<td>{{ produit.nom }}</td>
+							<td>{{ produit.prix }}€</td>
+							<td class="quantite-input">
+								<button type="button" data-article="{{ produit.id }}" class="quantity-change moins none" data-delta="-1">-</button>
+								<input type="text" value="{{ produit.nbArticles }}" data-article="{{ produit.id }}" class="quantity" name="quantity_produit" id="quantity-{{ produit.id }}" data-lot="{{ produit.lot }}"/>
+								<button type="button" data-article="{{ produit.id }}" class="quantity-change plus none" data-delta="1">+</button>
+							</td>
+							<td class="total-column">{{ produit.prix }}
+								€</td>
+							<td class="">
+								<a id="link-supp" class="supprimer_article" onclick="supprimerArticleDuPanier('{{ path('app_supp', { id: produit.id }) }}')">Supprimer</a>
+							</td>
+						</tr>
+						{% set totalGeneral = totalGeneral + produit.prix * 1 %}
+					{% endfor %}
+				</tbody>
+				<tfoot>
+					<tr>
+						<th colspan="4">Total général :</th>
+						<td class="total-column" id="total-general">{{ totalGeneral }}
+							€</td>
+						<td>
+							<a id="commander">Passer la commande</a>
+						</td>
+					</tr>
+				</tfoot>
+			</table>
+		</div>
+	{% endif %}
+	{% block footer %}
+		{% include 'footer/footer.html.twig' %}
+	{% endblock %}
+{% endblock %}

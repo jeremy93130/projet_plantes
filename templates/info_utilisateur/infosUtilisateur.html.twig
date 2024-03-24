@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+  Infos Personnelles
+{% endblock %}
+
+{% block body %}
+  {% include 'navbar/navbar.html.twig' %}
+  <div class="container container-height">
+    <div id="div-infos-perso">
+      <h1>Vos Informations personnelles</h1>
+      <div>
+        <p>
+          Nom :
+          <span id="nom">{{ app.user.nom }}</span>
+        </p>
+        <a class="modifInfos" href="#" data-field="nom">Modifier</a>
+      </div>
+      <div>
+        <p>
+          Prénom :
+          <span id="prenom">{{ app.user.prenom }}</span>
+        </p>
+        <a class="modifInfos" href="#" data-field="prenom">Modifier</a>
+      </div>
+      <div>
+        <p>
+          Email :
+          <span id="email">{{ app.user.email }}</span>
+        </p>
+        <a class="modifInfos" href="#" data-field="email">Modifier</a>
+      </div>
+      <div>
+        <p>
+          Mot de Passe :
+          <span id="motDePasse">***************</span>
+        </p>
+        <div class="d-flex flex-column" id="inputs-mdp">
+          <p>
+            <span id="ancien-mdp"></span>
+          </p>
+          <p>
+            <span id="nouveau-mdp"></span>
+          </p>
+          <p>
+            <span id="confirm-nouveau-mdp"></span>
+          </p>
+        </div>
+        <a class="modifInfos" href="#" data-field="motDePasse">Modifier</a>
+      </div>
+      <div id="div-mdp"></div>
+      <div>
+        <p>
+          Numéro de téléphone :
+          <span id="telephone">{{ app.user.telephone }}</span>
+        </p>
+        <a class="modifInfos" href="#" data-field="telephone">Modifier</a>
+      </div>
+      <div id="confirm-infos"></div>
+    </div>
+  </div>
+  {% block footer %}
+    {% include 'footer/footer.html.twig' %}
+  {% endblock %}
+{% endblock %}

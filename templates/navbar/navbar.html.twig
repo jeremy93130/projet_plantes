@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+  <nav class="navbar navbar-expand-lg {{ css is defined ? css : ' ' }}">
+    <div class="container-fluid">
+      <button class="navbar-toggler btn-hamburger" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+      <div class="collapse navbar-collapse align-items-center" id="navbarSupportedContent">
+        <h2 class="text-warning w-50"><a class="nav-link active titre-site" aria-current="page" href="{{ path('app_home') }}">Le Naturel Au Vert</a></h2>
+        <ul class="navbar-nav w-50 justify-content-end align-items-center">
+          {% if app.user is empty %}
+            <li class="nav-item">
+              <a class="nav-link text-warning" href="{{ path('app_login') }}">Connexion</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-warning" href="{{ path('app_register') }}">Inscription</a>
+            </li>
+          {% else %}
+            <div class="dropdown">
+              <button class="mainmenubtn">
+                Bienvenu(e)
+                {{ app.user.prenom }}
+              </button>
+              <div class="dropdown-child">
+                <ul class="dropdown-menu drop-nav bg-dark">
+                  <li>
+                    <a href="{{ path('app_info_utilisateur') }}" class="nav-link text-warning dropdown-item p-2">Informations personnelles</a>
+                  </li>
+                  <li>
+                    <a class="nav-link text-warning dropdown-item p-2" href="{{ path('app_historique_commandes') }}">Historique des commandes</a>
+                  </li>
+                  {% if is_granted('ROLE_ADMIN') %}
+                    <li>
+                      <a class="nav-link text-danger dropdown-item p-2" href="{{ path('admin') }}">Admin</a>
+                    </li>
+                  {% endif %}
+                  <li>
+                    <a class="nav-link text-warning dropdown-item p-2" href="{{ path('app_logout') }}">Se déconnecter</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          {% endif %}
+          <li class="list-unstyled me-5">
+            <a class="w-100" href="{{ path('app_panier') }}">
+              {% if app.request.attributes.get('_route') != 'recapp_commande' and app.request.attributes.get('_route') != 'app_login' and app.request.attributes.get('_route') != 'app_register' %}
+                <i class="fa-solid fa-cart-shopping nav-link text-warning" id="nav_panier"><span id="nb_articles">{{ app.session.get('totalQuantite', '') == 0 ? '' : app.session.get('totalQuantite', '') }}</span></i>
+              {% endif %}
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+{% endblock %}

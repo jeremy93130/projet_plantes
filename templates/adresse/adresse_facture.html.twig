@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+  commandes
+{% endblock %}
+
+{% block body %}
+  {% include 'navbar/navbar.html.twig' %}
+  <div class="container-height">
+    <div class="adresse_livraison">
+      <h1>Veuillez inscrire vos informations de Facturation</h1>
+      {{ form(formAdresse) }}
+    </div>
+  </div>
+  {% block footer %}
+    {% include 'footer/footer.html.twig' %}
+  {% endblock %}
+{% endblock %}

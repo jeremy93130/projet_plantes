@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+  Hello HomeController!
+{% endblock %}
+{% block body %}
+  {% block navbar %}
+    {% include 'navbar/navbar.html.twig' %}
+  {% endblock %}
+  <div class="banner">
+    <h1>Qu'est ce qui vous tente aujourd'hui ?</h1>
+  </div>
+  <div class="container main-produits">
+    <a href="{{ path('app_achats', { categorie: 1 }) }}"><div class="produits">Plantes</div></a>
+    <a href="{{ path('app_achats', { categorie: 2 }) }}"><div class="produits">Graines</div></a>
+    <a href="{{ path('app_achats', { categorie: 3 }) }}"><div class="produits">Légumes</div></a>
+    <a href="{{ path('app_achats', { categorie: 4 }) }}"><div class="produits">Fruits</div></a>
+  </div>
+  {% block footer %}
+    {% include 'footer/footer.html.twig' %}
+  {% endblock %}
+{% endblock %}
