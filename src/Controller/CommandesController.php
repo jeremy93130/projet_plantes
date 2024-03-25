@@ -26,15 +26,19 @@ class CommandesController extends AbstractController
 
         $session->set('commande', $commandeArray);
 
+        $errors = [];
         // On verifie que le lot n'est pas dépassé : 
-            foreach($commandeData as $commande){
-                $dataProduit = $produitsRepository->findOneById($commande['id']);
-
-                if($commande['quantite'] > $dataProduit->getStock()){
-                    return new JsonResponse(['erreur_stock' => 'Il n\'y a pas assez de stock pour ce produit, veuillez en choisir moins']);
-                }
+        foreach ($commandeData as $commande) {
+            $dataProduit = $produitsRepository->findOneById($commande['id']);
+            $stockRestant = $dataProduit->getStock();
+            if ($commande['quantite'] > $dataProduit->getStock()) {
+                $errors = ['id' => $commande['id'], 'erreur_stock' => 'Il n\'y a pas assez de stock pour ce produit, veuillez en choisir moins, Stock restant : ' . $stockRestant];
             }
+        }
 
+        if (!empty ($errors)) {
+            return new JsonResponse(['errors' => $errors]);
+        }
 
         // Vous pouvez renvoyer une réponse JSON en fonction de vos besoins
         return new JsonResponse(['redirect' => $this->generateUrl('recapp_commande')]);
@@ -50,7 +54,7 @@ class CommandesController extends AbstractController
 
         foreach ($commandeData['commandeData'] as $key => &$value) {
 
-            if (!isset($value['prixTTC'])) {
+            if (!isset ($value['prixTTC'])) {
                 $value['prixTTC'] = $value['prix'];
                 $prixTTC = ($value['categorie'] == 1) ? 0.1 : 0.055;
                 $value['prixTTC'] += $value['prix'] * $prixTTC;
@@ -90,7 +94,7 @@ class CommandesController extends AbstractController
         $commande = $session->get('adresseData');
         $commandeFacture = $session->get('adresseDataFacture') ?? $commande;
 
-        if (empty($commandeFacture)) {
+        if (empty ($commandeFacture)) {
             $session->set('adresseDataFacture', $commande);
         }
 
