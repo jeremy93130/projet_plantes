@@ -46,8 +46,11 @@ $("#commander").on("click", function () {
     contentType: "application/json",
     data: JSON.stringify(dataToSend),
     success: function (response) {
-      if (response) {
+      if (response.redirect) {
         window.location.href = response.redirect;
+      } else if (response.erreur_stock) {
+        let erreur = $("<p>" + response.erreur_stock + "</p>");
+        $(".quantite-input").append(erreur);
       } else {
         deleteArticle.html(
           "<div><h2>Une Erreur s'est produite, Merci de raffraichir la page et réessayer</h2></div>"

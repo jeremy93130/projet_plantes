@@ -22,7 +22,7 @@ class AdresseController extends AbstractController
         $adresse = new Adresse();
         $user = $this->getUser();
 
-        $form = $this->createForm(AdresseType::class, $adresse);
+        $form = $this->createForm(AdresseLivraisonType::class, $adresse);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

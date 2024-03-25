@@ -1,76 +1,79 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-  Hello AchatsController!
+	Hello AchatsController!
 {% endblock %}
 {% block javascripts %}
-  <script src="{{ asset('assets/js/structure.js') }}"></script>
+	<script src="{{ asset('assets/js/structure.js') }}"></script>
 {% endblock %}
 {% block body %}
-  {% include 'navbar/navbar.html.twig' %}
-  {% if app.request.attributes.get('_route') == 'recapp_commande' %}{% endif %}
-  <div class="achat-accueil {{ css }} container-height relative">
-    <div class="d-flex justify-content-center align-items-center block-mobile">
-      <div class="titre-plante">
-        <h2 class="text-center m-3 titre-site">Produits disponibles à l'achat</h2>
-        <input type="search" name="plante_search" id="plante_search" placeholder="Recherche" />
-        {% if app.request.attributes.get('_route') != 'handle_successful_payment' %}
-          <h3>Autres catégories</h3>
-          <div class="categories">
-            {% if app.request.get('categorie') != 1 %}
-              <a class="nav-link text-warning dropdown-item" href="{{ path('app_achats', { categorie: 1 }) }}">Plantes</a>
-            {% endif %}
-            {% if app.request.get('categorie') != 2 %}
-              <a class="nav-link text-warning dropdown-item" href="{{ path('app_achats', { categorie: 2 }) }}">Graines</a>
-            {% endif %}
-            {% if app.request.get('categorie') != 3 %}
-              <a class="nav-link text-warning dropdown-item" href="{{ path('app_achats', { categorie: 3 }) }}">Légumes</a>
-            {% endif %}
-            {% if app.request.get('categorie') != 4 %}
-              <a class="nav-link text-warning dropdown-item" href="{{ path('app_achats', { categorie: 4 }) }}">Fruits</a>
-            {% endif %}
-          </div>
-        {% endif %}
-      </div>
-    </div>
-    <div class="produits-categories padding-bot">
-      <div class="d-flex flex-wrap justify-content-center">
-        {% for item in pagination.getCurrentPageResults() %}
-          {% if item.stock > 0 %}
-            <div class="card m-5 plantesResults relative-div-achats" style="width: 18rem;" data-nom="{{ item.nom_produit }}">
-              <div class="img-card">
-                <img src="{{ asset('images/produits/' ~ item.image) }}" class="card-img-top" alt="{{ item.nom_produit }}" />
-              </div>
-              <div class="card-body text-center">
-                <h5 class="card-title">{{ item.nom_produit }}</h5>
-                <a href="{{ url('details', { id: item.id, categorie: item.categorie }) }}" class="btn btn-warning change-btn">Voir l'article en détail</a>
-              </div>
-              <span id="add_to_cart_principale" onclick="ajouterAuPanier('{{ path('add_to_cart', { id: item.id }) }}', '{{ item.id }}', '{{ item.nom_produit }}', '{{ item.prix_produit }}', '{{ asset('images/' ~ item.image) }}')"><i class="fa-solid fa-cart-plus"></i></span>
-              <span class="absolute-prix">{{ item.prix_produit }}€</span>
-            </div>
-          {% else %}
-            <div class="card m-5 plantesResults relative-div-achats" style="width: 18rem;" data-nom="{{ item.nom_produit }}">
-              <div class="img-card">
-                <img src="{{ asset('images/produits/' ~ item.image) }}" class="card-img-top img-hors-stock" alt="{{ item.nom_produit }}" />
-                <h6 id="hors-stock">Hors Stock, bientot disponible</h6>
-              </div>
-              <div class="card-body text-center">
-                <h5 class="card-title">{{ item.nom_produit }}</h5>
-                <a href="{{ url('details', { id: item.id, categorie: item.categorie }) }}" class="btn btn-warning change-btn">Voir l'article en détail</a>
-              </div>
-            </div>
-          {% endif %}
-        {% endfor %}
-      </div>
-    </div>
-    {% if pagination.hasPreviousPage() %}
-      <a href="{{ path('app_achats', { categorie: 1, page: pagination.previousPage }) }}" id="previous">Page précédente</a>
-    {% endif %}
-    {% if pagination.hasNextPage() %}
-      <a href="{{ path('app_achats', { categorie: 1, page: pagination.nextPage }) }}" id="next">Page suivante</a>
-    {% endif %}
-  </div>
-  {% block footer %}
-    {% include 'footer/footer.html.twig' %}
-  {% endblock %}
+	{% include 'navbar/navbar.html.twig' %}
+	{% if app.request.attributes.get('_route') == 'recapp_commande' %}{% endif %}
+	<div class="achat-accueil {{ css }} container-height relative">
+		<div class="d-flex justify-content-center align-items-center block-mobile">
+			<div class="titre-plante">
+				<h2 class="text-center m-3 titre-site">Produits disponibles à l'achat</h2>
+				<input type="search" name="plante_search" id="plante_search" placeholder="Recherche"/>
+				{% if app.request.attributes.get('_route') != 'handle_successful_payment' %}
+					<h3>Autres catégories</h3>
+					<div class="categories">
+						{% if app.request.get('categorie') != 1 %}
+							<a class="nav-link text-warning dropdown-item" href="{{ path('app_achats', { categorie: 1 }) }}">Plantes</a>
+						{% endif %}
+						{% if app.request.get('categorie') != 2 %}
+							<a class="nav-link text-warning dropdown-item" href="{{ path('app_achats', { categorie: 2 }) }}">Graines</a>
+						{% endif %}
+						{% if app.request.get('categorie') != 3 %}
+							<a class="nav-link text-warning dropdown-item" href="{{ path('app_achats', { categorie: 3 }) }}">Légumes</a>
+						{% endif %}
+						{% if app.request.get('categorie') != 4 %}
+							<a class="nav-link text-warning dropdown-item" href="{{ path('app_achats', { categorie: 4 }) }}">Fruits</a>
+						{% endif %}
+					</div>
+				{% endif %}
+			</div>
+		</div>
+		<div class="d-flex justify-content-end w-25" id="relative-div"></div>
+		<div class="produits-categories padding-bot">
+			<div class="d-flex flex-wrap justify-content-center">
+				{% for item in pagination.getCurrentPageResults() %}
+					{% if item.stock > 0 %}
+						<div class="card m-5 plantesResults relative-div-achats" style="width: 18rem;" data-nom="{{ item.nom_produit }}">
+							<div class="img-card">
+								<img src="{{ asset('images/produits/' ~ item.image) }}" class="card-img-top" alt="{{ item.nom_produit }}"/>
+							</div>
+							<div class="card-body text-center">
+								<h5 class="card-title">{{ item.nom_produit }}</h5>
+								<a href="{{ url('details', { id: item.id, categorie: item.categorie }) }}" class="btn btn-warning change-btn">Voir l'article en détail</a>
+							</div>
+							<span id="add_to_cart_principale" onclick="ajouterAuPanier('{{ path('add_to_cart', { id: item.id }) }}', '{{ item.id }}', '{{ item.nom_produit }}', '{{ item.prix_produit }}', '{{ asset('images/' ~ item.image) }}', this)">
+								<i class="fa-solid fa-cart-plus {{ cssPanier[item.id] }}"></i>
+							</span>
+							<span class="absolute-prix">{{ item.prix_produit }}€</span>
+						</div>
+					{% else %}
+						<div class="card m-5 plantesResults relative-div-achats" style="width: 18rem;" data-nom="{{ item.nom_produit }}">
+							<div class="img-card">
+								<img src="{{ asset('images/produits/' ~ item.image) }}" class="card-img-top img-hors-stock" alt="{{ item.nom_produit }}"/>
+								<h6 id="hors-stock">Hors Stock, bientot disponible</h6>
+							</div>
+							<div class="card-body text-center">
+								<h5 class="card-title">{{ item.nom_produit }}</h5>
+								<a href="{{ url('details', { id: item.id, categorie: item.categorie }) }}" class="btn btn-warning change-btn">Voir l'article en détail</a>
+							</div>
+						</div>
+					{% endif %}
+				{% endfor %}
+			</div>
+		</div>
+		{% if pagination.hasPreviousPage() %}
+			<a href="{{ path('app_achats', { categorie: 1, page: pagination.previousPage }) }}" id="previous">Page précédente</a>
+		{% endif %}
+		{% if pagination.hasNextPage() %}
+			<a href="{{ path('app_achats', { categorie: 1, page: pagination.nextPage }) }}" id="next">Page suivante</a>
+		{% endif %}
+	</div>
+	{% block footer %}
+		{% include 'footer/footer.html.twig' %}
+	{% endblock %}
 {% endblock %}

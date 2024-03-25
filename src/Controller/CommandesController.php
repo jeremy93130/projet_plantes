@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Repository\AdresseFactureRepository;
 use App\Repository\AdresseRepository;
+use App\Repository\ProduitsRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,7 +16,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class CommandesController extends AbstractController
 {
     #[Route('/commandes', name: 'app_commandes')]
-    public function index(SessionInterface $session, Request $request): JsonResponse
+    public function index(SessionInterface $session, Request $request, ProduitsRepository $produitsRepository): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
         $commandeData = $data['commandeData'];
@@ -24,13 +26,22 @@ class CommandesController extends AbstractController
 
         $session->set('commande', $commandeArray);
 
+        // On verifie que le lot n'est pas dépassé : 
+            foreach($commandeData as $commande){
+                $dataProduit = $produitsRepository->findOneById($commande['id']);
+
+                if($commande['quantite'] > $dataProduit->getStock()){
+                    return new JsonResponse(['erreur_stock' => 'Il n\'y a pas assez de stock pour ce produit, veuillez en choisir moins']);
+                }
+            }
+
 
         // Vous pouvez renvoyer une réponse JSON en fonction de vos besoins
         return new JsonResponse(['redirect' => $this->generateUrl('recapp_commande')]);
     }
 
     #[Route('/recap', name: 'recapp_commande')]
-    public function recap(SessionInterface $session, AdresseRepository $adresseRepository): Response
+    public function recap(SessionInterface $session, AdresseRepository $adresseRepository, AdresseFactureRepository $adresseFactureRepository): Response
     {
         $sessionCommande = $session->get('commande', []);
 
@@ -39,7 +50,7 @@ class CommandesController extends AbstractController
 
         foreach ($commandeData['commandeData'] as $key => &$value) {
 
-            if (!isset ($value['prixTTC'])) {
+            if (!isset($value['prixTTC'])) {
                 $value['prixTTC'] = $value['prix'];
                 $prixTTC = ($value['categorie'] == 1) ? 0.1 : 0.055;
                 $value['prixTTC'] += $value['prix'] * $prixTTC;
@@ -76,19 +87,21 @@ class CommandesController extends AbstractController
         $user = $this->getUser();
         $userId = $user->getId();
 
-        $commande = $session->get('adresseData') ?? $adresseRepository->findByLastLivraison($userId);
-        // dd($commande);
+        $commande = $session->get('adresseData');
+        $commandeFacture = $session->get('adresseDataFacture') ?? $commande;
 
-        $commandeFacture = $session->get('adresseDataFacture') ?? $adresseRepository->findByLastFacture($userId) ?? $commande;
-        if (empty ($commandeFacture)) {
+        if (empty($commandeFacture)) {
             $session->set('adresseDataFacture', $commande);
         }
 
-        // dd($commande);
-        // dd($commandeFacture);
+        $usedAdresse = $adresseRepository->findByLast($userId);
+        $usedFactureAdresse = $adresseFactureRepository->findByLast($userId);
+
         return $this->render('commandes/commandes.html.twig', [
             'adresseInfos' => $commande,
             'adresseFactureInfos' => $commandeFacture,
+            'userLastAdresse' => $usedAdresse,
+            'userLastFactureAdresse' => $usedFactureAdresse,
             'dataCommande' => $sessionCommande,
             'user' => $user,
             'successMessage' => null

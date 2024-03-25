@@ -145,6 +145,18 @@ class Adresse
         return $this;
     }
 
+    public function getCommande(): ?commande
+    {
+        return $this->commande;
+    }
+
+    public function setCommande(commande $commande): static
+    {
+        $this->commande = $commande;
+
+        return $this;
+    }
+
     public function getTelephone(): ?string
     {
         return $this->telephone;
@@ -195,18 +207,6 @@ class Adresse
                 $userAdressCommande->setAdresse(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getCommande(): ?commande
-    {
-        return $this->commande;
-    }
-
-    public function setCommande(?commande $commande): static
-    {
-        $this->commande = $commande;
 
         return $this;
     }

@@ -25,7 +25,6 @@ class HistoriqueCommandesController extends AbstractController
 
         // Si vous avez besoin d'accéder à toutes les commandes de l'utilisateur, utilisez $user->getCommandes() au lieu de $detailsCommande
         $commandes = $detailsCommande->findAllbyUserId($userId);
-
         $formattedResults = [];
         foreach ($commandes as $detailsCommande) {
             $commandeObj = $detailsCommande->getCommande();
@@ -52,8 +51,11 @@ class HistoriqueCommandesController extends AbstractController
                 'quantite' => $detailsCommande->getQuantite(),
             ];
 
+            // Ajoute le prix du produit au total de la commande
+            // $formattedResults[$commandeId]['total'] += ($plante->getPrixPlante() * $detailsCommande->getQuantite());
         }
 
+        // dd($formattedResults);
 
         return $this->render('historique_commandes/historique.html.twig', [
             'commandes' => $formattedResults,

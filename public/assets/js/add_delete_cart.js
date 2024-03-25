@@ -1,6 +1,6 @@
 // Fonction ajout panier
 var nbArticles = $("#nb_articles");
-function ajouterAuPanier(url, id, nom, prix, image) {
+function ajouterAuPanier(url, id, nom, prix, image, clickedIcon) {
   var ajoutPanier = $("#ajout-panier");
   var produitData = {
     id: id,
@@ -20,6 +20,7 @@ function ajouterAuPanier(url, id, nom, prix, image) {
         ajoutPanier.addClass("alert alert-success");
         ajoutPanier.append("<p>" + response.message + "</p>");
         nbArticles.text(response.totalQuantite);
+        $(clickedIcon).find("i").addClass("selected_cart");
       } else if (response.doublon) {
         ajoutPanier.addClass("alert alert-warning");
         ajoutPanier.append("<p>" + response.doublon + "</p>");
@@ -55,3 +56,25 @@ function supprimerArticleDuPanier(url, id) {
     },
   });
 }
+
+$("#ajouter_panier_link").click(function(e) {
+  e.preventDefault(); // Empêche l'action par défaut du lien
+  var url = $(this).attr("href"); // Obtient l'URL de l'attribut href
+  var id = $(this).data("id"); // Suppose que vous avez un attribut data-id pour l'ID
+  var nom = $(this).data("nom"); // Suppose que vous avez un attribut data-nom pour le nom
+  var prix = $(this).data("prix"); // Suppose que vous avez un attribut data-prix pour le prix
+  var image = $(this).data("image"); // Suppose que vous avez un attribut data-image pour l'image
+  ajouterAuPanier(url, id, nom, prix, image, null); // Passez null pour clickedIcon
+});
+
+// Click event for the icon button
+$("#ajouter_panier_icon").click(function(e) {
+  e.preventDefault(); // Empêche l'action par défaut du lien
+  var url = $(this).data("url"); // Suppose que vous avez un attribut data-url pour l'URL
+  var id = $(this).data("id"); // Suppose que vous avez un attribut data-id pour l'ID
+  var nom = $(this).data("nom"); // Suppose que vous avez un attribut data-nom pour le nom
+  var prix = $(this).data("prix"); // Suppose que vous avez un attribut data-prix pour le prix
+  var image = $(this).data("image"); // Suppose que vous avez un attribut data-image pour l'image
+  var clickedIcon = $(this).find("i")[0]; // Trouve l'élément <i> à l'intérieur de l'élément cliqué
+  ajouterAuPanier(url, id, nom, prix, image, clickedIcon); // Passez la référence de l'icône cliquée
+});
