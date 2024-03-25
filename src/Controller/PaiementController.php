@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Adresse;
 use App\Entity\User;
-use App\Entity\Commande;
 use App\Entity\DetailsCommande;
 use App\Repository\AdresseRepository;
 use App\Repository\ProduitsRepository;
@@ -24,13 +23,8 @@ class PaiementController extends AbstractController
     #[Route('/paiement', name: 'app_paiements')]
     public function index(SessionInterface $session): Response
     {
-
         $sessionCommande = $session->get('commande');
         $user = $this->getUser();
-
-        // if ($commande == null || $sessionCommande == null || $user == null) {
-        //     $this->redirectToRoute('app_home');
-        // }
 
         // Récupérer les informations nécessaires de la session ou ailleurs
         $successMessage = $session->has('success_url') ? $session->get('success_url') : null;
@@ -43,7 +37,7 @@ class PaiementController extends AbstractController
     }
 
     #[Route('/order/create-session-stripe/{ids}/{total}', name: 'app_paiement')]
-    public function stripeCheckout(SessionInterface $sessionInterface, $ids, $total, UrlGeneratorInterface $urlGenerator): RedirectResponse
+    public function stripeCheckout(SessionInterface $sessionInterface,UrlGeneratorInterface $urlGenerator): RedirectResponse
     {
         \Stripe\Stripe::setApiKey('sk_test_51OICEgC3GA5BR02Af7eTScs2GgI29d4FpjzMiWRo625SCPzvudJNRQPg0A3ICZ9wTnCiXJadx9TrO7MRr9lVaXV800sjafT7mP'); // Remplacez par votre clé secrète Stripe
         if (!isset ($sessionInterface->get('commande')['totalGeneral']) || $sessionInterface->get('commande')['totalGeneral'] == null) {
