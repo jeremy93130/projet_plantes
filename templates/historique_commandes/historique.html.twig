@@ -17,6 +17,7 @@
       <table class="table table_historic">
         <tr class="text-warning">
           <th>Date de la commande</th>
+          <th>Adresse de facturation</th>
           <th>Adresse de livraison</th>
           <th>Produit(s)</th>
           <th>prix</th>
@@ -27,15 +28,25 @@
           <tr class="text-warning">
             <td>{{ commande.commande.dateCommande|date('d-m-Y') }}</td>
             <td>
-              {{ commande.commande.adresse.nomComplet }}
+              {{ commande.adresse_facturation.nom_complet }}
               <br />
-              {{ commande.commande.adresse.adresse }},
-              <br />{{ commande.commande.adresse.codePostal }}
+              {{ commande.adresse_facturation.adresse }},
+              <br />{{ commande.adresse_facturation.code_postal }}
               ,
-              {{ commande.commande.adresse.ville }}
+              {{ commande.adresse_facturation.ville }}
               ,
-              {{ commande.commande.adresse.pays }},
-              <br />{{ commande.commande.adresse.instructionLivraison }}
+              {{ commande.adresse_facturation.pays }}
+            </td>
+            <td>
+              {{ commande.adresse_livraison.nom_complet }}
+              <br />
+              {{ commande.adresse_livraison.adresse }},
+              <br />{{ commande.adresse_livraison.code_postal }}
+              ,
+              {{ commande.adresse_livraison.ville }}
+              ,
+              {{ commande.adresse_livraison.pays }},
+              <br />{{ commande.adresse_livraison.instruction_livraison }}
             </td>
             <td>
               {% for plante in commande.produits %}

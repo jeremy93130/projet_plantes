@@ -24,24 +24,62 @@ class HistoriqueCommandesController extends AbstractController
         }
 
         // Si vous avez besoin d'accéder à toutes les commandes de l'utilisateur, utilisez $user->getCommandes() au lieu de $detailsCommande
-        $commandes = $detailsCommande->findAllbyUserId($userId);
+        $commandes = $detailsCommande->findByUserId($userId);
+        // dd($commandes);
         $formattedResults = [];
         foreach ($commandes as $detailsCommande) {
             $commandeObj = $detailsCommande->getCommande();
             $plante = $detailsCommande->getProduit();
 
             $commandeId = $commandeObj->getId();
-
             // Si la commande n'existe pas encore dans $formattedResults, crée une nouvelle entrée
-            if (!isset($formattedResults[$commandeId])) {
-                $formattedResults[$commandeId] = [
-                    'commande' => $commandeObj,
-                    'date_commande' => $commandeObj->getDateCommande(),
-                    'nom_client' => $commandeObj->getAdresse()->getNomComplet(),
-                    'adresse_livraison' => $commandeObj->getAdresse()->getAdresse(),
-                    'produits' => [],
-                    'total' => $commandeObj->getTotal(),
-                ];
+            if (!isset ($formattedResults[$commandeId])) {
+                // Si la commande n'existe pas encore dans $formattedResults, crée une nouvelle entrée
+                if (!isset ($formattedResults[$commandeId])) {
+                    $adresseLivraison = null;
+                    $adresseFacturation = null;
+
+                    // Parcourir les adresses associées à la commande
+                    foreach ($commandeObj->getAdresses() as $adresse) {
+                        if ($adresse->getType() === 'livraison') {
+                            $adresseLivraison = [
+                                'nom_complet' => $adresse->getNomComplet(),
+                                'adresse' => $adresse->getAdresse(),
+                                'code_postal' => $adresse->getCodePostal(),
+                                'ville' => $adresse->getVille(),
+                                'pays' => $adresse->getPays(),
+                                'telephone' => $adresse->getTelephone(),
+                                'instruction_livraison' => $adresse->getInstructionLivraison()
+                                // Ajoutez d'autres propriétés d'adresse si nécessaire
+                            ];
+                        } elseif ($adresse->getType() === 'facturation') {
+                            $adresseFacturation = [
+                                'nom_complet' => $adresse->getNomComplet(),
+                                'adresse' => $adresse->getAdresse(),
+                                'code_postal' => $adresse->getCodePostal(),
+                                'ville' => $adresse->getVille(),
+                                'pays' => $adresse->getPays(),
+                                'telephone' => $adresse->getTelephone(),
+                                // Ajoutez d'autres propriétés d'adresse si nécessaire
+                            ];
+                        }
+
+                        // Sortir de la boucle dès que les deux adresses sont trouvées
+                        if ($adresseLivraison !== null && $adresseFacturation !== null) {
+                            break;
+                        }
+                    }
+
+                    $formattedResults[$commandeId] = [
+                        'commande' => $commandeObj,
+                        'date_commande' => $commandeObj->getDateCommande(),
+                        'nom_client' => $detailsCommande,
+                        'adresse_livraison' => $adresseLivraison,
+                        'adresse_facturation' => $adresseFacturation,
+                        'produits' => [],
+                        'total' => $commandeObj->getTotal(),
+                    ];
+                }
             }
 
             // Ajoute le produit à la commande existante
@@ -50,9 +88,6 @@ class HistoriqueCommandesController extends AbstractController
                 'prix' => $plante->getPrixProduit(),
                 'quantite' => $detailsCommande->getQuantite(),
             ];
-
-            // Ajoute le prix du produit au total de la commande
-            // $formattedResults[$commandeId]['total'] += ($plante->getPrixPlante() * $detailsCommande->getQuantite());
         }
 
         // dd($formattedResults);

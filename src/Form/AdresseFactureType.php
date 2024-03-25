@@ -2,7 +2,7 @@
 
 namespace App\Form;
 
-use App\Entity\AdresseFacture;
+use App\Entity\Adresse;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -24,7 +24,7 @@ class AdresseFactureType extends AbstractType
                 ]
             ])
             ->add('adresse', TextType::class, [
-                'label' => 'Entrez votre adresse de livraison',
+                'label' => 'Entrez votre adresse de facturation',
                 'constraints' => [
                     new Assert\NotBlank(),
                 ]
@@ -44,7 +44,7 @@ class AdresseFactureType extends AbstractType
                 ]
             ])
             ->add('pays', CountryType::class, [
-                'label' => 'Pays de Livraison',
+                'label' => 'Pays de facturation',
                 'constraints' => []
             ])
             ->add('telephone', TelType::class, [
@@ -58,7 +58,7 @@ class AdresseFactureType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => AdresseFacture::class,
+            'data_class' => Adresse::class,
         ]);
     }
 }

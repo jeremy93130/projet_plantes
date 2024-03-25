@@ -45,7 +45,7 @@ class CommandesController extends AbstractController
     }
 
     #[Route('/recap', name: 'recapp_commande')]
-    public function recap(SessionInterface $session, AdresseRepository $adresseRepository, AdresseFactureRepository $adresseFactureRepository): Response
+    public function recap(SessionInterface $session, AdresseRepository $adresseRepository, Request $request): Response
     {
         $sessionCommande = $session->get('commande', []);
 
@@ -91,24 +91,26 @@ class CommandesController extends AbstractController
         $user = $this->getUser();
         $userId = $user->getId();
 
-        $commande = $session->get('adresseData');
-        $commandeFacture = $session->get('adresseDataFacture') ?? $commande;
+        $commande = $session->get('adresseData') ?? $adresseRepository->findByClient($userId);
+
+        $commandeFacture = $session->get('adresseDataFacture') ?? $adresseRepository->findByFactureClient($userId) ?? $commande;
+
+        $session->set('adresseData', $commande);
+        $session->set('adresseDataFacture', $commandeFacture);
 
         if (empty ($commandeFacture)) {
             $session->set('adresseDataFacture', $commande);
         }
 
-        $usedAdresse = $adresseRepository->findByLast($userId);
-        $usedFactureAdresse = $adresseFactureRepository->findByLast($userId);
+        $erreur_adresse = $request->query->get('erreur_adresse') ?? null;
 
         return $this->render('commandes/commandes.html.twig', [
             'adresseInfos' => $commande,
             'adresseFactureInfos' => $commandeFacture,
-            'userLastAdresse' => $usedAdresse,
-            'userLastFactureAdresse' => $usedFactureAdresse,
             'dataCommande' => $sessionCommande,
             'user' => $user,
-            'successMessage' => null
+            'successMessage' => null,
+            'erreur_adresse' => $erreur_adresse
         ]);
     }
 

@@ -21,7 +21,7 @@ class AdresseRepository extends ServiceEntityRepository
         parent::__construct($registry, Adresse::class);
     }
 
-    public function findByLastLivraison($id): ?Adresse
+    public function findByClient($id): ?Adresse
     {
         return $this->createQueryBuilder('a')
             ->andWhere('a.client = :val')
@@ -33,7 +33,7 @@ class AdresseRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
-    public function findByLastFacture($id): ?Adresse
+    public function findByFactureClient($id): ?Adresse
     {
         return $this->createQueryBuilder('a')
             ->andWhere("a.client = :val")

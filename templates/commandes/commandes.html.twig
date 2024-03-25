@@ -106,6 +106,11 @@
                 </div>
               </div>
             </div>
+            {% if erreur_adresse is not null %}
+              <div>
+                <p class="alert alert-danger text-center">{{ erreur_adresse }}</p>
+              </div>
+            {% endif %}
           {% endif %}
           <div class="paiement_div">
             <a class="paiement_links" href="{{ path('app_paiement', { ids: dataCommande['commandeData']|column('id')|join(','), total: dataCommande.totalGeneral }) }}"><img src="{{ asset('images/logos/Logo_CB.png') }}" /></a>

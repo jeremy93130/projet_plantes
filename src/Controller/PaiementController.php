@@ -37,11 +37,15 @@ class PaiementController extends AbstractController
     }
 
     #[Route('/order/create-session-stripe/{ids}/{total}', name: 'app_paiement')]
-    public function stripeCheckout(SessionInterface $sessionInterface,UrlGeneratorInterface $urlGenerator): RedirectResponse
+    public function stripeCheckout(SessionInterface $sessionInterface, UrlGeneratorInterface $urlGenerator): RedirectResponse
     {
         \Stripe\Stripe::setApiKey('sk_test_51OICEgC3GA5BR02Af7eTScs2GgI29d4FpjzMiWRo625SCPzvudJNRQPg0A3ICZ9wTnCiXJadx9TrO7MRr9lVaXV800sjafT7mP'); // Remplacez par votre clé secrète Stripe
-        if (!isset ($sessionInterface->get('commande')['totalGeneral']) || $sessionInterface->get('commande')['totalGeneral'] == null) {
-            return $this->redirectToRoute('app_home');
+
+        $adresseLivraison = $sessionInterface->get('adresseData', []);
+        $adresseFacturation = $sessionInterface->get('adresseDataFacture', []);
+        if (!isset ($adresseLivraison) || !isset ($adresseFacturation)) {
+            $erreur_adresse = 'Merci d\'entrer une adresse valide avant de procéder au paiement !';
+            return $this->redirectToRoute('recapp_commande', ['erreur_adresse' => $erreur_adresse]);
         } else {
             $commandeData = $sessionInterface->get('commande')['commandeData'];
             // dd($commandeData);

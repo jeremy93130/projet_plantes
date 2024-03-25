@@ -4,7 +4,7 @@
 namespace App\Controller;
 
 use App\Entity\Adresse;
-use App\Form\AdresseType;
+use App\Form\AdresseFactureType;
 use App\Form\AdresseLivraisonType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -78,7 +78,7 @@ class AdresseController extends AbstractController
         $adresse = new Adresse();
         $user = $this->getUser();
 
-        $form = $this->createForm(AdresseType::class, $adresse, ['type_page' => 'adresse_facture']);
+        $form = $this->createForm(AdresseFactureType::class, $adresse);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
